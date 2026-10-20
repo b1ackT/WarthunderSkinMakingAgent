@@ -1,0 +1,1 @@
+{"revision":1,"operation":{"type":"image","assetId":"bc04968e-6e32-4253-88f3-61f49c6ec8ef","name":"主体 · 透明机械猫徽记","block":"subject","stage":2,"prompt":"独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。","placement":{"mode":"projection","view":"left","targets":["body","turret"],"rect":{"cx":0.5,"cy":0.48,"w":0.31,"h":0.5,"angle":0},"occlusion":true}}}

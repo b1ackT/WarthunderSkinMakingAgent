@@ -1,0 +1,620 @@
+{
+  "id": "56ce9984-f4f3-4db0-b3fb-eb91331b48c7",
+  "jobId": "8ac91dbb-24e5-4536-a3d4-7f47d860e6d5",
+  "revision": 21,
+  "status": "applied",
+  "operation": {
+    "type": "image",
+    "assetId": "ffea4b69-15a4-483b-bcb9-db46b81078ad",
+    "targetLayerId": "14d051df-f0af-4a8b-9cee-5aef92d8f003",
+    "block": "material",
+    "stage": 1,
+    "prompt": "中性灰拉丝钛铝微纹理；内置 imagegen 生成，正片叠底24%，保持赛事色块独立。"
+  },
+  "createdAt": "2026-10-20T18:34:50.382Z",
+  "result": {
+    "success": true,
+    "message": "已同步 1 个独立图层，其他图层保留",
+    "layerIds": [
+      "14d051df-f0af-4a8b-9cee-5aef92d8f003"
+    ],
+    "context": {
+      "version": 1,
+      "editorRevision": 11,
+      "vehicle": "HSTV-L",
+      "selectedPart": "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+      "selectedLayerId": "14d051df-f0af-4a8b-9cee-5aef92d8f003",
+      "camera": {
+        "position": [
+          -0.34797,
+          4.46179,
+          7.18685
+        ],
+        "quaternion": [
+          -0.27208,
+          -0.00344,
+          -0.00097,
+          0.96227
+        ],
+        "target": [
+          -0.29066,
+          -0.46213,
+          -0.82418
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "views": {
+        "current": {
+          "position": [
+            -0.34797,
+            4.46179,
+            7.18685
+          ],
+          "quaternion": [
+            -0.27208,
+            -0.00344,
+            -0.00097,
+            0.96227
+          ],
+          "target": [
+            -0.29066,
+            -0.46213,
+            -0.82418
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "left": {
+          "position": [
+            8.8,
+            1.7,
+            0
+          ],
+          "quaternion": [
+            -0.02606,
+            0.70663,
+            0.02606,
+            0.70663
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "right": {
+          "position": [
+            -8.8,
+            1.7,
+            0
+          ],
+          "quaternion": [
+            -0.02606,
+            -0.70663,
+            -0.02606,
+            0.70663
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "front": {
+          "position": [
+            0,
+            1.7,
+            8.8
+          ],
+          "quaternion": [
+            -0.03686,
+            0,
+            0,
+            0.99932
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "top": {
+          "position": [
+            0,
+            9,
+            0.001
+          ],
+          "quaternion": [
+            -0.70706,
+            0,
+            0,
+            0.70715
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 769
+      },
+      "parts": [
+        {
+          "id": "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+          "key": "body",
+          "name": "车体",
+          "width": 2048,
+          "height": 2048,
+          "output": "hstv_l_body_c",
+          "layers": [
+            {
+              "id": "d8ce7898-3440-4f32-8733-4842f4107595",
+              "name": "赛事风格 · 珍珠白主底",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e9e9ed",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "赛车车衣式浅白主底，大面积留白供后续立希角色与独立文字图层使用。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:33.180Z"
+              }
+            },
+            {
+              "id": "a0859e37-ee97-4c32-910d-799d6f8892b1",
+              "name": "赛事图形 · 紫色主流线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                "versions": [
+                  {
+                    "assetId": "0c02fed5-d43f-4203-a8c9-eff44f23e9c2",
+                    "prompt": "赛事图形 · 紫色主流线；采用独立UV图层，保持人物构图区留白，不合并背景或文字。",
+                    "time": "2026-10-20T18:29:51.211Z"
+                  },
+                  {
+                    "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                    "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                    "time": "2026-10-20T18:31:09.199Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:09.199Z"
+              }
+            },
+            {
+              "id": "58d8de34-ebc6-42a4-90b9-2e267374da1a",
+              "name": "赛事图形 · 石墨黑切线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "赛事图形 · 石墨黑切线；独立于底色、人物和文字。",
+                "assetId": "43f0516d-3972-4d6b-aa97-8a890d6260fb",
+                "versions": [
+                  {
+                    "assetId": "43f0516d-3972-4d6b-aa97-8a890d6260fb",
+                    "prompt": "赛事图形 · 石墨黑切线；独立于底色、人物和文字。",
+                    "time": "2026-10-20T18:31:11.188Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:11.188Z"
+              }
+            },
+            {
+              "id": "9d931c5a-da3b-452b-bccc-d1368e8c07b5",
+              "name": "赛事图形 · 青色细线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "赛事图形 · 青色细线；独立于底色、人物和文字。",
+                "assetId": "e748f410-a46b-44ba-8ff8-fdcaffaf086e",
+                "versions": [
+                  {
+                    "assetId": "e748f410-a46b-44ba-8ff8-fdcaffaf086e",
+                    "prompt": "赛事图形 · 青色细线；独立于底色、人物和文字。",
+                    "time": "2026-10-20T18:31:12.190Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:12.190Z"
+              }
+            },
+            {
+              "id": "14d051df-f0af-4a8b-9cee-5aef92d8f003",
+              "name": "材质 · 拉丝金属微纹理",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 0.24,
+              "blend": "multiply",
+              "visible": true,
+              "color": "#ffffff",
+              "fill": false,
+              "agent": {
+                "block": "material",
+                "stage": 1,
+                "prompt": "中性灰拉丝钛铝微纹理；内置 imagegen 生成，正片叠底24%，保持赛事色块独立。",
+                "assetId": "ffea4b69-15a4-483b-bcb9-db46b81078ad",
+                "versions": [
+                  {
+                    "assetId": "ffea4b69-15a4-483b-bcb9-db46b81078ad",
+                    "prompt": "中性灰拉丝钛铝微纹理；内置 imagegen 生成，正片叠底24%，保持赛事色块独立。",
+                    "time": "2026-10-20T18:34:51.230Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:34:51.230Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "5019a322-bda1-42fb-a125-2d8deb65cb31",
+          "key": "turret",
+          "name": "炮塔",
+          "width": 2048,
+          "height": 1024,
+          "output": "hstv_l_turret_c",
+          "layers": [
+            {
+              "id": "ddcfd0f5-4212-4ac6-89df-e92d333a5484",
+              "name": "赛事风格 · 珍珠白主底",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e9e9ed",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "赛车车衣式浅白主底，大面积留白供后续立希角色与独立文字图层使用。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:33.182Z"
+              }
+            },
+            {
+              "id": "8edd3552-f5b8-423f-9e84-645b80520593",
+              "name": "赛事图形 · 紫色主流线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                "versions": [
+                  {
+                    "assetId": "0c02fed5-d43f-4203-a8c9-eff44f23e9c2",
+                    "prompt": "赛事图形 · 紫色主流线；采用独立UV图层，保持人物构图区留白，不合并背景或文字。",
+                    "time": "2026-10-20T18:29:51.211Z"
+                  },
+                  {
+                    "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                    "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                    "time": "2026-10-20T18:31:10.223Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:10.223Z"
+              }
+            },
+            {
+              "id": "227fc498-29ff-4712-abc1-a3ff7688af55",
+              "name": "赛事图形 · 石墨黑切线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "赛事图形 · 石墨黑切线；独立于底色、人物和文字。",
+                "assetId": "43f0516d-3972-4d6b-aa97-8a890d6260fb",
+                "versions": [
+                  {
+                    "assetId": "43f0516d-3972-4d6b-aa97-8a890d6260fb",
+                    "prompt": "赛事图形 · 石墨黑切线；独立于底色、人物和文字。",
+                    "time": "2026-10-20T18:31:11.188Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:11.189Z"
+              }
+            },
+            {
+              "id": "26b09225-1e6b-408b-8176-a29e18542808",
+              "name": "赛事图形 · 青色细线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "赛事图形 · 青色细线；独立于底色、人物和文字。",
+                "assetId": "e748f410-a46b-44ba-8ff8-fdcaffaf086e",
+                "versions": [
+                  {
+                    "assetId": "e748f410-a46b-44ba-8ff8-fdcaffaf086e",
+                    "prompt": "赛事图形 · 青色细线；独立于底色、人物和文字。",
+                    "time": "2026-10-20T18:31:12.190Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:12.190Z"
+              }
+            },
+            {
+              "id": "713d45e7-109b-44c2-a3aa-7140b4d24b1b",
+              "name": "材质 · 拉丝金属微纹理",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 0.24,
+              "blend": "multiply",
+              "visible": true,
+              "color": "#ffffff",
+              "fill": true,
+              "agent": {
+                "block": "material",
+                "stage": 1,
+                "prompt": "材质 · 拉丝金属微纹理：独立、可调整强度的颜色贴图层。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:34:32.143Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "4789092e-31ae-427d-8699-0b1c4db77153",
+          "key": "gun",
+          "name": "主炮",
+          "width": 1024,
+          "height": 512,
+          "output": "hstv_l_gun_c",
+          "layers": [
+            {
+              "id": "815a0794-aef9-4a29-8018-05f631a16eb2",
+              "name": "赛事风格 · 石墨黑机械区",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#202126",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "炮管和机枪保持石墨黑机械区，衬托浅白车衣和紫色赛事流线。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:34.205Z"
+              }
+            },
+            {
+              "id": "e8d2d231-cda4-461e-bef2-bc6c2fd5c62e",
+              "name": "材质 · 拉丝金属微纹理",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 0.24,
+              "blend": "multiply",
+              "visible": true,
+              "color": "#ffffff",
+              "fill": true,
+              "agent": {
+                "block": "material",
+                "stage": 1,
+                "prompt": "材质 · 拉丝金属微纹理：独立、可调整强度的颜色贴图层。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:34:32.143Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "10bd0510-ade5-48de-ac6c-9e421acb87f5",
+          "key": "mg",
+          "name": "机枪",
+          "width": 256,
+          "height": 256,
+          "output": "hstv_l_mg_c",
+          "layers": [
+            {
+              "id": "915ea13b-a416-423f-a216-74876692d238",
+              "name": "赛事风格 · 石墨黑机械区",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#202126",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "炮管和机枪保持石墨黑机械区，衬托浅白车衣和紫色赛事流线。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:34.205Z"
+              }
+            },
+            {
+              "id": "722bccec-640a-4def-afb7-44685e0bbbe9",
+              "name": "材质 · 拉丝金属微纹理",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 0.24,
+              "blend": "multiply",
+              "visible": true,
+              "color": "#ffffff",
+              "fill": true,
+              "agent": {
+                "block": "material",
+                "stage": 1,
+                "prompt": "材质 · 拉丝金属微纹理：独立、可调整强度的颜色贴图层。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:34:32.143Z"
+              }
+            }
+          ]
+        }
+      ],
+      "projections": []
+    }
+  },
+  "completedAt": "2026-10-20T18:34:51.416Z"
+}

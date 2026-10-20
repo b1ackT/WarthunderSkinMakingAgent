@@ -1,0 +1,415 @@
+{
+  "id": "8d964119-6fa2-44fd-8d90-8a3ce2211af8",
+  "jobId": "db075261-c661-4231-8834-31bb6d841d50",
+  "revision": 17,
+  "status": "applied",
+  "operation": {
+    "type": "update",
+    "layerIds": [
+      "20d1d19c-15c9-40df-b6d2-3f8002848baa"
+    ],
+    "values": {
+      "visible": false
+    },
+    "block": "background",
+    "prompt": "检查发现侧面白色长条经共享UV重复到顶面。隐藏此独立底板，恢复干净的黑白分区；其他图层保持不变。"
+  },
+  "createdAt": "2026-10-20T18:21:13.324Z",
+  "result": {
+    "success": true,
+    "message": "已同步 1 个独立图层，其他图层保留",
+    "layerIds": [
+      "20d1d19c-15c9-40df-b6d2-3f8002848baa"
+    ],
+    "context": {
+      "version": 1,
+      "editorRevision": 5,
+      "vehicle": "HSTV-L",
+      "selectedPart": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+      "selectedLayerId": null,
+      "camera": {
+        "position": [
+          -7.44474,
+          8.3388,
+          0.10803
+        ],
+        "quaternion": [
+          -0.26905,
+          -0.64994,
+          -0.26517,
+          0.65944
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "views": {
+        "current": {
+          "position": [
+            -7.44474,
+            8.3388,
+            0.10803
+          ],
+          "quaternion": [
+            -0.26905,
+            -0.64994,
+            -0.26517,
+            0.65944
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "left": {
+          "position": [
+            8.8,
+            1.7,
+            0
+          ],
+          "quaternion": [
+            -0.02606,
+            0.70663,
+            0.02606,
+            0.70663
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "right": {
+          "position": [
+            -8.8,
+            1.7,
+            0
+          ],
+          "quaternion": [
+            -0.02606,
+            -0.70663,
+            -0.02606,
+            0.70663
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "front": {
+          "position": [
+            0,
+            1.7,
+            8.8
+          ],
+          "quaternion": [
+            -0.03686,
+            0,
+            0,
+            0.99932
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "top": {
+          "position": [
+            0,
+            9,
+            0.001
+          ],
+          "quaternion": [
+            -0.70706,
+            0,
+            0,
+            0.70715
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 769
+      },
+      "parts": [
+        {
+          "id": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "key": "body",
+          "name": "车体",
+          "width": 2048,
+          "height": 2048,
+          "output": "hstv_l_body_c",
+          "layers": [
+            {
+              "id": "546ecc19-1f4a-42e7-96f9-3b357e65c83e",
+              "name": "风格 · 炭黑主底色",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#181818",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:18:47.133Z"
+              }
+            },
+            {
+              "id": "20d1d19c-15c9-40df-b6d2-3f8002848baa",
+              "name": "风格 · 侧面白色构图区",
+              "kind": "projection",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": false,
+              "color": "#e6edf2",
+              "fill": false,
+              "projectionId": "b49a47bc-f26f-4fa9-8f2a-018e232baecb",
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "检查发现侧面白色长条经共享UV重复到顶面。隐藏此独立底板，恢复干净的黑白分区；其他图层保持不变。",
+                "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+                "versions": [
+                  {
+                    "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+                    "prompt": "依据用户第一张参考的侧面标记建立独立白色构图区，后续角色与背景图将分别置于其上。",
+                    "time": "2026-10-20T18:19:11.419Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:21:14.133Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+          "key": "turret",
+          "name": "炮塔",
+          "width": 2048,
+          "height": 1024,
+          "output": "hstv_l_turret_c",
+          "layers": [
+            {
+              "id": "eba7bcb8-2cdd-4019-96b3-b5c5cd134bab",
+              "name": "风格 · 炭黑主底色",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#181818",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:18:47.135Z"
+              }
+            },
+            {
+              "id": "1037c74c-612a-4f33-b933-394f1b38cf21",
+              "name": "风格 · 浅灰白炮塔",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#dedede",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "炮塔使用中性浅灰白，与炭黑车体形成清楚的黑白分区；无人物、无文字、无磨损。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:18:48.130Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+          "key": "gun",
+          "name": "主炮",
+          "width": 1024,
+          "height": 512,
+          "output": "hstv_l_gun_c",
+          "layers": [
+            {
+              "id": "17c1a93c-b11f-4a49-8ae8-b64f00b11a30",
+              "name": "风格 · 炭黑主底色",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#181818",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:18:47.135Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "e02e841e-5548-4903-9376-5b38bb7a1079",
+          "key": "mg",
+          "name": "机枪",
+          "width": 256,
+          "height": 256,
+          "output": "hstv_l_mg_c",
+          "layers": [
+            {
+              "id": "e693b05c-1da2-4fd1-93c6-de6447f62e3d",
+              "name": "风格 · 炭黑主底色",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#181818",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:18:47.135Z"
+              }
+            }
+          ]
+        }
+      ],
+      "projections": [
+        {
+          "id": "b49a47bc-f26f-4fa9-8f2a-018e232baecb",
+          "name": "风格 · 侧面白色构图区",
+          "camera": {
+            "position": [
+              -8.86128,
+              1.72045,
+              -0.98301
+            ],
+            "quaternion": [
+              -0.02732,
+              -0.74418,
+              -0.03049,
+              0.66672
+            ],
+            "target": [
+              -0.01146,
+              0.98963,
+              -0.00836
+            ],
+            "fov": 38,
+            "aspect": 1.6645,
+            "near": 0.05,
+            "far": 100
+          },
+          "rect": {
+            "cx": 0.40576,
+            "cy": 0.57651,
+            "w": 0.437,
+            "h": 0.1197,
+            "angle": 0
+          },
+          "viewport": {
+            "width": 1279.625,
+            "height": 768.58752
+          },
+          "targets": [
+            "06900110-d866-4b47-b6dc-193ff97d4d2e",
+            "3cda1291-a8cd-44c9-a0e1-442333b0767e"
+          ],
+          "occlusion": true
+        }
+      ]
+    }
+  },
+  "completedAt": "2026-10-20T18:21:14.288Z"
+}

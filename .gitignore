@@ -1,0 +1,8 @@
+# dependencies (restored by `npm install`; vendor/ already ships the copies)
+node_modules/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

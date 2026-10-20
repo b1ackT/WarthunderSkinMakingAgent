@@ -1,0 +1,4 @@
+Built-in imagegen; opaque neutral-gray source texture.
+A single square seamless satin brushed titanium / anodized aluminum microtexture for premium motorsport livery. Flat orthographic, neutral middle gray, fine horizontal machining grain, restrained microvariation and clean hairline marks. Even illumination, no broad glare, vignette, shadows, panels, bolts, seams, words, logos or colored paint. Reflections and livery are separate editable layers.
+
+Reflection highlights and contrast are separate procedural transparent gradient graphics.

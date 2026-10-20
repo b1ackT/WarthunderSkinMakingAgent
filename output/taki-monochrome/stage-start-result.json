@@ -1,0 +1,431 @@
+{
+  "job": {
+    "id": "db075261-c661-4231-8834-31bb6d841d50",
+    "status": "running",
+    "revision": 15,
+    "brief": "我想要一个黑白主题配色的椎名立希的皮肤",
+    "stages": [
+      {
+        "title": "风格",
+        "status": "running",
+        "message": "建立黑白配色和留白构图；人物、材质与文字分别处理。"
+      },
+      {
+        "title": "材质",
+        "status": "pending",
+        "message": ""
+      },
+      {
+        "title": "图像或角色",
+        "status": "pending",
+        "message": ""
+      }
+    ],
+    "references": [
+      "277ffdd9-e063-4552-8d40-5c7fe8a2aca4",
+      "a46add52-b779-455a-8aa2-cba6068303fa",
+      "9141cea8-55fe-4fc7-83d5-fd39c3d2859e"
+    ],
+    "pauseAfterStage": true,
+    "allowResearch": true,
+    "stage": 0,
+    "feedback": [],
+    "worker": "当前对话中的 Agent",
+    "placement": null,
+    "createdAt": "2026-10-20T18:17:01.553Z"
+  },
+  "assets": [
+    {
+      "id": "277ffdd9-e063-4552-8d40-5c7fe8a2aca4",
+      "filename": "277ffdd9-e063-4552-8d40-5c7fe8a2aca4.png",
+      "name": "4785Taki-Shiina-Cool-More-Than-Just-Grabbing-Take-Out-DvzxYH 拷贝.png",
+      "role": "reference",
+      "prompt": "",
+      "placement": {
+        "mode": "projection",
+        "camera": {
+          "position": [
+            -8.86128,
+            1.72045,
+            -0.98301
+          ],
+          "quaternion": [
+            -0.02732,
+            -0.74418,
+            -0.03049,
+            0.66672
+          ],
+          "target": [
+            -0.01146,
+            0.98963,
+            -0.00836
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "viewport": {
+          "width": 1279.625,
+          "height": 768.5875244140625
+        },
+        "rect": {
+          "cx": 0.40576338816914137,
+          "cy": 0.5765120680993776,
+          "w": 0.4370029900727752,
+          "h": 0.11970009540570772,
+          "angle": 0
+        },
+        "targets": [
+          "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+          "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+          "e02e841e-5548-4903-9376-5b38bb7a1079"
+        ]
+      },
+      "notes": "",
+      "createdAt": "2026-10-20T18:16:10.077Z",
+      "source": "upload"
+    },
+    {
+      "id": "a46add52-b779-455a-8aa2-cba6068303fa",
+      "filename": "a46add52-b779-455a-8aa2-cba6068303fa.png",
+      "name": "Jk6nCVOfficial-art-s6W6zU.png",
+      "role": "reference",
+      "prompt": "",
+      "placement": {
+        "mode": "projection",
+        "camera": {
+          "position": [
+            -0.5494,
+            6.80102,
+            4.33693
+          ],
+          "quaternion": [
+            -0.44539,
+            -0.05508,
+            -0.02746,
+            0.89322
+          ],
+          "target": [
+            -0.01146,
+            0.98963,
+            -0.00836
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "viewport": {
+          "width": 1279.625,
+          "height": 768.5875244140625
+        },
+        "rect": {
+          "cx": 0.5086060464644183,
+          "cy": 0.6238717028290881,
+          "w": 0.24632222193391617,
+          "h": 0.21858278291477062,
+          "angle": 0
+        },
+        "targets": [
+          "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+          "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+          "e02e841e-5548-4903-9376-5b38bb7a1079"
+        ]
+      },
+      "notes": "",
+      "createdAt": "2026-10-20T18:16:10.117Z",
+      "source": "upload"
+    },
+    {
+      "id": "9141cea8-55fe-4fc7-83d5-fd39c3d2859e",
+      "filename": "9141cea8-55fe-4fc7-83d5-fd39c3d2859e.png",
+      "name": "VvNcVBTaki-Shiina-Pure-chibi-beA28O.png",
+      "role": "reference",
+      "prompt": "",
+      "placement": {
+        "mode": "projection",
+        "camera": {
+          "position": [
+            0.71666,
+            5.80097,
+            -5.41798
+          ],
+          "quaternion": [
+            -0.02363,
+            0.93337,
+            0.35264,
+            0.06253
+          ],
+          "target": [
+            -0.01146,
+            0.98963,
+            -0.00836
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "viewport": {
+          "width": 1279.625,
+          "height": 768.5875244140625
+        },
+        "rect": {
+          "cx": 0.5651850937469474,
+          "cy": 0.7352448579071192,
+          "w": 0.08690042096073068,
+          "h": 0.09367833553490171,
+          "angle": 0
+        },
+        "targets": [
+          "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+          "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+          "e02e841e-5548-4903-9376-5b38bb7a1079"
+        ]
+      },
+      "notes": "",
+      "createdAt": "2026-10-20T18:16:10.135Z",
+      "source": "upload"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "kind": "asset",
+      "message": "素材已入库：4785Taki-Shiina-Cool-More-Than-Just-Grabbing-Take-Out-DvzxYH 拷贝.png",
+      "time": "2026-10-20T18:16:10.077Z",
+      "assetId": "277ffdd9-e063-4552-8d40-5c7fe8a2aca4"
+    },
+    {
+      "id": 2,
+      "kind": "asset",
+      "message": "素材已入库：Jk6nCVOfficial-art-s6W6zU.png",
+      "time": "2026-10-20T18:16:10.117Z",
+      "assetId": "a46add52-b779-455a-8aa2-cba6068303fa"
+    },
+    {
+      "id": 3,
+      "kind": "asset",
+      "message": "素材已入库：VvNcVBTaki-Shiina-Pure-chibi-beA28O.png",
+      "time": "2026-10-20T18:16:10.135Z",
+      "assetId": "9141cea8-55fe-4fc7-83d5-fd39c3d2859e"
+    },
+    {
+      "id": 4,
+      "kind": "queued",
+      "message": "任务已提交，等待当前对话中的 Agent 读取。",
+      "time": "2026-10-20T18:17:01.553Z"
+    },
+    {
+      "id": 5,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T18:18:00.798Z"
+    },
+    {
+      "id": 6,
+      "kind": "stage",
+      "message": "风格 · 进行中",
+      "time": "2026-10-20T18:18:01.233Z",
+      "stage": 0
+    }
+  ],
+  "commands": [],
+  "context": {
+    "version": 1,
+    "editorRevision": 1,
+    "vehicle": "HSTV-L",
+    "selectedPart": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+    "selectedLayerId": null,
+    "camera": {
+      "position": [
+        0.5816,
+        4.9085,
+        -4.41453
+      ],
+      "quaternion": [
+        -0.02363,
+        0.93337,
+        0.35264,
+        0.06253
+      ],
+      "target": [
+        -0.01146,
+        0.98963,
+        -0.00836
+      ],
+      "fov": 38,
+      "aspect": 1.6645,
+      "near": 0.05,
+      "far": 100
+    },
+    "views": {
+      "current": {
+        "position": [
+          0.5816,
+          4.9085,
+          -4.41453
+        ],
+        "quaternion": [
+          -0.02363,
+          0.93337,
+          0.35264,
+          0.06253
+        ],
+        "target": [
+          -0.01146,
+          0.98963,
+          -0.00836
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "left": {
+        "position": [
+          8.8,
+          1.7,
+          0
+        ],
+        "quaternion": [
+          -0.02606,
+          0.70663,
+          0.02606,
+          0.70663
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "right": {
+        "position": [
+          -8.8,
+          1.7,
+          0
+        ],
+        "quaternion": [
+          -0.02606,
+          -0.70663,
+          -0.02606,
+          0.70663
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "front": {
+        "position": [
+          0,
+          1.7,
+          8.8
+        ],
+        "quaternion": [
+          -0.03686,
+          0,
+          0,
+          0.99932
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "top": {
+        "position": [
+          0,
+          9,
+          0.001
+        ],
+        "quaternion": [
+          -0.70706,
+          0,
+          0,
+          0.70715
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      }
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 769
+    },
+    "parts": [
+      {
+        "id": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+        "key": "body",
+        "name": "车体",
+        "width": 2048,
+        "height": 2048,
+        "output": "hstv_l_body_c",
+        "layers": []
+      },
+      {
+        "id": "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+        "key": "turret",
+        "name": "炮塔",
+        "width": 2048,
+        "height": 1024,
+        "output": "hstv_l_turret_c",
+        "layers": []
+      },
+      {
+        "id": "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+        "key": "gun",
+        "name": "主炮",
+        "width": 1024,
+        "height": 512,
+        "output": "hstv_l_gun_c",
+        "layers": []
+      },
+      {
+        "id": "e02e841e-5548-4903-9376-5b38bb7a1079",
+        "key": "mg",
+        "name": "机枪",
+        "width": 256,
+        "height": 256,
+        "output": "hstv_l_mg_c",
+        "layers": []
+      }
+    ],
+    "projections": []
+  },
+  "canvasOnline": true,
+  "integration": {
+    "projectRoot": "E:\\迅雷下载1\\models\\skin-studio",
+    "cliPath": "E:\\迅雷下载1\\models\\skin-studio\\agent.cjs",
+    "skillPath": "E:\\迅雷下载1\\models\\skin-studio\\skills\\wt-skin-agent\\SKILL.md",
+    "previewPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\preview.png",
+    "contextPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\context.json",
+    "assetsPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\assets"
+  }
+}

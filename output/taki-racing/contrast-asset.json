@@ -1,0 +1,11 @@
+{
+  "id": "dfd829b6-7a00-4deb-bd15-fbfebffafcd6",
+  "filename": "dfd829b6-7a00-4deb-bd15-fbfebffafcd6.png",
+  "name": "材质 · 独立反光暗部",
+  "role": "material",
+  "prompt": "柔和反光暗带，透明外缘，与高光独立，不合并赛事色带。",
+  "placement": null,
+  "notes": "",
+  "createdAt": "2026-10-20T18:34:31.203Z",
+  "source": "agent"
+}

@@ -1,0 +1,385 @@
+{
+  "id": "b285da3b-a769-4157-8611-e1f38e6ae57b",
+  "jobId": "8ac91dbb-24e5-4536-a3d4-7f47d860e6d5",
+  "revision": 19,
+  "status": "applied",
+  "operation": {
+    "type": "image",
+    "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+    "targetLayerId": "8edd3552-f5b8-423f-9e84-645b80520593",
+    "block": "decoration",
+    "stage": 0,
+    "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。"
+  },
+  "createdAt": "2026-10-20T18:31:09.888Z",
+  "result": {
+    "success": true,
+    "message": "已同步 1 个独立图层，其他图层保留",
+    "layerIds": [
+      "8edd3552-f5b8-423f-9e84-645b80520593"
+    ],
+    "context": {
+      "version": 1,
+      "editorRevision": 11,
+      "vehicle": "HSTV-L",
+      "selectedPart": "5019a322-bda1-42fb-a125-2d8deb65cb31",
+      "selectedLayerId": "8edd3552-f5b8-423f-9e84-645b80520593",
+      "camera": {
+        "position": [
+          4.43587,
+          8.49669,
+          0.87845
+        ],
+        "quaternion": [
+          -0.42356,
+          0.51118,
+          0.3204,
+          0.67575
+        ],
+        "target": [
+          0.4917,
+          0.03355,
+          -0.23676
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "views": {
+        "current": {
+          "position": [
+            4.43587,
+            8.49669,
+            0.87845
+          ],
+          "quaternion": [
+            -0.42356,
+            0.51118,
+            0.3204,
+            0.67575
+          ],
+          "target": [
+            0.4917,
+            0.03355,
+            -0.23676
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "left": {
+          "position": [
+            8.8,
+            1.7,
+            0
+          ],
+          "quaternion": [
+            -0.02606,
+            0.70663,
+            0.02606,
+            0.70663
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "right": {
+          "position": [
+            -8.8,
+            1.7,
+            0
+          ],
+          "quaternion": [
+            -0.02606,
+            -0.70663,
+            -0.02606,
+            0.70663
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "front": {
+          "position": [
+            0,
+            1.7,
+            8.8
+          ],
+          "quaternion": [
+            -0.03686,
+            0,
+            0,
+            0.99932
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "top": {
+          "position": [
+            0,
+            9,
+            0.001
+          ],
+          "quaternion": [
+            -0.70706,
+            0,
+            0,
+            0.70715
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        }
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 769
+      },
+      "parts": [
+        {
+          "id": "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+          "key": "body",
+          "name": "车体",
+          "width": 2048,
+          "height": 2048,
+          "output": "hstv_l_body_c",
+          "layers": [
+            {
+              "id": "d8ce7898-3440-4f32-8733-4842f4107595",
+              "name": "赛事风格 · 珍珠白主底",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e9e9ed",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "赛车车衣式浅白主底，大面积留白供后续立希角色与独立文字图层使用。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:33.180Z"
+              }
+            },
+            {
+              "id": "a0859e37-ee97-4c32-910d-799d6f8892b1",
+              "name": "赛事图形 · 紫色主流线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                "versions": [
+                  {
+                    "assetId": "0c02fed5-d43f-4203-a8c9-eff44f23e9c2",
+                    "prompt": "赛事图形 · 紫色主流线；采用独立UV图层，保持人物构图区留白，不合并背景或文字。",
+                    "time": "2026-10-20T18:29:51.211Z"
+                  },
+                  {
+                    "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                    "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                    "time": "2026-10-20T18:31:09.199Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:09.199Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "5019a322-bda1-42fb-a125-2d8deb65cb31",
+          "key": "turret",
+          "name": "炮塔",
+          "width": 2048,
+          "height": 1024,
+          "output": "hstv_l_turret_c",
+          "layers": [
+            {
+              "id": "ddcfd0f5-4212-4ac6-89df-e92d333a5484",
+              "name": "赛事风格 · 珍珠白主底",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e9e9ed",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "赛车车衣式浅白主底，大面积留白供后续立希角色与独立文字图层使用。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:33.182Z"
+              }
+            },
+            {
+              "id": "8edd3552-f5b8-423f-9e84-645b80520593",
+              "name": "赛事图形 · 紫色主流线",
+              "kind": "image",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#e6edf2",
+              "fill": false,
+              "agent": {
+                "block": "decoration",
+                "stage": 0,
+                "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                "versions": [
+                  {
+                    "assetId": "0c02fed5-d43f-4203-a8c9-eff44f23e9c2",
+                    "prompt": "赛事图形 · 紫色主流线；采用独立UV图层，保持人物构图区留白，不合并背景或文字。",
+                    "time": "2026-10-20T18:29:51.211Z"
+                  },
+                  {
+                    "assetId": "b8d501da-4ab8-43f6-ab8d-b571d0121679",
+                    "prompt": "根据模型预览将紫色流线移入主要UV区域，增强赛车色块的可见度。",
+                    "time": "2026-10-20T18:31:10.223Z"
+                  }
+                ],
+                "updatedAt": "2026-10-20T18:31:10.223Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "4789092e-31ae-427d-8699-0b1c4db77153",
+          "key": "gun",
+          "name": "主炮",
+          "width": 1024,
+          "height": 512,
+          "output": "hstv_l_gun_c",
+          "layers": [
+            {
+              "id": "815a0794-aef9-4a29-8018-05f631a16eb2",
+              "name": "赛事风格 · 石墨黑机械区",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#202126",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "炮管和机枪保持石墨黑机械区，衬托浅白车衣和紫色赛事流线。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:34.205Z"
+              }
+            }
+          ]
+        },
+        {
+          "id": "10bd0510-ade5-48de-ac6c-9e421acb87f5",
+          "key": "mg",
+          "name": "机枪",
+          "width": 256,
+          "height": 256,
+          "output": "hstv_l_mg_c",
+          "layers": [
+            {
+              "id": "915ea13b-a416-423f-a216-74876692d238",
+              "name": "赛事风格 · 石墨黑机械区",
+              "kind": "fill",
+              "x": 0,
+              "y": 0,
+              "w": 1,
+              "h": 1,
+              "scale": 1,
+              "angle": 0,
+              "dx": 0,
+              "dy": 0,
+              "opacity": 1,
+              "blend": "source-over",
+              "visible": true,
+              "color": "#202126",
+              "fill": true,
+              "agent": {
+                "block": "background",
+                "stage": 0,
+                "prompt": "炮管和机枪保持石墨黑机械区，衬托浅白车衣和紫色赛事流线。",
+                "versions": [],
+                "updatedAt": "2026-10-20T18:29:34.205Z"
+              }
+            }
+          ]
+        }
+      ],
+      "projections": []
+    }
+  },
+  "completedAt": "2026-10-20T18:31:10.394Z"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "skin-studio",
+  "version": "0.4.0",
+  "description": "Local texture layers, cross-material projection and Photoshop file live preview",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.cjs",
+    "check": "node --check app.js && node --check projection.js && node --check image-io.js && node --check server.cjs && node --check agent-ui.js && node --check agent-store.cjs && node --check agent.cjs",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "ag-psd": "^31.0.3",
+    "fflate": "^0.8.2",
+    "three": "^0.180.0"
+  },
+  "private": true
+}

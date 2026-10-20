@@ -1,0 +1,13 @@
+Skin Studio · GPU / PSD verification
+Run projection and PSD checks
+PASS: one image spans two separate UV textures
+PASS: occluded rear geometry receives no pixels
+PASS: source RGB values and left/right placement survive baking
+PASS: occlusion toggle is effective
+PASS: horizontal mirror reverses the artwork
+PASS: RGB 8-bit PSD composite round-trip
+PASS: PSD contains editable raster layers and a hidden UV guide
+PASS: DDS RGB and original alpha survive round-trip
+ALL CHECKS PASSED
+body
+turret

@@ -1,0 +1,36 @@
+<!doctype html><meta charset="utf-8"><title>Skin Studio GPU verification</title>
+<style>body{font:15px/1.6 system-ui;background:#17212b;color:#dce7f1;padding:24px}canvas{border:1px solid #789;margin:8px;max-width:340px}button{padding:12px}pre{white-space:pre-wrap}a{color:#9bd0ff}</style>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js","fflate":"../vendor/fflate.js"}}</script><script src="../vendor/ag-psd.js"></script>
+<h1>Skin Studio · GPU / PSD verification</h1><button id="run">Run projection and PSD checks</button><pre id="result">Ready</pre><div id="images"></div>
+<script type="module">
+import * as THREE from 'three';
+import {buildUVGeometry,bakeProjection} from '../projection.js';
+import {canvas,readImage,toDDS} from '../image-io.js';
+const results=[];const assert=(value,label)=>{if(!value)throw Error(label);results.push('PASS: '+label);};
+document.getElementById('run').onclick=async()=>{
+ try{
+  results.length=0;document.getElementById('result').textContent='Running…';const host=document.getElementById('images');host.replaceChildren();
+  const renderer=new THREE.WebGLRenderer({alpha:true});renderer.setSize(300,300);host.append(renderer.domElement);
+  const model=new THREE.Group(),parts=['body','turret','hidden'].map(id=>({id,canvas:canvas(128,128)}));
+  for(let i=0;i<3;i++){const material=new THREE.MeshBasicMaterial();material.userData.part=parts[i];const mesh=new THREE.Mesh(new THREE.PlaneGeometry(i===2?2:1,1),material);mesh.position.set(i===0?-.5:i===1?.5:0,0,i===2?-.4:0);model.add(mesh);}
+  const geometries=buildUVGeometry(model,parts),camera=new THREE.PerspectiveCamera(45,1,.05,100);camera.position.z=5;camera.lookAt(0,0,0);camera.updateMatrixWorld();
+  const source=canvas(128,128),g=source.getContext('2d');g.fillStyle='#ff0000';g.fillRect(0,0,64,128);g.fillStyle='#0000ff';g.fillRect(64,0,64,128);
+  const options={renderer,model,geometries,parts,camera,image:source,rect:{cx:.5,cy:.5,w:.7,h:.7,angle:0},viewport:{width:300,height:300},occlusion:true};
+  const result=await bakeProjection(options);
+  assert(result.has('body')&&result.has('turret'),'one image spans two separate UV textures');
+  assert(!result.has('hidden'),'occluded rear geometry receives no pixels');
+  const left=result.get('body').canvas.getContext('2d').getImageData(64,64,1,1).data,right=result.get('turret').canvas.getContext('2d').getImageData(64,64,1,1).data;
+  assert(left[0]===255&&left[2]===0&&right[0]===0&&right[2]===255,'source RGB values and left/right placement survive baking');
+  const through=await bakeProjection({...options,occlusion:false});assert(through.has('hidden'),'occlusion toggle is effective');
+  const mirrored=await bakeProjection({...options,mirror:true});assert(mirrored.get('body').canvas.getContext('2d').getImageData(64,64,1,1).data[2]===255,'horizontal mirror reverses the artwork');
+  for(const id of ['body','turret']){const label=document.createElement('div');label.textContent=id;label.append(result.get(id).canvas);host.append(label);}
+  const psd=agPsd.writePsd({width:128,height:128,canvas:source,children:[{name:'Artwork',canvas:source},{name:'UV guide',hidden:true,canvas:source}]},{generateThumbnail:false});
+  const read=await readImage(new Uint8Array(psd),'fixture.psd');const pixel=read.getContext('2d').getImageData(20,20,1,1).data;
+  assert(read.width===128&&pixel[0]===255,'RGB 8-bit PSD composite round-trip');
+  const tree=agPsd.readPsd(psd,{skipCompositeImageData:true,skipLayerImageData:true,skipThumbnail:true});assert(tree.children.length===2&&tree.children[1].hidden,'PSD contains editable raster layers and a hidden UV guide');
+  const alpha=canvas(128,128),ag=alpha.getContext('2d');ag.fillStyle='#454545';ag.fillRect(0,0,128,128);
+  const dds=toDDS({canvas:source,alpha}),back=await readImage(dds,'fixture.dds');assert(back.getContext('2d').getImageData(20,20,1,1).data[0]===255&&dds[131]===69,'DDS RGB and original alpha survive round-trip');
+  document.getElementById('result').textContent=results.join('\n')+'\nALL CHECKS PASSED';renderer.dispose();
+ }catch(error){document.getElementById('result').textContent=results.join('\n')+'\nFAIL: '+error.message;console.error(error);}
+};
+</script>

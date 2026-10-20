@@ -1,0 +1,11 @@
+{
+  "id": "2ca933bb-a72f-49da-bf34-beeaa1011ea4",
+  "filename": "2ca933bb-a72f-49da-bf34-beeaa1011ea4.png",
+  "name": "材质 · 独立反光高光",
+  "role": "material",
+  "prompt": "柔和白色高光带，透明外缘，可独立调整强度；绘制在颜色贴图中的高光。",
+  "placement": null,
+  "notes": "",
+  "createdAt": "2026-10-20T18:34:30.787Z",
+  "source": "agent"
+}

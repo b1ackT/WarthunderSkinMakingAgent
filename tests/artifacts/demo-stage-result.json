@@ -1,0 +1,3721 @@
+{
+  "job": {
+    "id": "0071fe74-dbc7-45ee-946e-46146adf06b1",
+    "status": "running",
+    "revision": 7,
+    "brief": "功能演示工程：石墨蓝工业涂装，背景、材质、透明机械猫头徽记、文字分别分层。徽记从左侧跨炮塔与车体投射；保持所有图层可编辑。此示例连续完成三个阶段，用来验证工作台。",
+    "stages": [
+      {
+        "title": "风格",
+        "status": "completed",
+        "message": "独立底色已同步四张贴图"
+      },
+      {
+        "title": "材质",
+        "status": "completed",
+        "message": "独立材质色调层已完成，保留原车颜色细节"
+      },
+      {
+        "title": "图像或角色",
+        "status": "completed",
+        "message": "真实生成透明主体，跨炮塔和车体投射并二次修正；文字独立"
+      }
+    ],
+    "references": [],
+    "stage": 2,
+    "pauseAfterStage": false,
+    "allowResearch": true,
+    "feedback": [
+      {
+        "id": "91cfa15c-1359-495a-a19c-48415aaa641b",
+        "prompt": "只把选中的背景图层改为偏蓝的 #24445a，保留主体、文字和其他图层。",
+        "target": {
+          "layerId": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+          "partId": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+          "block": "background",
+          "projectionId": null
+        },
+        "stage": 0,
+        "time": "2026-10-20T17:25:20.870Z"
+      }
+    ],
+    "worker": "当前对话中的 Agent",
+    "placement": null,
+    "createdAt": "2026-10-20T17:13:29.118Z"
+  },
+  "assets": [
+    {
+      "id": "bc04968e-6e32-4253-88f3-61f49c6ec8ef",
+      "filename": "bc04968e-6e32-4253-88f3-61f49c6ec8ef.png",
+      "name": "mechanical-cat",
+      "role": "decoration",
+      "prompt": "Independent transparent mechanical cat head, white and slate blue armor with amber details. No background or text.",
+      "placement": null,
+      "notes": "",
+      "createdAt": "2026-10-20T17:15:14.895Z",
+      "source": "agent"
+    },
+    {
+      "id": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+      "filename": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8.png",
+      "name": "mechanical-cat",
+      "role": "decoration",
+      "prompt": "Independent transparent mechanical cat head, white and slate blue armor with amber details. No background or text.",
+      "placement": null,
+      "notes": "",
+      "createdAt": "2026-10-20T17:24:06.993Z",
+      "source": "project"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "kind": "queued",
+      "message": "任务已提交，等待当前对话中的 Agent 读取。",
+      "time": "2026-10-20T17:13:29.118Z"
+    },
+    {
+      "id": 2,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T17:13:34.098Z"
+    },
+    {
+      "id": 3,
+      "kind": "progress",
+      "message": "生成独立透明机械徽记；背景、材质和文字将分别建立图层。生成完成后检查暂停状态再落图。",
+      "time": "2026-10-20T17:13:42.022Z"
+    },
+    {
+      "id": 4,
+      "kind": "asset",
+      "message": "素材已入库：mechanical-cat",
+      "time": "2026-10-20T17:15:14.895Z",
+      "assetId": "bc04968e-6e32-4253-88f3-61f49c6ec8ef"
+    },
+    {
+      "id": 5,
+      "kind": "stage",
+      "message": "风格 · 进行中",
+      "time": "2026-10-20T17:15:55.491Z",
+      "stage": 0
+    },
+    {
+      "id": 6,
+      "kind": "canvas",
+      "message": "背景 · 石墨蓝",
+      "time": "2026-10-20T17:15:55.730Z",
+      "commandId": "d44bcfde-41c0-4622-bd19-c98ec2776083"
+    },
+    {
+      "id": 7,
+      "kind": "applied",
+      "message": "已同步 4 个独立图层，其他图层保留",
+      "time": "2026-10-20T17:15:56.630Z",
+      "commandId": "d44bcfde-41c0-4622-bd19-c98ec2776083"
+    },
+    {
+      "id": 8,
+      "kind": "stage",
+      "message": "风格 · 已完成",
+      "time": "2026-10-20T17:16:14.974Z",
+      "stage": 0
+    },
+    {
+      "id": 9,
+      "kind": "canvas",
+      "message": "材质色调 · 冷钢柔光",
+      "time": "2026-10-20T17:16:15.237Z",
+      "commandId": "4197c159-1771-4ff1-b9da-9100e589830f"
+    },
+    {
+      "id": 10,
+      "kind": "applied",
+      "message": "已同步 4 个独立图层，其他图层保留",
+      "time": "2026-10-20T17:16:15.642Z",
+      "commandId": "4197c159-1771-4ff1-b9da-9100e589830f"
+    },
+    {
+      "id": 11,
+      "kind": "canvas",
+      "message": "主体 · 透明机械猫徽记",
+      "time": "2026-10-20T17:16:16.162Z",
+      "commandId": "4cc7329b-87ec-4ae2-88c0-10b2ac8cf3c9"
+    },
+    {
+      "id": 12,
+      "kind": "applied",
+      "message": "已同步 2 个独立图层，其他图层保留",
+      "time": "2026-10-20T17:16:16.771Z",
+      "commandId": "4cc7329b-87ec-4ae2-88c0-10b2ac8cf3c9"
+    },
+    {
+      "id": 13,
+      "kind": "pause",
+      "message": "用户已暂停；旧任务的迟到结果不会自动覆盖画布。",
+      "time": "2026-10-20T17:17:10.342Z"
+    },
+    {
+      "id": 14,
+      "kind": "queued",
+      "message": "已继续，等待 Agent 读取最新要求。",
+      "time": "2026-10-20T17:23:59.400Z"
+    },
+    {
+      "id": 15,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T17:23:59.644Z"
+    },
+    {
+      "id": 16,
+      "kind": "asset",
+      "message": "素材已入库：mechanical-cat",
+      "time": "2026-10-20T17:24:06.993Z",
+      "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8"
+    },
+    {
+      "id": 17,
+      "kind": "pause",
+      "message": "检测到用户编辑画布，已暂停后续落图。请以最新位置继续。",
+      "time": "2026-10-20T17:24:07.812Z"
+    },
+    {
+      "id": 18,
+      "kind": "queued",
+      "message": "已继续，等待 Agent 读取最新要求。",
+      "time": "2026-10-20T17:24:23.261Z"
+    },
+    {
+      "id": 19,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T17:24:23.505Z"
+    },
+    {
+      "id": 20,
+      "kind": "canvas",
+      "message": "画布操作：image",
+      "time": "2026-10-20T17:24:23.865Z",
+      "commandId": "5d3c624b-6cfb-4938-8e94-f0c7ec989257"
+    },
+    {
+      "id": 21,
+      "kind": "applied",
+      "message": "已同步 2 个独立图层，其他图层保留",
+      "time": "2026-10-20T17:24:25.206Z",
+      "commandId": "5d3c624b-6cfb-4938-8e94-f0c7ec989257"
+    },
+    {
+      "id": 22,
+      "kind": "canvas",
+      "message": "文字 · HSTV / 01",
+      "time": "2026-10-20T17:24:25.476Z",
+      "commandId": "ec3b1e7b-ed3e-45de-9065-363ee3543863"
+    },
+    {
+      "id": 23,
+      "kind": "applied",
+      "message": "已同步 1 个独立图层，其他图层保留",
+      "time": "2026-10-20T17:24:26.009Z",
+      "commandId": "ec3b1e7b-ed3e-45de-9065-363ee3543863"
+    },
+    {
+      "id": 24,
+      "kind": "pause",
+      "message": "用户已暂停；旧任务的迟到结果不会自动覆盖画布。",
+      "time": "2026-10-20T17:24:57.986Z"
+    },
+    {
+      "id": 25,
+      "kind": "feedback",
+      "message": "只把选中的背景图层改为偏蓝的 #24445a，保留主体、文字和其他图层。",
+      "time": "2026-10-20T17:25:20.870Z",
+      "target": {
+        "layerId": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+        "partId": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+        "block": "background",
+        "projectionId": null
+      }
+    },
+    {
+      "id": 26,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T17:25:31.213Z"
+    },
+    {
+      "id": 27,
+      "kind": "canvas",
+      "message": "画布操作：update",
+      "time": "2026-10-20T17:25:31.546Z",
+      "commandId": "1b5e4b96-9c4b-4089-8f06-22336d5dfb29"
+    },
+    {
+      "id": 28,
+      "kind": "applied",
+      "message": "已同步 1 个独立图层，其他图层保留",
+      "time": "2026-10-20T17:25:32.014Z",
+      "commandId": "1b5e4b96-9c4b-4089-8f06-22336d5dfb29"
+    },
+    {
+      "id": 29,
+      "kind": "stage",
+      "message": "材质 · 已完成",
+      "time": "2026-10-20T17:25:32.457Z",
+      "stage": 1
+    },
+    {
+      "id": 30,
+      "kind": "stage",
+      "message": "图像或角色 · 已完成",
+      "time": "2026-10-20T17:25:32.772Z",
+      "stage": 2
+    }
+  ],
+  "commands": [
+    {
+      "id": "d44bcfde-41c0-4622-bd19-c98ec2776083",
+      "jobId": "0071fe74-dbc7-45ee-946e-46146adf06b1",
+      "revision": 1,
+      "status": "applied",
+      "operation": {
+        "type": "fill",
+        "name": "背景 · 石墨蓝",
+        "block": "background",
+        "stage": 0,
+        "targets": [
+          "780825d9-7295-49a5-87f7-95537e6b10d0",
+          "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+          "feb9272b-5648-4840-9091-b27fd39e4072",
+          "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b"
+        ],
+        "color": "#273d50",
+        "opacity": 0.64,
+        "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。"
+      },
+      "createdAt": "2026-10-20T17:15:55.730Z",
+      "completedAt": "2026-10-20T17:15:56.627Z",
+      "result": {
+        "success": true,
+        "message": "已同步 4 个独立图层，其他图层保留",
+        "layerIds": [
+          "c426eab8-164d-4389-b3cb-cc6599b36736",
+          "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+          "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+          "86792f76-e72b-4503-87b0-21c4b930dfba"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 1,
+          "vehicle": "HSTV-L",
+          "selectedPart": "780825d9-7295-49a5-87f7-95537e6b10d0",
+          "selectedLayerId": "c426eab8-164d-4389-b3cb-cc6599b36736",
+          "camera": {
+            "position": [
+              7,
+              4.3,
+              7
+            ],
+            "quaternion": [
+              -0.14592,
+              0.37788,
+              0.06044,
+              0.91228
+            ],
+            "target": [
+              0,
+              1.05,
+              0
+            ],
+            "fov": 38,
+            "aspect": 1.04459,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                7,
+                4.3,
+                7
+              ],
+              "quaternion": [
+                -0.14592,
+                0.37788,
+                0.06044,
+                0.91228
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 492,
+            "height": 471
+          },
+          "parts": [
+            {
+              "id": "780825d9-7295-49a5-87f7-95537e6b10d0",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "c426eab8-164d-4389-b3cb-cc6599b36736",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.428Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.429Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "feb9272b-5648-4840-9091-b27fd39e4072",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.430Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "86792f76-e72b-4503-87b0-21c4b930dfba",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.431Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": []
+        }
+      }
+    },
+    {
+      "id": "4197c159-1771-4ff1-b9da-9100e589830f",
+      "jobId": "0071fe74-dbc7-45ee-946e-46146adf06b1",
+      "revision": 1,
+      "status": "applied",
+      "operation": {
+        "type": "fill",
+        "name": "材质色调 · 冷钢柔光",
+        "block": "material",
+        "stage": 1,
+        "targets": [
+          "body",
+          "turret",
+          "gun",
+          "mg"
+        ],
+        "color": "#7896ad",
+        "opacity": 0.38,
+        "blend": "soft-light",
+        "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。"
+      },
+      "createdAt": "2026-10-20T17:16:15.237Z",
+      "completedAt": "2026-10-20T17:16:15.639Z",
+      "result": {
+        "success": true,
+        "message": "已同步 4 个独立图层，其他图层保留",
+        "layerIds": [
+          "f51bdd04-4b78-484d-8cd3-fba12a861651",
+          "6f1bee50-8fae-4d2c-8ae0-e79d32ae19b1",
+          "66162aff-a93e-4aad-bf94-07afd3a4abf5",
+          "80b68892-fa02-4ba7-83d9-32fe85c0fb93"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 1,
+          "vehicle": "HSTV-L",
+          "selectedPart": "780825d9-7295-49a5-87f7-95537e6b10d0",
+          "selectedLayerId": "f51bdd04-4b78-484d-8cd3-fba12a861651",
+          "camera": {
+            "position": [
+              8.8,
+              1.7,
+              0
+            ],
+            "quaternion": [
+              -0.02606,
+              0.70663,
+              0.02606,
+              0.70663
+            ],
+            "target": [
+              0,
+              1.05,
+              0
+            ],
+            "fov": 38,
+            "aspect": 1.04459,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 492,
+            "height": 471
+          },
+          "parts": [
+            {
+              "id": "780825d9-7295-49a5-87f7-95537e6b10d0",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "c426eab8-164d-4389-b3cb-cc6599b36736",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.428Z"
+                  }
+                },
+                {
+                  "id": "f51bdd04-4b78-484d-8cd3-fba12a861651",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.429Z"
+                  }
+                },
+                {
+                  "id": "6f1bee50-8fae-4d2c-8ae0-e79d32ae19b1",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "feb9272b-5648-4840-9091-b27fd39e4072",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.430Z"
+                  }
+                },
+                {
+                  "id": "66162aff-a93e-4aad-bf94-07afd3a4abf5",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "86792f76-e72b-4503-87b0-21c4b930dfba",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.431Z"
+                  }
+                },
+                {
+                  "id": "80b68892-fa02-4ba7-83d9-32fe85c0fb93",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": []
+        }
+      }
+    },
+    {
+      "id": "4cc7329b-87ec-4ae2-88c0-10b2ac8cf3c9",
+      "jobId": "0071fe74-dbc7-45ee-946e-46146adf06b1",
+      "revision": 1,
+      "status": "applied",
+      "operation": {
+        "type": "image",
+        "assetId": "bc04968e-6e32-4253-88f3-61f49c6ec8ef",
+        "name": "主体 · 透明机械猫徽记",
+        "block": "subject",
+        "stage": 2,
+        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+        "placement": {
+          "mode": "projection",
+          "view": "left",
+          "targets": [
+            "body",
+            "turret"
+          ],
+          "rect": {
+            "cx": 0.5,
+            "cy": 0.48,
+            "w": 0.31,
+            "h": 0.5,
+            "angle": 0
+          },
+          "occlusion": true
+        }
+      },
+      "createdAt": "2026-10-20T17:16:16.162Z",
+      "completedAt": "2026-10-20T17:16:16.768Z",
+      "result": {
+        "success": true,
+        "message": "已同步 2 个独立图层，其他图层保留",
+        "layerIds": [
+          "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+          "9bbc77f6-5d15-4cd2-805f-93b72b239472"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 1,
+          "vehicle": "HSTV-L",
+          "selectedPart": "780825d9-7295-49a5-87f7-95537e6b10d0",
+          "selectedLayerId": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+          "camera": {
+            "position": [
+              8.8,
+              1.7,
+              0
+            ],
+            "quaternion": [
+              -0.02606,
+              0.70663,
+              0.02606,
+              0.70663
+            ],
+            "target": [
+              0,
+              1.05,
+              0
+            ],
+            "fov": 38,
+            "aspect": 1.04459,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 492,
+            "height": 471
+          },
+          "parts": [
+            {
+              "id": "780825d9-7295-49a5-87f7-95537e6b10d0",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "c426eab8-164d-4389-b3cb-cc6599b36736",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.428Z"
+                  }
+                },
+                {
+                  "id": "f51bdd04-4b78-484d-8cd3-fba12a861651",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                    "assetId": "bc04968e-6e32-4253-88f3-61f49c6ec8ef",
+                    "versions": [
+                      {
+                        "assetId": "bc04968e-6e32-4253-88f3-61f49c6ec8ef",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.605Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:16:16.605Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.429Z"
+                  }
+                },
+                {
+                  "id": "6f1bee50-8fae-4d2c-8ae0-e79d32ae19b1",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "9bbc77f6-5d15-4cd2-805f-93b72b239472",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                    "assetId": "bc04968e-6e32-4253-88f3-61f49c6ec8ef",
+                    "versions": [
+                      {
+                        "assetId": "bc04968e-6e32-4253-88f3-61f49c6ec8ef",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.606Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:16:16.606Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "feb9272b-5648-4840-9091-b27fd39e4072",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.430Z"
+                  }
+                },
+                {
+                  "id": "66162aff-a93e-4aad-bf94-07afd3a4abf5",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "86792f76-e72b-4503-87b0-21c4b930dfba",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.431Z"
+                  }
+                },
+                {
+                  "id": "80b68892-fa02-4ba7-83d9-32fe85c0fb93",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": [
+            {
+              "id": "345889b4-aead-4374-aabf-7d825589afff",
+              "name": "主体 · 透明机械猫徽记",
+              "camera": {
+                "position": [
+                  8.8,
+                  1.7,
+                  0
+                ],
+                "quaternion": [
+                  -0.02606,
+                  0.70663,
+                  0.02606,
+                  0.70663
+                ],
+                "target": [
+                  0,
+                  1.05,
+                  0
+                ],
+                "fov": 38,
+                "aspect": 1.04459,
+                "near": 0.05,
+                "far": 100
+              },
+              "rect": {
+                "cx": 0.5,
+                "cy": 0.48,
+                "w": 0.31,
+                "h": 0.5,
+                "angle": 0
+              },
+              "viewport": {
+                "width": 1044.59,
+                "height": 1000
+              },
+              "targets": [
+                "780825d9-7295-49a5-87f7-95537e6b10d0",
+                "af207f15-0eb9-48a7-8fdb-ab785fcacff3"
+              ],
+              "occlusion": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "5d3c624b-6cfb-4938-8e94-f0c7ec989257",
+      "jobId": "0071fe74-dbc7-45ee-946e-46146adf06b1",
+      "revision": 5,
+      "status": "applied",
+      "operation": {
+        "type": "image",
+        "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+        "targetLayerId": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+        "block": "subject",
+        "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+        "placement": {
+          "view": "left",
+          "rect": {
+            "cx": 0.66,
+            "cy": 0.535,
+            "w": 0.22,
+            "h": 0.27,
+            "angle": 0
+          }
+        }
+      },
+      "createdAt": "2026-10-20T17:24:23.865Z",
+      "completedAt": "2026-10-20T17:24:25.202Z",
+      "result": {
+        "success": true,
+        "message": "已同步 2 个独立图层，其他图层保留",
+        "layerIds": [
+          "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+          "9bbc77f6-5d15-4cd2-805f-93b72b239472"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 2,
+          "vehicle": "HSTV-L",
+          "selectedPart": "780825d9-7295-49a5-87f7-95537e6b10d0",
+          "selectedLayerId": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+          "camera": {
+            "position": [
+              8.8,
+              1.7,
+              0
+            ],
+            "quaternion": [
+              -0.02606,
+              0.70663,
+              0.02606,
+              0.70663
+            ],
+            "target": [
+              0,
+              1.05,
+              0
+            ],
+            "fov": 38,
+            "aspect": 1.04459,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 492,
+            "height": 471
+          },
+          "parts": [
+            {
+              "id": "780825d9-7295-49a5-87f7-95537e6b10d0",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "c426eab8-164d-4389-b3cb-cc6599b36736",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.428Z"
+                  }
+                },
+                {
+                  "id": "f51bdd04-4b78-484d-8cd3-fba12a861651",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+                    "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                    "versions": [
+                      {
+                        "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.605Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:24:25.009Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.429Z"
+                  }
+                },
+                {
+                  "id": "6f1bee50-8fae-4d2c-8ae0-e79d32ae19b1",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "9bbc77f6-5d15-4cd2-805f-93b72b239472",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+                    "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                    "versions": [
+                      {
+                        "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.606Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:24:25.010Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "feb9272b-5648-4840-9091-b27fd39e4072",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.430Z"
+                  }
+                },
+                {
+                  "id": "66162aff-a93e-4aad-bf94-07afd3a4abf5",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "86792f76-e72b-4503-87b0-21c4b930dfba",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.431Z"
+                  }
+                },
+                {
+                  "id": "80b68892-fa02-4ba7-83d9-32fe85c0fb93",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": [
+            {
+              "id": "345889b4-aead-4374-aabf-7d825589afff",
+              "name": "主体 · 透明机械猫徽记",
+              "camera": {
+                "position": [
+                  8.8,
+                  1.7,
+                  0
+                ],
+                "quaternion": [
+                  -0.02606,
+                  0.70663,
+                  0.02606,
+                  0.70663
+                ],
+                "target": [
+                  0,
+                  1.05,
+                  0
+                ],
+                "fov": 38,
+                "aspect": 1.04459,
+                "near": 0.05,
+                "far": 100
+              },
+              "rect": {
+                "cx": 0.66,
+                "cy": 0.535,
+                "w": 0.22,
+                "h": 0.27,
+                "angle": 0
+              },
+              "viewport": {
+                "width": 1044.59,
+                "height": 1000
+              },
+              "targets": [
+                "780825d9-7295-49a5-87f7-95537e6b10d0",
+                "af207f15-0eb9-48a7-8fdb-ab785fcacff3"
+              ],
+              "occlusion": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ec3b1e7b-ed3e-45de-9065-363ee3543863",
+      "jobId": "0071fe74-dbc7-45ee-946e-46146adf06b1",
+      "revision": 5,
+      "status": "applied",
+      "operation": {
+        "type": "text",
+        "name": "文字 · HSTV / 01",
+        "block": "text",
+        "stage": 2,
+        "targets": [
+          "turret"
+        ],
+        "text": "HSTV / 01",
+        "font": "Impact",
+        "color": "#e2c087",
+        "rect": {
+          "x": 0.25,
+          "y": 0.3,
+          "w": 0.25,
+          "h": 0.08
+        },
+        "prompt": "独立编号文字，可单独编辑内容和颜色。"
+      },
+      "createdAt": "2026-10-20T17:24:25.476Z",
+      "completedAt": "2026-10-20T17:24:26.006Z",
+      "result": {
+        "success": true,
+        "message": "已同步 1 个独立图层，其他图层保留",
+        "layerIds": [
+          "52146e50-633e-446e-83c9-9aecff21ffd3"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 2,
+          "vehicle": "HSTV-L",
+          "selectedPart": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+          "selectedLayerId": "52146e50-633e-446e-83c9-9aecff21ffd3",
+          "camera": {
+            "position": [
+              8.8,
+              1.7,
+              0
+            ],
+            "quaternion": [
+              -0.02606,
+              0.70663,
+              0.02606,
+              0.70663
+            ],
+            "target": [
+              0,
+              1.05,
+              0
+            ],
+            "fov": 38,
+            "aspect": 1.04459,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 492,
+            "height": 471
+          },
+          "parts": [
+            {
+              "id": "780825d9-7295-49a5-87f7-95537e6b10d0",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "c426eab8-164d-4389-b3cb-cc6599b36736",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.428Z"
+                  }
+                },
+                {
+                  "id": "f51bdd04-4b78-484d-8cd3-fba12a861651",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+                    "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                    "versions": [
+                      {
+                        "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.605Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:24:25.009Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.429Z"
+                  }
+                },
+                {
+                  "id": "6f1bee50-8fae-4d2c-8ae0-e79d32ae19b1",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "9bbc77f6-5d15-4cd2-805f-93b72b239472",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+                    "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                    "versions": [
+                      {
+                        "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.606Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:24:25.010Z"
+                  }
+                },
+                {
+                  "id": "52146e50-633e-446e-83c9-9aecff21ffd3",
+                  "name": "文字 · HSTV / 01",
+                  "kind": "text",
+                  "x": 0.25,
+                  "y": 0.3,
+                  "w": 0.25,
+                  "h": 0.08,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "agent": {
+                    "block": "text",
+                    "stage": 2,
+                    "prompt": "独立编号文字，可单独编辑内容和颜色。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:24:25.830Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "feb9272b-5648-4840-9091-b27fd39e4072",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.430Z"
+                  }
+                },
+                {
+                  "id": "66162aff-a93e-4aad-bf94-07afd3a4abf5",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "86792f76-e72b-4503-87b0-21c4b930dfba",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.431Z"
+                  }
+                },
+                {
+                  "id": "80b68892-fa02-4ba7-83d9-32fe85c0fb93",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": [
+            {
+              "id": "345889b4-aead-4374-aabf-7d825589afff",
+              "name": "主体 · 透明机械猫徽记",
+              "camera": {
+                "position": [
+                  8.8,
+                  1.7,
+                  0
+                ],
+                "quaternion": [
+                  -0.02606,
+                  0.70663,
+                  0.02606,
+                  0.70663
+                ],
+                "target": [
+                  0,
+                  1.05,
+                  0
+                ],
+                "fov": 38,
+                "aspect": 1.04459,
+                "near": 0.05,
+                "far": 100
+              },
+              "rect": {
+                "cx": 0.66,
+                "cy": 0.535,
+                "w": 0.22,
+                "h": 0.27,
+                "angle": 0
+              },
+              "viewport": {
+                "width": 1044.59,
+                "height": 1000
+              },
+              "targets": [
+                "780825d9-7295-49a5-87f7-95537e6b10d0",
+                "af207f15-0eb9-48a7-8fdb-ab785fcacff3"
+              ],
+              "occlusion": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1b5e4b96-9c4b-4089-8f06-22336d5dfb29",
+      "jobId": "0071fe74-dbc7-45ee-946e-46146adf06b1",
+      "revision": 7,
+      "status": "applied",
+      "operation": {
+        "type": "update",
+        "targetLayerId": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+        "values": {
+          "color": "#24445a"
+        },
+        "prompt": "只把选中的背景图层改为偏蓝的 #24445a，保留主体、文字和其他图层。",
+        "block": "background"
+      },
+      "createdAt": "2026-10-20T17:25:31.546Z",
+      "completedAt": "2026-10-20T17:25:32.008Z",
+      "result": {
+        "success": true,
+        "message": "已同步 1 个独立图层，其他图层保留",
+        "layerIds": [
+          "8f88280c-c6ff-4cce-ad7c-f9208be79dbf"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 2,
+          "vehicle": "HSTV-L",
+          "selectedPart": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+          "selectedLayerId": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+          "camera": {
+            "position": [
+              8.8,
+              1.7,
+              0
+            ],
+            "quaternion": [
+              -0.02606,
+              0.70663,
+              0.02606,
+              0.70663
+            ],
+            "target": [
+              0,
+              1.05,
+              0
+            ],
+            "fov": 38,
+            "aspect": 1.04459,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.04459,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 492,
+            "height": 471
+          },
+          "parts": [
+            {
+              "id": "780825d9-7295-49a5-87f7-95537e6b10d0",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "c426eab8-164d-4389-b3cb-cc6599b36736",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.428Z"
+                  }
+                },
+                {
+                  "id": "f51bdd04-4b78-484d-8cd3-fba12a861651",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+                    "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                    "versions": [
+                      {
+                        "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.605Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:24:25.009Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#24445a",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "只把选中的背景图层改为偏蓝的 #24445a，保留主体、文字和其他图层。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:25:31.829Z"
+                  }
+                },
+                {
+                  "id": "6f1bee50-8fae-4d2c-8ae0-e79d32ae19b1",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                },
+                {
+                  "id": "9bbc77f6-5d15-4cd2-805f-93b72b239472",
+                  "name": "主体 · 透明机械猫徽记",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+                  "agent": {
+                    "block": "subject",
+                    "stage": 2,
+                    "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+                    "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                    "versions": [
+                      {
+                        "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                        "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                        "time": "2026-10-20T17:16:16.606Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T17:24:25.010Z"
+                  }
+                },
+                {
+                  "id": "52146e50-633e-446e-83c9-9aecff21ffd3",
+                  "name": "文字 · HSTV / 01",
+                  "kind": "text",
+                  "x": 0.25,
+                  "y": 0.3,
+                  "w": 0.25,
+                  "h": 0.08,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "agent": {
+                    "block": "text",
+                    "stage": 2,
+                    "prompt": "独立编号文字，可单独编辑内容和颜色。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:24:25.830Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "feb9272b-5648-4840-9091-b27fd39e4072",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.430Z"
+                  }
+                },
+                {
+                  "id": "66162aff-a93e-4aad-bf94-07afd3a4abf5",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "86792f76-e72b-4503-87b0-21c4b930dfba",
+                  "name": "背景 · 石墨蓝",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.64,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#273d50",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:15:56.431Z"
+                  }
+                },
+                {
+                  "id": "80b68892-fa02-4ba7-83d9-32fe85c0fb93",
+                  "name": "材质色调 · 冷钢柔光",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 0.38,
+                  "blend": "soft-light",
+                  "visible": true,
+                  "color": "#7896ad",
+                  "fill": true,
+                  "agent": {
+                    "block": "material",
+                    "stage": 1,
+                    "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T17:16:15.399Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": [
+            {
+              "id": "345889b4-aead-4374-aabf-7d825589afff",
+              "name": "主体 · 透明机械猫徽记",
+              "camera": {
+                "position": [
+                  8.8,
+                  1.7,
+                  0
+                ],
+                "quaternion": [
+                  -0.02606,
+                  0.70663,
+                  0.02606,
+                  0.70663
+                ],
+                "target": [
+                  0,
+                  1.05,
+                  0
+                ],
+                "fov": 38,
+                "aspect": 1.04459,
+                "near": 0.05,
+                "far": 100
+              },
+              "rect": {
+                "cx": 0.66,
+                "cy": 0.535,
+                "w": 0.22,
+                "h": 0.27,
+                "angle": 0
+              },
+              "viewport": {
+                "width": 1044.59,
+                "height": 1000
+              },
+              "targets": [
+                "780825d9-7295-49a5-87f7-95537e6b10d0",
+                "af207f15-0eb9-48a7-8fdb-ab785fcacff3"
+              ],
+              "occlusion": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "context": {
+    "version": 1,
+    "editorRevision": 2,
+    "vehicle": "HSTV-L",
+    "selectedPart": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+    "selectedLayerId": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+    "camera": {
+      "position": [
+        8.8,
+        1.7,
+        0
+      ],
+      "quaternion": [
+        -0.02606,
+        0.70663,
+        0.02606,
+        0.70663
+      ],
+      "target": [
+        0,
+        1.05,
+        0
+      ],
+      "fov": 38,
+      "aspect": 1.04459,
+      "near": 0.05,
+      "far": 100
+    },
+    "views": {
+      "current": {
+        "position": [
+          8.8,
+          1.7,
+          0
+        ],
+        "quaternion": [
+          -0.02606,
+          0.70663,
+          0.02606,
+          0.70663
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.04459,
+        "near": 0.05,
+        "far": 100
+      },
+      "left": {
+        "position": [
+          8.8,
+          1.7,
+          0
+        ],
+        "quaternion": [
+          -0.02606,
+          0.70663,
+          0.02606,
+          0.70663
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.04459,
+        "near": 0.05,
+        "far": 100
+      },
+      "right": {
+        "position": [
+          -8.8,
+          1.7,
+          0
+        ],
+        "quaternion": [
+          -0.02606,
+          -0.70663,
+          -0.02606,
+          0.70663
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.04459,
+        "near": 0.05,
+        "far": 100
+      },
+      "front": {
+        "position": [
+          0,
+          1.7,
+          8.8
+        ],
+        "quaternion": [
+          -0.03686,
+          0,
+          0,
+          0.99932
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.04459,
+        "near": 0.05,
+        "far": 100
+      },
+      "top": {
+        "position": [
+          0,
+          9,
+          0.001
+        ],
+        "quaternion": [
+          -0.70706,
+          0,
+          0,
+          0.70715
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.04459,
+        "near": 0.05,
+        "far": 100
+      }
+    },
+    "viewport": {
+      "width": 492,
+      "height": 471
+    },
+    "parts": [
+      {
+        "id": "780825d9-7295-49a5-87f7-95537e6b10d0",
+        "key": "body",
+        "name": "车体",
+        "width": 2048,
+        "height": 2048,
+        "output": "hstv_l_body_c",
+        "layers": [
+          {
+            "id": "c426eab8-164d-4389-b3cb-cc6599b36736",
+            "name": "背景 · 石墨蓝",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.64,
+            "blend": "source-over",
+            "visible": true,
+            "color": "#273d50",
+            "fill": true,
+            "agent": {
+              "block": "background",
+              "stage": 0,
+              "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:15:56.428Z"
+            }
+          },
+          {
+            "id": "f51bdd04-4b78-484d-8cd3-fba12a861651",
+            "name": "材质色调 · 冷钢柔光",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.38,
+            "blend": "soft-light",
+            "visible": true,
+            "color": "#7896ad",
+            "fill": true,
+            "agent": {
+              "block": "material",
+              "stage": 1,
+              "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:16:15.399Z"
+            }
+          },
+          {
+            "id": "cc8a460c-f489-4a8c-ab2e-8974acb814a8",
+            "name": "主体 · 透明机械猫徽记",
+            "kind": "projection",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 1,
+            "blend": "source-over",
+            "visible": true,
+            "color": "#e6edf2",
+            "fill": false,
+            "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+            "agent": {
+              "block": "subject",
+              "stage": 2,
+              "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+              "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+              "versions": [
+                {
+                  "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                  "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                  "time": "2026-10-20T17:16:16.605Z"
+                }
+              ],
+              "updatedAt": "2026-10-20T17:24:25.009Z"
+            }
+          }
+        ]
+      },
+      {
+        "id": "af207f15-0eb9-48a7-8fdb-ab785fcacff3",
+        "key": "turret",
+        "name": "炮塔",
+        "width": 2048,
+        "height": 1024,
+        "output": "hstv_l_turret_c",
+        "layers": [
+          {
+            "id": "8f88280c-c6ff-4cce-ad7c-f9208be79dbf",
+            "name": "背景 · 石墨蓝",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.64,
+            "blend": "source-over",
+            "visible": true,
+            "color": "#24445a",
+            "fill": true,
+            "agent": {
+              "block": "background",
+              "stage": 0,
+              "prompt": "只把选中的背景图层改为偏蓝的 #24445a，保留主体、文字和其他图层。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:25:31.829Z"
+            }
+          },
+          {
+            "id": "6f1bee50-8fae-4d2c-8ae0-e79d32ae19b1",
+            "name": "材质色调 · 冷钢柔光",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.38,
+            "blend": "soft-light",
+            "visible": true,
+            "color": "#7896ad",
+            "fill": true,
+            "agent": {
+              "block": "material",
+              "stage": 1,
+              "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:16:15.399Z"
+            }
+          },
+          {
+            "id": "9bbc77f6-5d15-4cd2-805f-93b72b239472",
+            "name": "主体 · 透明机械猫徽记",
+            "kind": "projection",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 1,
+            "blend": "source-over",
+            "visible": true,
+            "color": "#e6edf2",
+            "fill": false,
+            "projectionId": "345889b4-aead-4374-aabf-7d825589afff",
+            "agent": {
+              "block": "subject",
+              "stage": 2,
+              "prompt": "根据模型预览缩小徽记并后移，耳朵覆盖炮塔，脸部覆盖车体，背景保持独立。",
+              "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+              "versions": [
+                {
+                  "assetId": "fd0a2c2a-f2c2-4238-83b3-b8e7c5abc7c8",
+                  "prompt": "独立透明机械猫头，白色与石墨蓝装甲，琥珀色细节；不合并背景或文字。",
+                  "time": "2026-10-20T17:16:16.606Z"
+                }
+              ],
+              "updatedAt": "2026-10-20T17:24:25.010Z"
+            }
+          },
+          {
+            "id": "52146e50-633e-446e-83c9-9aecff21ffd3",
+            "name": "文字 · HSTV / 01",
+            "kind": "text",
+            "x": 0.25,
+            "y": 0.3,
+            "w": 0.25,
+            "h": 0.08,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 1,
+            "blend": "source-over",
+            "visible": true,
+            "color": "#e6edf2",
+            "fill": false,
+            "agent": {
+              "block": "text",
+              "stage": 2,
+              "prompt": "独立编号文字，可单独编辑内容和颜色。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:24:25.830Z"
+            }
+          }
+        ]
+      },
+      {
+        "id": "feb9272b-5648-4840-9091-b27fd39e4072",
+        "key": "gun",
+        "name": "主炮",
+        "width": 1024,
+        "height": 512,
+        "output": "hstv_l_gun_c",
+        "layers": [
+          {
+            "id": "094f3f49-ddbe-4716-823b-142ad3baaf1d",
+            "name": "背景 · 石墨蓝",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.64,
+            "blend": "source-over",
+            "visible": true,
+            "color": "#273d50",
+            "fill": true,
+            "agent": {
+              "block": "background",
+              "stage": 0,
+              "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:15:56.430Z"
+            }
+          },
+          {
+            "id": "66162aff-a93e-4aad-bf94-07afd3a4abf5",
+            "name": "材质色调 · 冷钢柔光",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.38,
+            "blend": "soft-light",
+            "visible": true,
+            "color": "#7896ad",
+            "fill": true,
+            "agent": {
+              "block": "material",
+              "stage": 1,
+              "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:16:15.399Z"
+            }
+          }
+        ]
+      },
+      {
+        "id": "43732b61-dbd7-4014-ae4f-0b4bb90b0d2b",
+        "key": "mg",
+        "name": "机枪",
+        "width": 256,
+        "height": 256,
+        "output": "hstv_l_mg_c",
+        "layers": [
+          {
+            "id": "86792f76-e72b-4503-87b0-21c4b930dfba",
+            "name": "背景 · 石墨蓝",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.64,
+            "blend": "source-over",
+            "visible": true,
+            "color": "#273d50",
+            "fill": true,
+            "agent": {
+              "block": "background",
+              "stage": 0,
+              "prompt": "石墨蓝底色，保留原车细节，独立于主体与文字。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:15:56.431Z"
+            }
+          },
+          {
+            "id": "80b68892-fa02-4ba7-83d9-32fe85c0fb93",
+            "name": "材质色调 · 冷钢柔光",
+            "kind": "fill",
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1,
+            "scale": 1,
+            "angle": 0,
+            "dx": 0,
+            "dy": 0,
+            "opacity": 0.38,
+            "blend": "soft-light",
+            "visible": true,
+            "color": "#7896ad",
+            "fill": true,
+            "agent": {
+              "block": "material",
+              "stage": 1,
+              "prompt": "颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。",
+              "versions": [],
+              "updatedAt": "2026-10-20T17:16:15.399Z"
+            }
+          }
+        ]
+      }
+    ],
+    "projections": [
+      {
+        "id": "345889b4-aead-4374-aabf-7d825589afff",
+        "name": "主体 · 透明机械猫徽记",
+        "camera": {
+          "position": [
+            8.8,
+            1.7,
+            0
+          ],
+          "quaternion": [
+            -0.02606,
+            0.70663,
+            0.02606,
+            0.70663
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.04459,
+          "near": 0.05,
+          "far": 100
+        },
+        "rect": {
+          "cx": 0.66,
+          "cy": 0.535,
+          "w": 0.22,
+          "h": 0.27,
+          "angle": 0
+        },
+        "viewport": {
+          "width": 1044.59,
+          "height": 1000
+        },
+        "targets": [
+          "780825d9-7295-49a5-87f7-95537e6b10d0",
+          "af207f15-0eb9-48a7-8fdb-ab785fcacff3"
+        ],
+        "occlusion": true
+      }
+    ]
+  },
+  "canvasOnline": true,
+  "integration": {
+    "projectRoot": "E:\\迅雷下载1\\models\\skin-studio",
+    "cliPath": "E:\\迅雷下载1\\models\\skin-studio\\agent.cjs",
+    "skillPath": "E:\\迅雷下载1\\models\\skin-studio\\skills\\wt-skin-agent\\SKILL.md",
+    "previewPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\preview.png",
+    "contextPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\context.json",
+    "assetsPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\assets"
+  }
+}

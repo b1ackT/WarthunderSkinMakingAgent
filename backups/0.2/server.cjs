@@ -1,0 +1,87 @@
+const http = require('node:http');
+const fs = require('node:fs');
+const fsp = require('node:fs/promises');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const { execFile, spawn } = require('node:child_process');
+const { promisify } = require('node:util');
+const run = promisify(execFile);
+const root = __dirname, port = Number(process.env.PORT || 8766);
+const token = crypto.randomBytes(32).toString('hex');
+const watches = new Map();
+const extensions = new Set(['.psd', '.png', '.jpg', '.jpeg', '.webp', '.tga', '.dds']);
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.obj': 'text/plain', '.mtl': 'text/plain', '.md': 'text/plain; charset=utf-8' };
+function json(res, status, value) { res.writeHead(status, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }); res.end(JSON.stringify(value)); }
+function stamp(stat) { return stat.mtimeMs + ':' + stat.size; }
+async function body(req) {
+  const chunks = []; let size = 0;
+  for await (const chunk of req) { size += chunk.length; if (size > 1024 * 1024) throw Error('Request too large'); chunks.push(chunk); }
+  return chunks.length ? JSON.parse(Buffer.concat(chunks).toString('utf8')) : {};
+}
+function openBrowser() { spawn('cmd.exe', ['/c', 'start', '', 'http://127.0.0.1:' + port], { windowsHide: true, stdio: 'ignore' }).unref(); }
+async function inspect(file) {
+  const stat = await fsp.stat(file); if (!stat.isFile()) throw Error('请选择文件，不是文件夹。');
+  if (stat.size > 512 * 1024 * 1024) throw Error('文件超过 512 MB，请导出精简 PSD 或 PNG。'); return stat;
+}
+async function handleAPI(req, res, url) {
+  const allowed = new Set([`127.0.0.1:${port}`, `localhost:${port}`]);
+  if (!allowed.has(req.headers.host) || (req.headers.origin && !allowed.has(new URL(req.headers.origin).host))) return json(res, 403, { error: '仅允许本地 Skin Studio 页面调用。' });
+  if (url.pathname === '/api/session' && req.method === 'GET') return json(res, 200, { token });
+  if (req.headers['x-studio-token'] !== token) return json(res, 403, { error: '本地会话已失效，请刷新页面后重新连接。' });
+  if (url.pathname === '/api/browse' && req.method === 'POST') {
+    const script = `Add-Type -AssemblyName System.Windows.Forms; $dialog=New-Object System.Windows.Forms.OpenFileDialog; $dialog.Title='Skin Studio - Photoshop source'; $dialog.Filter='PSD and textures|*.psd;*.png;*.jpg;*.jpeg;*.webp;*.tga;*.dds'; if($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK){[Console]::Write([Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($dialog.FileName)))}`;
+    const { stdout } = await run('powershell.exe', ['-NoProfile', '-STA', '-WindowStyle', 'Hidden', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')], { windowsHide: true, timeout: 180000 });
+    return json(res, 200, { path: stdout.trim() ? Buffer.from(stdout.trim(), 'base64').toString('utf8') : null });
+  }
+  if (url.pathname === '/api/watch' && req.method === 'POST') {
+    const input = await body(req), file = input.path;
+    if (typeof file !== 'string' || !path.isAbsolute(file)) return json(res, 400, { error: '请选择文件或输入完整的本地文件路径。' });
+    if (!extensions.has(path.extname(file).toLowerCase())) return json(res, 400, { error: '支持 PSD、PNG、JPG、WebP、TGA 和 DDS。' });
+    if (watches.size >= 24) return json(res, 400, { error: '最多连接 24 个文件，请先断开不用的联动。' });
+    const resolved = path.resolve(file), stat = await inspect(resolved), id = crypto.randomUUID();
+    watches.set(id, { path: resolved, observed: stamp(stat), stable: stamp(stat), since: Date.now() });
+    return json(res, 200, { id, path: resolved, stamp: stamp(stat) });
+  }
+  if (url.pathname === '/api/watch' && req.method === 'GET') {
+    const files = [];
+    for (const [id, watch] of watches) {
+      try {
+        const stat = await inspect(watch.path), next = stamp(stat);
+        if (next !== watch.observed) { watch.observed = next; watch.since = Date.now(); }
+        if (Date.now() - watch.since >= 650) watch.stable = next;
+        files.push({ id, stamp: watch.stable });
+      } catch (error) { files.push({ id, error: error.code === 'ENOENT' ? '源文件暂时不存在，等待 PS 保存完成…' : error.message }); }
+    }
+    return json(res, 200, { files });
+  }
+  const match = url.pathname.match(/^\/api\/watch\/([^/]+)(\/file)?$/);
+  if (match) {
+    const watch = watches.get(match[1]); if (!watch) return json(res, 404, { error: '文件未连接，请重新选择。' });
+    if (req.method === 'DELETE' && !match[2]) { watches.delete(match[1]); return json(res, 200, { ok: true }); }
+    if (req.method === 'GET' && match[2]) {
+      const before = await inspect(watch.path), bytes = await fsp.readFile(watch.path), after = await inspect(watch.path);
+      if (stamp(before) !== stamp(after)) return json(res, 409, { error: '文件仍在保存，稍后自动重试。' });
+      res.writeHead(200, { 'Content-Type': 'application/octet-stream', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' }); return res.end(bytes);
+    }
+  }
+  json(res, 404, { error: 'Unknown API' });
+}
+const server = http.createServer(async (req, res) => {
+  try {
+    const url = new URL(req.url, 'http://127.0.0.1:' + port);
+    if (url.pathname === '/health') { res.writeHead(200, { 'Content-Type': 'text/plain' }); return res.end('skin-studio-workshop-v2'); }
+    if (url.pathname.startsWith('/api/')) return await handleAPI(req, res, url);
+    if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405); return res.end(); }
+    let file = path.resolve(root, '.' + decodeURIComponent(url.pathname));
+    if (file !== root && !file.startsWith(root + path.sep)) { res.writeHead(403); return res.end(); }
+    if (file === root) file = path.join(root, 'index.html');
+    const stat = await fsp.stat(file); if (!stat.isFile()) { res.writeHead(404); return res.end(); }
+    res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff' });
+    if (req.method === 'HEAD') return res.end(); fs.createReadStream(file).pipe(res);
+  } catch (error) { if (!res.headersSent) json(res, error.code === 'ENOENT' ? 404 : 400, { error: error.code === 'ENOENT' ? '文件不存在，请检查路径。' : error.message }); else res.end(); }
+});
+server.on('error', async error => {
+  if (error.code === 'EADDRINUSE' && process.argv.includes('--open')) { try { if ((await (await fetch('http://127.0.0.1:' + port + '/health')).text()) === 'skin-studio-workshop-v2') { openBrowser(); return; } } catch {} }
+  console.error(error.message); process.exitCode = 1;
+});
+server.listen(port, '127.0.0.1', () => { console.log('Skin Studio: http://127.0.0.1:' + port); if (process.argv.includes('--open')) openBrowser(); });

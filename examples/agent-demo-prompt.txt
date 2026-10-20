@@ -1,0 +1,3 @@
+Built-in imagegen; transparent_background=true.
+
+Create a single isolated mechanical cat-head emblem for a layered tank skin editor demonstration. Genuine transparent background. Front-facing robotic feline head with angular white and slate-blue armor panels, small amber accents, bold clean outer silhouette and crisp ink-like detailing, high contrast readable at small sizes. Graphic decal illustration, flat restrained shading. Centered head only, no badge frame, no letters, no words, no scenery, no background texture, no cast shadow. Keep all surrounding pixels transparent so the editor can change its background separately.

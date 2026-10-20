@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "editorRevision": 1,
+  "vehicle": "HSTV-L",
+  "selectedPart": "de01b396-5744-4476-bc2f-b9ddccad0804",
+  "selectedLayerId": null,
+  "camera": {
+    "position": [
+      7,
+      4.3,
+      7
+    ],
+    "quaternion": [
+      -0.14592,
+      0.37788,
+      0.06044,
+      0.91228
+    ],
+    "target": [
+      0,
+      1.05,
+      0
+    ],
+    "fov": 38,
+    "aspect": 0.73414,
+    "near": 0.05,
+    "far": 100
+  },
+  "views": {
+    "current": {
+      "position": [
+        7,
+        4.3,
+        7
+      ],
+      "quaternion": [
+        -0.14592,
+        0.37788,
+        0.06044,
+        0.91228
+      ],
+      "target": [
+        0,
+        1.05,
+        0
+      ],
+      "fov": 38,
+      "aspect": 0.73414,
+      "near": 0.05,
+      "far": 100
+    },
+    "left": {
+      "position": [
+        8.8,
+        1.7,
+        0
+      ],
+      "quaternion": [
+        -0.02606,
+        0.70663,
+        0.02606,
+        0.70663
+      ],
+      "target": [
+        0,
+        1.05,
+        0
+      ],
+      "fov": 38,
+      "aspect": 0.73414,
+      "near": 0.05,
+      "far": 100
+    },
+    "right": {
+      "position": [
+        -8.8,
+        1.7,
+        0
+      ],
+      "quaternion": [
+        -0.02606,
+        -0.70663,
+        -0.02606,
+        0.70663
+      ],
+      "target": [
+        0,
+        1.05,
+        0
+      ],
+      "fov": 38,
+      "aspect": 0.73414,
+      "near": 0.05,
+      "far": 100
+    },
+    "front": {
+      "position": [
+        0,
+        1.7,
+        8.8
+      ],
+      "quaternion": [
+        -0.03686,
+        0,
+        0,
+        0.99932
+      ],
+      "target": [
+        0,
+        1.05,
+        0
+      ],
+      "fov": 38,
+      "aspect": 0.73414,
+      "near": 0.05,
+      "far": 100
+    },
+    "top": {
+      "position": [
+        0,
+        9,
+        0.001
+      ],
+      "quaternion": [
+        -0.70706,
+        0,
+        0,
+        0.70715
+      ],
+      "target": [
+        0,
+        1.05,
+        0
+      ],
+      "fov": 38,
+      "aspect": 0.73414,
+      "near": 0.05,
+      "far": 100
+    }
+  },
+  "viewport": {
+    "width": 544,
+    "height": 741
+  },
+  "parts": [
+    {
+      "id": "de01b396-5744-4476-bc2f-b9ddccad0804",
+      "key": "body",
+      "name": "车体",
+      "width": 2048,
+      "height": 2048,
+      "output": "hstv_l_body_c",
+      "layers": []
+    },
+    {
+      "id": "d489e420-6974-4a10-96ce-c711b9c919bb",
+      "key": "turret",
+      "name": "炮塔",
+      "width": 2048,
+      "height": 1024,
+      "output": "hstv_l_turret_c",
+      "layers": []
+    },
+    {
+      "id": "3fd853a2-cb12-45ce-8c26-bf06cf56d3ff",
+      "key": "gun",
+      "name": "主炮",
+      "width": 1024,
+      "height": 512,
+      "output": "hstv_l_gun_c",
+      "layers": []
+    },
+    {
+      "id": "6a881140-eb7b-40d4-8c70-d5622583b68a",
+      "key": "mg",
+      "name": "机枪",
+      "width": 256,
+      "height": 256,
+      "output": "hstv_l_mg_c",
+      "layers": []
+    }
+  ],
+  "projections": []
+}

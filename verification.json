@@ -1,0 +1,72 @@
+{
+  "automated_tests": {
+    "passed": 6,
+    "failed": 0
+  },
+  "webgl_checks": [
+    "cross-material projection",
+    "occlusion prevents rear bleed",
+    "RGB identity",
+    "occlusion toggle",
+    "horizontal mirror",
+    "RGB 8-bit PSD composite round trip",
+    "PSD layer structure + hidden UV guide",
+    "DDS RGB + alpha round trip"
+  ],
+  "ui_checks": [
+    "HSTV-L original stock textures",
+    "projection across hull + turret",
+    "actual layered material PSD export",
+    "PSD source registration and automatic composite update",
+    "PSD source save reprojects hull + turret together",
+    "project save and restore",
+    "projection source remains editable after restore",
+    "text layer + font + blending",
+    "undo and redo",
+    "DDS + BLK export"
+  ],
+  "export_checks": [
+    {
+      "part": "车体",
+      "size": [
+        2048,
+        2048
+      ],
+      "changed_pixels": 488924,
+      "alpha_preserved": true
+    },
+    {
+      "part": "炮塔",
+      "size": [
+        2048,
+        1024
+      ],
+      "changed_pixels": 235298,
+      "alpha_preserved": true
+    },
+    {
+      "part": "主炮",
+      "size": [
+        1024,
+        512
+      ],
+      "changed_pixels": 0,
+      "alpha_preserved": true
+    },
+    {
+      "part": "机枪",
+      "size": [
+        256,
+        256
+      ],
+      "changed_pixels": 0,
+      "alpha_preserved": true
+    }
+  ],
+  "limits": [
+    "Photoshop application UI was not automated; controlled PSD saves were used",
+    "Not tested in War Thunder",
+    "Shared UVs repeat artwork",
+    "DXT/BC DDS and PSB/CMYK/16-bit PSD unsupported"
+  ]
+}

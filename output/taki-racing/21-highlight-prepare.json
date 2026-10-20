@@ -1,0 +1,1 @@
+{"revision":21,"operation":{"type":"fill","name":"材质 · 独立反光高光","block":"material","stage":1,"targets":["body","turret","gun"],"color":"#000000","blend":"screen","opacity":0.42,"prompt":"材质 · 独立反光高光：独立、可调整强度的颜色贴图层。"}}

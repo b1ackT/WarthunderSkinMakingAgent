@@ -1,0 +1,28 @@
+{
+  "job": {
+    "id": null,
+    "status": "idle",
+    "revision": 0,
+    "brief": "",
+    "stages": [],
+    "references": [],
+    "stage": -1,
+    "pauseAfterStage": true,
+    "allowResearch": true,
+    "feedback": [],
+    "worker": null
+  },
+  "assets": [],
+  "events": [],
+  "commands": [],
+  "context": null,
+  "canvasOnline": false,
+  "integration": {
+    "projectRoot": "E:\\迅雷下载1\\models\\skin-studio",
+    "cliPath": "E:\\迅雷下载1\\models\\skin-studio\\agent.cjs",
+    "skillPath": "E:\\迅雷下载1\\models\\skin-studio\\skills\\wt-skin-agent\\SKILL.md",
+    "previewPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\preview.png",
+    "contextPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\context.json",
+    "assetsPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\assets"
+  }
+}

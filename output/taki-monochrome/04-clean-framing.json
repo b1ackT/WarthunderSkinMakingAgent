@@ -1,0 +1,1 @@
+{"revision":16,"operation":{"type":"update","layerIds":["20d1d19c-15c9-40df-b6d2-3f8002848baa"],"values":{"visible":false},"block":"background","prompt":"模型顶面检查发现侧面白色长条通过共享UV重复覆盖车体，暂时隐藏构图区，保留干净的黑车体与白炮塔分区。"}}

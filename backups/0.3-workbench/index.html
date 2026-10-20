@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skin Studio · Texture Workshop</title>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="agent.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","fflate":"./vendor/fflate.js"}}</script>
+<script src="vendor/ag-psd.js"></script></head><body>
+<header><div class="brand"><span class="mark">S</span><div>SKIN STUDIO<small>AGENT WORKSHOP / LOCAL</small></div><span class="badge">STUDIO 0.3</span></div><div class="actions"><button id="importModel">导入模型</button><button id="openProject">打开工程</button><button id="openAgentExample">Agent 示例</button><button id="saveProject">保存工程</button><button id="export" class="primary">导出皮肤 ↗</button></div></header>
+<main><aside>
+<div class="eyebrow">MATERIALS & LAYERS</div><h1>从平面，到表面。</h1><p class="muted">图层编辑 · 模型投射 · Photoshop 联动</p>
+<label class="label">模型 <span id="vehicle">HSTV-L</span></label><label class="label" for="part">当前材质</label><select id="part"></select>
+<div class="row"><button id="importBase">导入底图</button><button id="blankBase">纯色底图</button><input id="baseColor" type="color" value="#65705d" aria-label="底图颜色"></div>
+<div class="section-head"><label class="label">图层 <span>上层优先</span></label><button id="addImage">＋ 图片</button></div>
+<div class="row"><button id="addText">T 文字</button><button id="addFill">＋ 色块</button><button id="addPaint">✎ 绘画</button></div><div id="layers"></div>
+<div id="properties" hidden>
+<div class="section-head"><label class="label">图层属性</label><button id="deleteLayer" class="danger">删除</button></div><input id="layerName" aria-label="图层名称">
+<div class="row"><button id="duplicate">复制</button><button id="layerUp">上移</button><button id="layerDown">下移</button></div>
+<label class="label" for="blend">混合模式</label><select id="blend"><option value="source-over">正常</option><option value="multiply">正片叠底</option><option value="screen">滤色</option><option value="overlay">叠加</option><option value="soft-light">柔光</option><option value="lighter">线性减淡</option></select>
+<label class="slider">不透明度 <input id="opacity" type="range" min="0" max="1" step=".01"><output></output></label>
+<button id="sourceImage" class="wide">更改图层图片…</button><button id="editProjection" class="wide" hidden>编辑整组模型投射…</button><button id="deleteProjection" class="wide danger" hidden>删除整组模型投射</button>
+<div id="textProps" hidden><label class="label">文本内容</label><textarea id="textValue" rows="2"></textarea><label class="label">字体</label><select id="font"><option>Arial</option><option>Microsoft YaHei</option><option>Georgia</option><option>Impact</option><option>Consolas</option></select><label class="row">颜色 <input id="textColor" type="color" value="#e6edf2"></label><button id="updateText" class="wide">更新文字</button></div>
+<div id="transformProps">
+<label class="slider">位置 X <input id="x" type="range" min="-1" max="1.5" step=".001"><output></output></label>
+<label class="slider">位置 Y <input id="y" type="range" min="-1" max="1.5" step=".001"><output></output></label>
+<label class="slider">宽度 <input id="w" type="range" min=".005" max="2" step=".001"><output></output></label>
+<label class="slider">高度 <input id="h" type="range" min=".005" max="2" step=".001"><output></output></label>
+<label class="slider">图片缩放 <input id="scale" type="range" min=".1" max="5" step=".01"><output></output></label>
+<label class="slider">横向偏移 <input id="dx" type="range" min="-1" max="1" step=".005"><output></output></label>
+<label class="slider">纵向偏移 <input id="dy" type="range" min="-1" max="1" step=".005"><output></output></label>
+<label class="slider">旋转 <input id="angle" type="range" min="-180" max="180" step="1"><output></output></label>
+<div class="row"><label><input id="flip" type="checkbox"> 水平翻转</label><button id="resetTransform">重置构图</button></div>
+</div>
+<div class="row"><label><input id="fillEnabled" type="checkbox"> 区域底色</label><input id="fillColor" type="color" value="#e6edf2" aria-label="区域底色"></div>
+<div class="tabs"><button id="eraseMask">擦除蒙版</button><button id="paintMask">恢复蒙版</button><button id="resetMask">重置蒙版</button></div>
+</div>
+<details open><summary>画笔</summary><div class="row"><input type="color" id="paintColor" value="#e6edf2" aria-label="画笔颜色"><button id="paint">绘画</button><button id="erasePaint">橡皮</button></div><label class="slider">笔刷大小 <input id="brush" type="range" min="2" max="160" value="24"><output>24</output></label></details>
+<details id="psPanel" open><summary><span class="ps-icon">Ps</span> Photoshop 文件联动</summary>
+<p class="hint">在 PS 保存文件后，模型自动刷新。支持 RGB / 8 位兼容 PSD，以及 PNG、JPG、TGA、未压缩 DDS。</p>
+<button id="exportPSD" class="wide">导出当前材质为分层 PSD</button><button id="exportUV" class="wide">导出透明 UV 参考 PNG</button>
+<label class="label" for="watchTarget">同步到</label><select id="watchTarget"><option value="composite">当前材质的 PS 合成图层</option><option value="base">当前材质底图（继续叠加本地图层）</option><option value="layer">当前图片图层</option><option value="projection">当前整组模型投射</option></select>
+<label class="label" for="watchPath">本地文件路径</label><input id="watchPath" placeholder="E:\\Artwork\\body.psd"><div class="row"><button id="browsePS">选择文件…</button><button id="connectPS" class="primary">开始联动</button></div><div id="watchList"></div><p class="hint">PSD 请开启“最大兼容性”；不读取未保存的 PS 画布。联动是单向读取，不会写回源文件。</p>
+</details>
+<details><summary>材质 / 游戏导出规则</summary><label class="label">游戏纹理名称 from（不含 *）</label><input id="fromName"><label class="label">输出名称（不含后缀）</label><input id="outputName"><label class="label">替换规则</label><select id="rule"><option>replace_tex</option><option>set_tex</option></select><label><input id="camoParam" type="checkbox" checked> camo_skin_tex</label><button id="importBlk" class="wide">导入 BLK 颜色贴图规则</button></details>
+</aside><section class="workspace">
+<div class="workspace-top"><div><span class="live-dot"></span><b id="projectTitle">HSTV-L / 新工程</b><span class="muted"> · 实时材质工作台</span></div><div class="actions"><button id="undo" disabled>↶ 撤销</button><button id="redo" disabled>↷ 重做</button></div></div>
+<div class="views"><section class="texture-pane"><div class="pane-head"><div><span class="eyebrow">01 / UV CANVAS</span><h2>平面图层</h2></div><label><input id="uv" type="checkbox"> UV 网格</label></div>
+<div class="toolbar"><button id="move" class="active">移动</button><button id="draw">框选色块</button><button id="fit">适应画布</button><span>滚轮缩放 · 空格拖动画布 · 图片可以直接拖入</span></div><div id="editorWrap"><canvas id="editor" aria-label="贴图编辑画布"></canvas><div id="dimensions" class="canvas-tag"></div></div><div class="pane-footer"><span id="textureName"></span><button id="png">导出合并 PNG</button></div></section>
+<section class="model-pane"><div class="pane-head"><div><span class="eyebrow">02 / SURFACE VIEW</span><h2>实时模型</h2></div><button id="startProjection" class="primary">＋ 在模型上贴图</button></div>
+<div id="viewport"><div class="view-overlay" id="viewHint">拖动旋转 · 滚轮缩放 · 右键平移 · 双击选择材质</div><div id="projectionOverlay" hidden><div id="sticker"><img id="stickerImage" draggable="false"><span id="stickerHandle"></span></div><div class="projection-label">拖动图片定位 · 右下角调整大小</div></div></div>
+<div id="projectionPanel" hidden><div class="projection-heading"><b>模型投射</b><span>图片会分配到各部件的 UV 图层</span></div><div class="row"><button id="projectionImage">选择图片…</button><button id="projectionDemo">载入校准图</button><label><input id="projectionMirror" type="checkbox"> 镜像</label></div>
+<label class="slider">整体大小 <input id="projectionSize" type="range" min=".03" max="1.4" step=".005" value=".45"><output></output></label><label class="slider">旋转 <input id="projectionAngle" type="range" min="-180" max="180" value="0"><output>0°</output></label>
+<div id="projectionTargets"></div><div class="row"><label><input id="projectionOcclusion" type="checkbox" checked> 只贴当前可见表面</label><label><input id="projectionLive" type="checkbox" checked> 实时试贴</label></div><label class="hint"><input id="projectionReference" type="checkbox"> 叠加显示平面参考图片</label><p id="projectionInfo" class="hint">可先旋转模型选好视角，再定位图片；投射时视角锁定。</p><div class="row"><button id="cancelProjection">取消</button><button id="applyProjection" class="primary">确认投射到贴图</button></div></div>
+<div class="preview-controls"><button id="resetCamera">重置视角</button><button id="leftView">左侧视图</button><button id="rightView">右侧视图</button><label><input id="wireframe" type="checkbox"> 线框</label><label><input id="compare" type="checkbox"> 对比底图</label><button id="screenshot">截图</button></div><label class="slider preview-light">预览亮度 <input id="exposure" type="range" min=".5" max="3" step=".05" value="1.3"><output>1.30</output></label><p class="preview-note">预览使用近似照明。共享 UV 会重复图案；游戏内的炮塔转动也会改变跨部件图案的对齐。</p></section></div>
+<div class="bottom-note"><b>图层留在工程里，效果落在模型上。</b><span>平面编辑 / 跨材质投射 / PS 保存后同步 / DDS + BLK</span></div>
+</section></main><footer><span id="status">加载工作台…</span><span>本地文件 · 本地处理 · 原文件保留</span></footer><input id="file" type="file" hidden><div id="toast" role="status"></div><div id="busy" hidden><div><span class="spinner"></span><p id="busyText">处理中…</p></div></div><script type="module" src="app.js?v=0.3.3"></script></body></html>

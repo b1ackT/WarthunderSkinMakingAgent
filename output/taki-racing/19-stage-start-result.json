@@ -1,0 +1,2096 @@
+{
+  "job": {
+    "id": "8ac91dbb-24e5-4536-a3d4-7f47d860e6d5",
+    "status": "running",
+    "revision": 19,
+    "brief": "我想要一个类似MIKU AMG赛事车风格的以椎名立希为角色的皮肤",
+    "stages": [
+      {
+        "title": "风格",
+        "status": "running",
+        "message": "研究 Racing Miku AMG 的赛事涂装语言，建立浅色主底、深色机械区与斜向流线的分层风格。"
+      },
+      {
+        "title": "材质",
+        "status": "pending",
+        "message": ""
+      },
+      {
+        "title": "图像或角色",
+        "status": "pending",
+        "message": ""
+      }
+    ],
+    "references": [
+      "277ffdd9-e063-4552-8d40-5c7fe8a2aca4",
+      "a46add52-b779-455a-8aa2-cba6068303fa",
+      "9141cea8-55fe-4fc7-83d5-fd39c3d2859e"
+    ],
+    "pauseAfterStage": true,
+    "allowResearch": true,
+    "stage": 0,
+    "feedback": [],
+    "worker": "当前对话中的 Agent",
+    "placement": null,
+    "createdAt": "2026-10-20T18:27:47.547Z"
+  },
+  "assets": [
+    {
+      "id": "277ffdd9-e063-4552-8d40-5c7fe8a2aca4",
+      "filename": "277ffdd9-e063-4552-8d40-5c7fe8a2aca4.png",
+      "name": "4785Taki-Shiina-Cool-More-Than-Just-Grabbing-Take-Out-DvzxYH 拷贝.png",
+      "role": "character",
+      "prompt": "",
+      "placement": {
+        "mode": "projection",
+        "camera": {
+          "position": [
+            -6.30733,
+            0.80592,
+            -1.81124
+          ],
+          "quaternion": [
+            0.01118,
+            -0.79861,
+            0.01485,
+            0.60156
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "viewport": {
+          "width": 1279.625,
+          "height": 768.5875244140625
+        },
+        "rect": {
+          "cx": 0.37419166725175834,
+          "cy": 0.5916047563247377,
+          "w": 0.6326853379591189,
+          "h": 0.1894383403885698,
+          "angle": 0
+        },
+        "targets": [
+          "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+          "5019a322-bda1-42fb-a125-2d8deb65cb31",
+          "4789092e-31ae-427d-8699-0b1c4db77153",
+          "10bd0510-ade5-48de-ac6c-9e421acb87f5"
+        ]
+      },
+      "notes": "",
+      "createdAt": "2026-10-20T18:16:10.077Z",
+      "source": "upload"
+    },
+    {
+      "id": "a46add52-b779-455a-8aa2-cba6068303fa",
+      "filename": "a46add52-b779-455a-8aa2-cba6068303fa.png",
+      "name": "Jk6nCVOfficial-art-s6W6zU.png",
+      "role": "decoration",
+      "prompt": "",
+      "placement": {
+        "mode": "projection",
+        "camera": {
+          "position": [
+            0,
+            6.68019,
+            0.00001
+          ],
+          "quaternion": [
+            -0.70709,
+            0.00441,
+            0.00441,
+            0.70709
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "viewport": {
+          "width": 1279.625,
+          "height": 768.5875244140625
+        },
+        "rect": {
+          "cx": 0.5004786463166699,
+          "cy": 0.6280351903643253,
+          "w": 0.29133529491672366,
+          "h": 0.2685445936315618,
+          "angle": 0
+        },
+        "targets": [
+          "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+          "5019a322-bda1-42fb-a125-2d8deb65cb31",
+          "4789092e-31ae-427d-8699-0b1c4db77153",
+          "10bd0510-ade5-48de-ac6c-9e421acb87f5"
+        ]
+      },
+      "notes": "",
+      "createdAt": "2026-10-20T18:16:10.117Z",
+      "source": "upload"
+    },
+    {
+      "id": "9141cea8-55fe-4fc7-83d5-fd39c3d2859e",
+      "filename": "9141cea8-55fe-4fc7-83d5-fd39c3d2859e.png",
+      "name": "VvNcVBTaki-Shiina-Pure-chibi-beA28O.png",
+      "role": "decoration",
+      "prompt": "",
+      "placement": {
+        "mode": "projection",
+        "camera": {
+          "position": [
+            0,
+            7.9624,
+            0.00001
+          ],
+          "quaternion": [
+            -0.70709,
+            0.00441,
+            0.00441,
+            0.70709
+          ],
+          "target": [
+            0,
+            1.05,
+            0
+          ],
+          "fov": 38,
+          "aspect": 1.6645,
+          "near": 0.05,
+          "far": 100
+        },
+        "viewport": {
+          "width": 1279.625,
+          "height": 768.5875244140625
+        },
+        "rect": {
+          "cx": 0.43952328830162646,
+          "cy": 0.3194170924876304,
+          "w": 0.05814205287804044,
+          "h": 0.159253162468122,
+          "angle": 0
+        },
+        "targets": [
+          "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+          "5019a322-bda1-42fb-a125-2d8deb65cb31",
+          "4789092e-31ae-427d-8699-0b1c4db77153",
+          "10bd0510-ade5-48de-ac6c-9e421acb87f5"
+        ]
+      },
+      "notes": "",
+      "createdAt": "2026-10-20T18:16:10.135Z",
+      "source": "upload"
+    },
+    {
+      "id": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+      "filename": "03203d3f-752b-45d7-a978-dfaa09aa01f9.png",
+      "name": "风格 · 独立白色构图区",
+      "role": "reference",
+      "prompt": "中性白色切角长条，透明外缘；用作用户侧面标记区域的可编辑构图底板，不含角色、文字或材质细节。",
+      "placement": null,
+      "notes": "",
+      "createdAt": "2026-10-20T18:19:10.190Z",
+      "source": "agent"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "kind": "asset",
+      "message": "素材已入库：4785Taki-Shiina-Cool-More-Than-Just-Grabbing-Take-Out-DvzxYH 拷贝.png",
+      "time": "2026-10-20T18:16:10.077Z",
+      "assetId": "277ffdd9-e063-4552-8d40-5c7fe8a2aca4"
+    },
+    {
+      "id": 2,
+      "kind": "asset",
+      "message": "素材已入库：Jk6nCVOfficial-art-s6W6zU.png",
+      "time": "2026-10-20T18:16:10.117Z",
+      "assetId": "a46add52-b779-455a-8aa2-cba6068303fa"
+    },
+    {
+      "id": 3,
+      "kind": "asset",
+      "message": "素材已入库：VvNcVBTaki-Shiina-Pure-chibi-beA28O.png",
+      "time": "2026-10-20T18:16:10.135Z",
+      "assetId": "9141cea8-55fe-4fc7-83d5-fd39c3d2859e"
+    },
+    {
+      "id": 4,
+      "kind": "queued",
+      "message": "任务已提交，等待当前对话中的 Agent 读取。",
+      "time": "2026-10-20T18:17:01.553Z"
+    },
+    {
+      "id": 5,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T18:18:00.798Z"
+    },
+    {
+      "id": 6,
+      "kind": "stage",
+      "message": "风格 · 进行中",
+      "time": "2026-10-20T18:18:01.233Z",
+      "stage": 0
+    },
+    {
+      "id": 7,
+      "kind": "progress",
+      "message": "已查看用户三张参考：场景插画、透明立绘、鼓组Q版。已查阅官方角色页；本段仅建立黑白底色与构图留白，人物和文字独立留待后续阶段。",
+      "time": "2026-10-20T18:18:46.386Z",
+      "links": [
+        {
+          "title": "椎名立希 · 官方角色页",
+          "url": "https://anime.bang-dream.com/mygo/character/taki/"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "kind": "canvas",
+      "message": "风格 · 炭黑主底色",
+      "time": "2026-10-20T18:18:46.790Z",
+      "commandId": "e7d84301-d095-42a7-a9b3-d2b3372e9463"
+    },
+    {
+      "id": 9,
+      "kind": "applied",
+      "message": "已同步 4 个独立图层，其他图层保留",
+      "time": "2026-10-20T18:18:47.334Z",
+      "commandId": "e7d84301-d095-42a7-a9b3-d2b3372e9463"
+    },
+    {
+      "id": 10,
+      "kind": "canvas",
+      "message": "风格 · 浅灰白炮塔",
+      "time": "2026-10-20T18:18:47.828Z",
+      "commandId": "01d5aa78-9569-46b8-86e9-1b1444c7e5e9"
+    },
+    {
+      "id": 11,
+      "kind": "applied",
+      "message": "已同步 1 个独立图层，其他图层保留",
+      "time": "2026-10-20T18:18:48.285Z",
+      "commandId": "01d5aa78-9569-46b8-86e9-1b1444c7e5e9"
+    },
+    {
+      "id": 12,
+      "kind": "asset",
+      "message": "素材已入库：风格 · 独立白色构图区",
+      "time": "2026-10-20T18:19:10.190Z",
+      "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9"
+    },
+    {
+      "id": 13,
+      "kind": "canvas",
+      "message": "风格 · 侧面白色构图区",
+      "time": "2026-10-20T18:19:10.643Z",
+      "commandId": "faabb170-2918-4907-8791-f32ea7214250"
+    },
+    {
+      "id": 14,
+      "kind": "applied",
+      "message": "已同步 1 个独立图层，其他图层保留",
+      "time": "2026-10-20T18:19:11.584Z",
+      "commandId": "faabb170-2918-4907-8791-f32ea7214250"
+    },
+    {
+      "id": 15,
+      "kind": "pause",
+      "message": "检测到用户编辑画布，已暂停后续落图。请以最新位置继续。",
+      "time": "2026-10-20T18:19:38.299Z"
+    },
+    {
+      "id": 16,
+      "kind": "queued",
+      "message": "已继续，等待 Agent 读取最新要求。",
+      "time": "2026-10-20T18:20:49.595Z"
+    },
+    {
+      "id": 17,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T18:21:12.676Z"
+    },
+    {
+      "id": 18,
+      "kind": "progress",
+      "message": "继续风格阶段：隐藏造成顶面重复的白色底板，检查炭黑车体与浅灰白炮塔的整体分区。人物、文字及材质仍留在后续独立阶段。",
+      "time": "2026-10-20T18:21:12.942Z"
+    },
+    {
+      "id": 19,
+      "kind": "canvas",
+      "message": "画布操作：update",
+      "time": "2026-10-20T18:21:13.324Z",
+      "commandId": "8d964119-6fa2-44fd-8d90-8a3ce2211af8"
+    },
+    {
+      "id": 20,
+      "kind": "applied",
+      "message": "已同步 1 个独立图层，其他图层保留",
+      "time": "2026-10-20T18:21:14.290Z",
+      "commandId": "8d964119-6fa2-44fd-8d90-8a3ce2211af8"
+    },
+    {
+      "id": 21,
+      "kind": "pause",
+      "message": "检测到用户编辑画布，已暂停后续落图。请以最新位置继续。",
+      "time": "2026-10-20T18:23:25.445Z"
+    },
+    {
+      "id": 22,
+      "kind": "queued",
+      "message": "任务已提交，等待当前对话中的 Agent 读取。",
+      "time": "2026-10-20T18:27:47.547Z"
+    },
+    {
+      "id": 23,
+      "kind": "running",
+      "message": "当前对话中的 Agent 已读取任务。",
+      "time": "2026-10-20T18:28:24.649Z"
+    },
+    {
+      "id": 24,
+      "kind": "stage",
+      "message": "风格 · 进行中",
+      "time": "2026-10-20T18:28:24.990Z",
+      "stage": 0
+    }
+  ],
+  "commands": [
+    {
+      "id": "e7d84301-d095-42a7-a9b3-d2b3372e9463",
+      "jobId": "db075261-c661-4231-8834-31bb6d841d50",
+      "revision": 15,
+      "status": "applied",
+      "operation": {
+        "type": "fill",
+        "name": "风格 · 炭黑主底色",
+        "block": "background",
+        "stage": 0,
+        "targets": [
+          "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+          "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+          "e02e841e-5548-4903-9376-5b38bb7a1079"
+        ],
+        "color": "#181818",
+        "opacity": 1,
+        "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。"
+      },
+      "createdAt": "2026-10-20T18:18:46.790Z",
+      "completedAt": "2026-10-20T18:18:47.331Z",
+      "result": {
+        "success": true,
+        "message": "已同步 4 个独立图层，其他图层保留",
+        "layerIds": [
+          "546ecc19-1f4a-42e7-96f9-3b357e65c83e",
+          "eba7bcb8-2cdd-4019-96b3-b5c5cd134bab",
+          "17c1a93c-b11f-4a49-8ae8-b64f00b11a30",
+          "e693b05c-1da2-4fd1-93c6-de6447f62e3d"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 1,
+          "vehicle": "HSTV-L",
+          "selectedPart": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "selectedLayerId": "546ecc19-1f4a-42e7-96f9-3b357e65c83e",
+          "camera": {
+            "position": [
+              0.09443,
+              6.14723,
+              5.12303
+            ],
+            "quaternion": [
+              -0.38379,
+              0.00953,
+              0.00396,
+              0.92336
+            ],
+            "target": [
+              -0.01146,
+              0.98963,
+              -0.00836
+            ],
+            "fov": 38,
+            "aspect": 1.6645,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                0.09443,
+                6.14723,
+                5.12303
+              ],
+              "quaternion": [
+                -0.38379,
+                0.00953,
+                0.00396,
+                0.92336
+              ],
+              "target": [
+                -0.01146,
+                0.98963,
+                -0.00836
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 769
+          },
+          "parts": [
+            {
+              "id": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "546ecc19-1f4a-42e7-96f9-3b357e65c83e",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.133Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "eba7bcb8-2cdd-4019-96b3-b5c5cd134bab",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "17c1a93c-b11f-4a49-8ae8-b64f00b11a30",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e02e841e-5548-4903-9376-5b38bb7a1079",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "e693b05c-1da2-4fd1-93c6-de6447f62e3d",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": []
+        }
+      }
+    },
+    {
+      "id": "01d5aa78-9569-46b8-86e9-1b1444c7e5e9",
+      "jobId": "db075261-c661-4231-8834-31bb6d841d50",
+      "revision": 15,
+      "status": "applied",
+      "operation": {
+        "type": "fill",
+        "name": "风格 · 浅灰白炮塔",
+        "block": "background",
+        "stage": 0,
+        "targets": [
+          "turret"
+        ],
+        "color": "#dedede",
+        "opacity": 1,
+        "prompt": "炮塔使用中性浅灰白，与炭黑车体形成清楚的黑白分区；无人物、无文字、无磨损。"
+      },
+      "createdAt": "2026-10-20T18:18:47.828Z",
+      "completedAt": "2026-10-20T18:18:48.283Z",
+      "result": {
+        "success": true,
+        "message": "已同步 1 个独立图层，其他图层保留",
+        "layerIds": [
+          "1037c74c-612a-4f33-b933-394f1b38cf21"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 1,
+          "vehicle": "HSTV-L",
+          "selectedPart": "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+          "selectedLayerId": "1037c74c-612a-4f33-b933-394f1b38cf21",
+          "camera": {
+            "position": [
+              0.09443,
+              6.14723,
+              5.12303
+            ],
+            "quaternion": [
+              -0.38379,
+              0.00953,
+              0.00396,
+              0.92336
+            ],
+            "target": [
+              -0.01146,
+              0.98963,
+              -0.00836
+            ],
+            "fov": 38,
+            "aspect": 1.6645,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                0.09443,
+                6.14723,
+                5.12303
+              ],
+              "quaternion": [
+                -0.38379,
+                0.00953,
+                0.00396,
+                0.92336
+              ],
+              "target": [
+                -0.01146,
+                0.98963,
+                -0.00836
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 769
+          },
+          "parts": [
+            {
+              "id": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "546ecc19-1f4a-42e7-96f9-3b357e65c83e",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.133Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "eba7bcb8-2cdd-4019-96b3-b5c5cd134bab",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                },
+                {
+                  "id": "1037c74c-612a-4f33-b933-394f1b38cf21",
+                  "name": "风格 · 浅灰白炮塔",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#dedede",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "炮塔使用中性浅灰白，与炭黑车体形成清楚的黑白分区；无人物、无文字、无磨损。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:48.130Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "17c1a93c-b11f-4a49-8ae8-b64f00b11a30",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e02e841e-5548-4903-9376-5b38bb7a1079",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "e693b05c-1da2-4fd1-93c6-de6447f62e3d",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": []
+        }
+      }
+    },
+    {
+      "id": "faabb170-2918-4907-8791-f32ea7214250",
+      "jobId": "db075261-c661-4231-8834-31bb6d841d50",
+      "revision": 15,
+      "status": "applied",
+      "operation": {
+        "type": "image",
+        "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+        "name": "风格 · 侧面白色构图区",
+        "block": "background",
+        "stage": 0,
+        "prompt": "依据用户第一张参考的侧面标记建立独立白色构图区，后续角色与背景图将分别置于其上。",
+        "placement": {
+          "mode": "projection",
+          "camera": {
+            "position": [
+              -8.86128,
+              1.72045,
+              -0.98301
+            ],
+            "quaternion": [
+              -0.02732,
+              -0.74418,
+              -0.03049,
+              0.66672
+            ],
+            "target": [
+              -0.01146,
+              0.98963,
+              -0.00836
+            ],
+            "fov": 38,
+            "aspect": 1.6645,
+            "near": 0.05,
+            "far": 100
+          },
+          "viewport": {
+            "width": 1279.625,
+            "height": 768.5875244140625
+          },
+          "rect": {
+            "cx": 0.40576338816914137,
+            "cy": 0.5765120680993776,
+            "w": 0.4370029900727752,
+            "h": 0.11970009540570772,
+            "angle": 0
+          },
+          "targets": [
+            "body",
+            "turret"
+          ],
+          "occlusion": true
+        }
+      },
+      "createdAt": "2026-10-20T18:19:10.643Z",
+      "completedAt": "2026-10-20T18:19:11.582Z",
+      "result": {
+        "success": true,
+        "message": "已同步 1 个独立图层，其他图层保留",
+        "layerIds": [
+          "20d1d19c-15c9-40df-b6d2-3f8002848baa"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 1,
+          "vehicle": "HSTV-L",
+          "selectedPart": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "selectedLayerId": "20d1d19c-15c9-40df-b6d2-3f8002848baa",
+          "camera": {
+            "position": [
+              0.09443,
+              6.14723,
+              5.12303
+            ],
+            "quaternion": [
+              -0.38379,
+              0.00953,
+              0.00396,
+              0.92336
+            ],
+            "target": [
+              -0.01146,
+              0.98963,
+              -0.00836
+            ],
+            "fov": 38,
+            "aspect": 1.6645,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                0.09443,
+                6.14723,
+                5.12303
+              ],
+              "quaternion": [
+                -0.38379,
+                0.00953,
+                0.00396,
+                0.92336
+              ],
+              "target": [
+                -0.01146,
+                0.98963,
+                -0.00836
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 769
+          },
+          "parts": [
+            {
+              "id": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "546ecc19-1f4a-42e7-96f9-3b357e65c83e",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.133Z"
+                  }
+                },
+                {
+                  "id": "20d1d19c-15c9-40df-b6d2-3f8002848baa",
+                  "name": "风格 · 侧面白色构图区",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "b49a47bc-f26f-4fa9-8f2a-018e232baecb",
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "依据用户第一张参考的侧面标记建立独立白色构图区，后续角色与背景图将分别置于其上。",
+                    "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+                    "versions": [
+                      {
+                        "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+                        "prompt": "依据用户第一张参考的侧面标记建立独立白色构图区，后续角色与背景图将分别置于其上。",
+                        "time": "2026-10-20T18:19:11.419Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T18:19:11.419Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "eba7bcb8-2cdd-4019-96b3-b5c5cd134bab",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                },
+                {
+                  "id": "1037c74c-612a-4f33-b933-394f1b38cf21",
+                  "name": "风格 · 浅灰白炮塔",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#dedede",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "炮塔使用中性浅灰白，与炭黑车体形成清楚的黑白分区；无人物、无文字、无磨损。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:48.130Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "17c1a93c-b11f-4a49-8ae8-b64f00b11a30",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e02e841e-5548-4903-9376-5b38bb7a1079",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "e693b05c-1da2-4fd1-93c6-de6447f62e3d",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": [
+            {
+              "id": "b49a47bc-f26f-4fa9-8f2a-018e232baecb",
+              "name": "风格 · 侧面白色构图区",
+              "camera": {
+                "position": [
+                  -8.86128,
+                  1.72045,
+                  -0.98301
+                ],
+                "quaternion": [
+                  -0.02732,
+                  -0.74418,
+                  -0.03049,
+                  0.66672
+                ],
+                "target": [
+                  -0.01146,
+                  0.98963,
+                  -0.00836
+                ],
+                "fov": 38,
+                "aspect": 1.6645,
+                "near": 0.05,
+                "far": 100
+              },
+              "rect": {
+                "cx": 0.40576,
+                "cy": 0.57651,
+                "w": 0.437,
+                "h": 0.1197,
+                "angle": 0
+              },
+              "viewport": {
+                "width": 1279.625,
+                "height": 768.58752
+              },
+              "targets": [
+                "06900110-d866-4b47-b6dc-193ff97d4d2e",
+                "3cda1291-a8cd-44c9-a0e1-442333b0767e"
+              ],
+              "occlusion": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "8d964119-6fa2-44fd-8d90-8a3ce2211af8",
+      "jobId": "db075261-c661-4231-8834-31bb6d841d50",
+      "revision": 17,
+      "status": "applied",
+      "operation": {
+        "type": "update",
+        "layerIds": [
+          "20d1d19c-15c9-40df-b6d2-3f8002848baa"
+        ],
+        "values": {
+          "visible": false
+        },
+        "block": "background",
+        "prompt": "检查发现侧面白色长条经共享UV重复到顶面。隐藏此独立底板，恢复干净的黑白分区；其他图层保持不变。"
+      },
+      "createdAt": "2026-10-20T18:21:13.324Z",
+      "completedAt": "2026-10-20T18:21:14.288Z",
+      "result": {
+        "success": true,
+        "message": "已同步 1 个独立图层，其他图层保留",
+        "layerIds": [
+          "20d1d19c-15c9-40df-b6d2-3f8002848baa"
+        ],
+        "context": {
+          "version": 1,
+          "editorRevision": 5,
+          "vehicle": "HSTV-L",
+          "selectedPart": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+          "selectedLayerId": null,
+          "camera": {
+            "position": [
+              -7.44474,
+              8.3388,
+              0.10803
+            ],
+            "quaternion": [
+              -0.26905,
+              -0.64994,
+              -0.26517,
+              0.65944
+            ],
+            "target": [
+              0,
+              1.05,
+              0
+            ],
+            "fov": 38,
+            "aspect": 1.6645,
+            "near": 0.05,
+            "far": 100
+          },
+          "views": {
+            "current": {
+              "position": [
+                -7.44474,
+                8.3388,
+                0.10803
+              ],
+              "quaternion": [
+                -0.26905,
+                -0.64994,
+                -0.26517,
+                0.65944
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "left": {
+              "position": [
+                8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                0.70663,
+                0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "right": {
+              "position": [
+                -8.8,
+                1.7,
+                0
+              ],
+              "quaternion": [
+                -0.02606,
+                -0.70663,
+                -0.02606,
+                0.70663
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "front": {
+              "position": [
+                0,
+                1.7,
+                8.8
+              ],
+              "quaternion": [
+                -0.03686,
+                0,
+                0,
+                0.99932
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            },
+            "top": {
+              "position": [
+                0,
+                9,
+                0.001
+              ],
+              "quaternion": [
+                -0.70706,
+                0,
+                0,
+                0.70715
+              ],
+              "target": [
+                0,
+                1.05,
+                0
+              ],
+              "fov": 38,
+              "aspect": 1.6645,
+              "near": 0.05,
+              "far": 100
+            }
+          },
+          "viewport": {
+            "width": 1280,
+            "height": 769
+          },
+          "parts": [
+            {
+              "id": "06900110-d866-4b47-b6dc-193ff97d4d2e",
+              "key": "body",
+              "name": "车体",
+              "width": 2048,
+              "height": 2048,
+              "output": "hstv_l_body_c",
+              "layers": [
+                {
+                  "id": "546ecc19-1f4a-42e7-96f9-3b357e65c83e",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.133Z"
+                  }
+                },
+                {
+                  "id": "20d1d19c-15c9-40df-b6d2-3f8002848baa",
+                  "name": "风格 · 侧面白色构图区",
+                  "kind": "projection",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": false,
+                  "color": "#e6edf2",
+                  "fill": false,
+                  "projectionId": "b49a47bc-f26f-4fa9-8f2a-018e232baecb",
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "检查发现侧面白色长条经共享UV重复到顶面。隐藏此独立底板，恢复干净的黑白分区；其他图层保持不变。",
+                    "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+                    "versions": [
+                      {
+                        "assetId": "03203d3f-752b-45d7-a978-dfaa09aa01f9",
+                        "prompt": "依据用户第一张参考的侧面标记建立独立白色构图区，后续角色与背景图将分别置于其上。",
+                        "time": "2026-10-20T18:19:11.419Z"
+                      }
+                    ],
+                    "updatedAt": "2026-10-20T18:21:14.133Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "3cda1291-a8cd-44c9-a0e1-442333b0767e",
+              "key": "turret",
+              "name": "炮塔",
+              "width": 2048,
+              "height": 1024,
+              "output": "hstv_l_turret_c",
+              "layers": [
+                {
+                  "id": "eba7bcb8-2cdd-4019-96b3-b5c5cd134bab",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                },
+                {
+                  "id": "1037c74c-612a-4f33-b933-394f1b38cf21",
+                  "name": "风格 · 浅灰白炮塔",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#dedede",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "炮塔使用中性浅灰白，与炭黑车体形成清楚的黑白分区；无人物、无文字、无磨损。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:48.130Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e5d1ea99-ad20-49e1-a6e4-e683bf0b9891",
+              "key": "gun",
+              "name": "主炮",
+              "width": 1024,
+              "height": 512,
+              "output": "hstv_l_gun_c",
+              "layers": [
+                {
+                  "id": "17c1a93c-b11f-4a49-8ae8-b64f00b11a30",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "e02e841e-5548-4903-9376-5b38bb7a1079",
+              "key": "mg",
+              "name": "机枪",
+              "width": 256,
+              "height": 256,
+              "output": "hstv_l_mg_c",
+              "layers": [
+                {
+                  "id": "e693b05c-1da2-4fd1-93c6-de6447f62e3d",
+                  "name": "风格 · 炭黑主底色",
+                  "kind": "fill",
+                  "x": 0,
+                  "y": 0,
+                  "w": 1,
+                  "h": 1,
+                  "scale": 1,
+                  "angle": 0,
+                  "dx": 0,
+                  "dy": 0,
+                  "opacity": 1,
+                  "blend": "source-over",
+                  "visible": true,
+                  "color": "#181818",
+                  "fill": true,
+                  "agent": {
+                    "block": "background",
+                    "stage": 0,
+                    "prompt": "黑白主题的中性炭黑底色；独立背景层。保留为可调整图层，后续材质和人物分别叠加。",
+                    "versions": [],
+                    "updatedAt": "2026-10-20T18:18:47.135Z"
+                  }
+                }
+              ]
+            }
+          ],
+          "projections": [
+            {
+              "id": "b49a47bc-f26f-4fa9-8f2a-018e232baecb",
+              "name": "风格 · 侧面白色构图区",
+              "camera": {
+                "position": [
+                  -8.86128,
+                  1.72045,
+                  -0.98301
+                ],
+                "quaternion": [
+                  -0.02732,
+                  -0.74418,
+                  -0.03049,
+                  0.66672
+                ],
+                "target": [
+                  -0.01146,
+                  0.98963,
+                  -0.00836
+                ],
+                "fov": 38,
+                "aspect": 1.6645,
+                "near": 0.05,
+                "far": 100
+              },
+              "rect": {
+                "cx": 0.40576,
+                "cy": 0.57651,
+                "w": 0.437,
+                "h": 0.1197,
+                "angle": 0
+              },
+              "viewport": {
+                "width": 1279.625,
+                "height": 768.58752
+              },
+              "targets": [
+                "06900110-d866-4b47-b6dc-193ff97d4d2e",
+                "3cda1291-a8cd-44c9-a0e1-442333b0767e"
+              ],
+              "occlusion": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "context": {
+    "version": 1,
+    "editorRevision": 11,
+    "vehicle": "HSTV-L",
+    "selectedPart": "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+    "selectedLayerId": null,
+    "camera": {
+      "position": [
+        -5.69237,
+        0.82972,
+        -1.63464
+      ],
+      "quaternion": [
+        0.01118,
+        -0.79861,
+        0.01485,
+        0.60156
+      ],
+      "target": [
+        0,
+        1.05,
+        0
+      ],
+      "fov": 38,
+      "aspect": 1.6645,
+      "near": 0.05,
+      "far": 100
+    },
+    "views": {
+      "current": {
+        "position": [
+          -5.69237,
+          0.82972,
+          -1.63464
+        ],
+        "quaternion": [
+          0.01118,
+          -0.79861,
+          0.01485,
+          0.60156
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "left": {
+        "position": [
+          8.8,
+          1.7,
+          0
+        ],
+        "quaternion": [
+          -0.02606,
+          0.70663,
+          0.02606,
+          0.70663
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "right": {
+        "position": [
+          -8.8,
+          1.7,
+          0
+        ],
+        "quaternion": [
+          -0.02606,
+          -0.70663,
+          -0.02606,
+          0.70663
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "front": {
+        "position": [
+          0,
+          1.7,
+          8.8
+        ],
+        "quaternion": [
+          -0.03686,
+          0,
+          0,
+          0.99932
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      },
+      "top": {
+        "position": [
+          0,
+          9,
+          0.001
+        ],
+        "quaternion": [
+          -0.70706,
+          0,
+          0,
+          0.70715
+        ],
+        "target": [
+          0,
+          1.05,
+          0
+        ],
+        "fov": 38,
+        "aspect": 1.6645,
+        "near": 0.05,
+        "far": 100
+      }
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 769
+    },
+    "parts": [
+      {
+        "id": "cf1d990a-c7b2-4c14-bdc8-21d60a87f391",
+        "key": "body",
+        "name": "车体",
+        "width": 2048,
+        "height": 2048,
+        "output": "hstv_l_body_c",
+        "layers": []
+      },
+      {
+        "id": "5019a322-bda1-42fb-a125-2d8deb65cb31",
+        "key": "turret",
+        "name": "炮塔",
+        "width": 2048,
+        "height": 1024,
+        "output": "hstv_l_turret_c",
+        "layers": []
+      },
+      {
+        "id": "4789092e-31ae-427d-8699-0b1c4db77153",
+        "key": "gun",
+        "name": "主炮",
+        "width": 1024,
+        "height": 512,
+        "output": "hstv_l_gun_c",
+        "layers": []
+      },
+      {
+        "id": "10bd0510-ade5-48de-ac6c-9e421acb87f5",
+        "key": "mg",
+        "name": "机枪",
+        "width": 256,
+        "height": 256,
+        "output": "hstv_l_mg_c",
+        "layers": []
+      }
+    ],
+    "projections": []
+  },
+  "canvasOnline": true,
+  "integration": {
+    "projectRoot": "E:\\迅雷下载1\\models\\skin-studio",
+    "cliPath": "E:\\迅雷下载1\\models\\skin-studio\\agent.cjs",
+    "skillPath": "E:\\迅雷下载1\\models\\skin-studio\\skills\\wt-skin-agent\\SKILL.md",
+    "previewPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\preview.png",
+    "contextPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\context.json",
+    "assetsPath": "E:\\迅雷下载1\\models\\skin-studio\\.studio-agent\\assets"
+  }
+}

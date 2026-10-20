@@ -1,0 +1,41 @@
+{
+  "source": "HSTV-L.obj + HSTV-L.mtl",
+  "editable_color_maps": [
+    "hstv_l_body_c",
+    "hstv_l_turret_c",
+    "hstv_l_gun_c",
+    "hstv_l_mg_c"
+  ],
+  "shared_space": "All materials reference triangles in the same OBJ coordinate system. Projection is performed in this shared 3D space and baked separately to UV maps.",
+  "uv_count": 130539,
+  "uv_outside_0_1": 130239,
+  "uv_min": [
+    -5.989,
+    -6.905
+  ],
+  "uv_max": [
+    6.8554,
+    5.9084
+  ],
+  "triangles_by_material": {
+    "98ee86fc-8d99-4097-a922-a07ef211e010": 3704,
+    "a9c8b152-7702-4662-b333-adcaaebc1aff": 23763,
+    "dd9583da-d732-4249-8e84-d5f4469bde1e": 120,
+    "d002aa82-6fef-4d2b-9317-686364a6177a": 11185,
+    "6d607722-76db-4bfe-b86f-bc40e86b174a": 118,
+    "886cb671-d4fd-4065-892f-47b17219c36d": 11030,
+    "f6cb0e96-e9b1-4cc8-8f31-40f634866f24": 1822,
+    "c85028ff-ebc1-4ee7-84fb-14ba717f84e4": 248,
+    "d7aff84e-f5cf-4556-8be6-091dcc3f5bad": 58293,
+    "282a2f20-12f5-4515-beae-7d2a97883d73": 3666,
+    "9183ea31-85e7-4329-b128-07202ae4391c": 3666,
+    "79112481-0aea-4c98-9100-96716972e9dc": 336,
+    "77cc047c-7e12-473e-b0b2-153ab877a9d8": 1689,
+    "17a32d3b-7e11-432d-9cec-6e782772a341": 798
+  },
+  "limitations": [
+    "Shared UV islands necessarily repeat artwork",
+    "Turret motion changes alignment across separate parts",
+    "Input JPEG textures have no source DDS alpha channel"
+  ]
+}
