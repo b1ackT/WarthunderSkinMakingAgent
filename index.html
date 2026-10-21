@@ -1,18 +1,28 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skin Studio · Texture Workshop</title>
-<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="agent.css?v=0.4.1">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="studio.css?v=0.5.0"><link rel="stylesheet" href="agent.css?v=0.5.1">
 <script type="importmap">{"imports":{"three":"./vendor/three.module.js","fflate":"./vendor/fflate.js"}}</script>
 <script src="vendor/ag-psd.js"></script></head><body>
-<header><div class="brand"><span class="mark">S</span><div>SKIN STUDIO<small>AGENT WORKSHOP / LOCAL</small></div><span class="badge">STUDIO 0.4</span></div><div class="actions"><button id="importModel">导入模型</button><button id="openProject">打开工程</button><button id="saveProject">保存工程</button><button id="export" class="primary">导出皮肤 ↗</button></div></header>
+<header><div class="brand"><span class="mark">S</span><div>SKIN STUDIO<small>AGENT WORKSHOP / LOCAL</small></div><span class="badge">STUDIO 0.5</span></div><div class="actions"><button id="importModel">导入模型</button><button id="openProject">打开工程</button><button id="saveProject">保存工程</button><button id="export" class="primary">导出皮肤 ↗</button></div></header>
 <main><aside>
 <div class="eyebrow">MATERIALS & LAYERS</div><h1>从平面，到表面。</h1><p class="muted">图层编辑 · 模型投射 · Photoshop 联动</p>
 <label class="label">模型 <span id="vehicle">HSTV-L</span></label><label class="label" for="part">当前材质</label><select id="part"></select>
 <div class="row"><button id="importBase">导入底图</button><button id="blankBase">纯色底图</button><input id="baseColor" type="color" value="#65705d" aria-label="底图颜色"></div>
 <div class="section-head"><label class="label">图层 <span>上层优先</span></label><button id="addImage">＋ 图片</button></div>
 <div class="row"><button id="addText">T 文字</button><button id="addFill">＋ 色块</button><button id="addPaint">✎ 绘画</button></div><div id="layers"></div>
+<details id="distancePanel"><summary>可变皮肤 · 远近渐变</summary>
+<label><input id="mipEnabled" type="checkbox"> 启用近 / 中 / 远图案</label><p class="hint" id="mipSummary"></p>
+<div id="mipSettings" hidden><label class="label">新图层加入</label><select id="creationDistance"><option value="all">所有距离共用</option><option value="near">近景</option><option value="mid">中景</option><option value="far">远景</option></select>
+<div class="distance-numbers"><label>中景层级<input id="mipMid" type="number" min="1" max="10" value="3"></label><label>远景层级<input id="mipFar" type="number" min="2" max="14" value="6"></label></div>
+<label><input id="mipSmooth" type="checkbox" checked> 平滑渐变</label><label class="label">模型预览</label><select id="mipMode"><option value="manual">手动对比图案</option><option value="auto">自动随远近 / 角度采样</option></select>
+<div class="row"><button id="previewnear">近景</button><button id="previewmid">中景</button><button id="previewfar">远景</button></div>
+<label class="slider">过渡层级<input id="mipLevel" type="range" min="0" max="14" step=".1" value="0"><output>0.0</output></label>
+<p class="hint">层级不是米数。自动模式使用真实 mip 采样；游戏的画质、角度和分辨率会影响切换。导出含完整 DDS mip 链，需在游戏内核对效果。</p></div></details>
 <div id="properties" hidden>
 <div class="section-head"><label class="label">图层属性</label><button id="deleteLayer" class="danger">删除</button></div><input id="layerName" aria-label="图层名称">
 <div class="row"><button id="duplicate">复制</button><button id="layerUp">上移</button><button id="layerDown">下移</button></div>
+<label class="label" for="layerDistance">此图层在哪些距离显示</label><select id="layerDistance"><option value="all">所有距离共用</option><option value="near">近景</option><option value="mid">中景</option><option value="far">远景</option></select>
+<div class="row"><select id="copyDistanceTarget" aria-label="复制目标距离"><option value="near">近景</option><option value="mid">中景</option><option value="far">远景</option></select><button id="copyDistance">复制到此距离</button></div>
 <label class="label" for="blend">混合模式</label><select id="blend"><option value="source-over">正常</option><option value="multiply">正片叠底</option><option value="screen">滤色</option><option value="overlay">叠加</option><option value="soft-light">柔光</option><option value="lighter">线性减淡</option></select>
 <label class="slider">不透明度 <input id="opacity" type="range" min="0" max="1" step=".01"><output></output></label>
 <button id="sourceImage" class="wide">更改图层图片…</button><button id="editProjection" class="wide" hidden>编辑整组模型投射…</button><button id="deleteProjection" class="wide danger" hidden>删除整组模型投射</button>
@@ -50,4 +60,4 @@
 <div id="projectionTargets"></div><div class="row"><label><input id="projectionOcclusion" type="checkbox" checked> 只贴当前可见表面</label><label><input id="projectionLive" type="checkbox" checked> 实时试贴</label></div><label class="hint"><input id="projectionReference" type="checkbox"> 叠加显示平面参考图片</label><p id="projectionInfo" class="hint">可先旋转模型选好视角，再定位图片；投射时视角锁定。</p><div class="row"><button id="cancelProjection">取消</button><button id="applyProjection" class="primary">确认投射到贴图</button></div></div>
 <div class="preview-controls"><button id="resetCamera">重置视角</button><button id="leftView">左侧视图</button><button id="rightView">右侧视图</button><label><input id="wireframe" type="checkbox"> 线框</label><label><input id="compare" type="checkbox"> 对比底图</label><button id="screenshot">截图</button></div><label class="slider preview-light">预览亮度 <input id="exposure" type="range" min=".5" max="3" step=".05" value="1.3"><output>1.30</output></label><p class="preview-note">预览使用近似照明。共享 UV 会重复图案；游戏内的炮塔转动也会改变跨部件图案的对齐。</p></section></div>
 <div class="bottom-note"><b>图层留在工程里，效果落在模型上。</b><span>平面编辑 / 跨材质投射 / PS 保存后同步 / DDS + BLK</span></div>
-</section></main><footer><span id="status">加载工作台…</span><span>本地文件 · 本地处理 · 原文件保留</span></footer><input id="file" type="file" hidden><div id="toast" role="status"></div><div id="busy" hidden><div><span class="spinner"></span><p id="busyText">处理中…</p></div></div><script type="module" src="app.js?v=0.4.1"></script></body></html>
+</section></main><footer><span id="status">加载工作台…</span><span>本地文件 · 本地处理 · 原文件保留</span></footer><input id="file" type="file" hidden><div id="toast" role="status"></div><div id="busy" hidden><div><span class="spinner"></span><p id="busyText">处理中…</p></div></div><script type="module" src="app.js?v=0.5.1"></script></body></html>

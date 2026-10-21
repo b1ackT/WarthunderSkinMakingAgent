@@ -48,3 +48,17 @@ test('image registration validates signatures and late new reference pauses', as
   assert.equal(s.job.status, 'paused'); assert.ok(s.job.references.includes(a.id));
   assert.ok((await s.assetFile(a.id)).path.startsWith(s.assetsDir + path.sep));
 });
+
+test('research focus and distance intent persist in the submitted workflow', async t => {
+ const s = await fixture(t); await s.start({brief:'赛车痛车', researchFocus:'官方侧面，脸部避开接缝', distanceLivery:true, allowResearch:true});
+ assert.equal(s.job.distanceLivery,true);assert.equal(s.job.researchFocus,'官方侧面，脸部避开接缝');
+ const copy = new AgentStore(s.projectRoot);await copy.ready;assert.equal(copy.job.distanceLivery,true);assert.equal(copy.job.researchFocus,s.job.researchFocus);
+});
+
+test('canvas mip changes sync agent intent and retain pause/revision protections', async t => {
+ const s=await fixture(t);const r=s.job.revision;
+ await s.updateContext({editorRevision:2,mipmap:{enabled:true}});
+ assert.equal(s.job.distanceLivery,true);assert.equal(s.job.status,'paused');assert.equal(s.job.revision,r+1);
+ await s.updateContext({editorRevision:3,mipmap:{enabled:false}});assert.equal(s.job.distanceLivery,false);
+ const copy=new AgentStore(s.projectRoot);await copy.ready;assert.equal(copy.job.distanceLivery,false);
+});

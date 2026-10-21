@@ -5,7 +5,7 @@
 <script type="module">
 import * as THREE from 'three';
 import {buildUVGeometry,bakeProjection} from '../projection.js';
-import {canvas,readImage,toDDS} from '../image-io.js';
+import {canvas,readImage,toDDS} from '../image-io.js?v=0.4.2';
 const results=[];const assert=(value,label)=>{if(!value)throw Error(label);results.push('PASS: '+label);};
 document.getElementById('run').onclick=async()=>{
  try{
@@ -30,6 +30,7 @@ document.getElementById('run').onclick=async()=>{
   const tree=agPsd.readPsd(psd,{skipCompositeImageData:true,skipLayerImageData:true,skipThumbnail:true});assert(tree.children.length===2&&tree.children[1].hidden,'PSD contains editable raster layers and a hidden UV guide');
   const alpha=canvas(128,128),ag=alpha.getContext('2d');ag.fillStyle='#454545';ag.fillRect(0,0,128,128);
   const dds=toDDS({canvas:source,alpha}),back=await readImage(dds,'fixture.dds');assert(back.getContext('2d').getImageData(20,20,1,1).data[0]===255&&dds[131]===69,'DDS RGB and original alpha survive round-trip');
+  const direct=toDDS({canvas:source,alpha},{alphaOverride:0});assert(direct[131]===0&&direct[130]===255,'direct albedo replacement forces black alpha without changing RGB');
   document.getElementById('result').textContent=results.join('\n')+'\nALL CHECKS PASSED';renderer.dispose();
  }catch(error){document.getElementById('result').textContent=results.join('\n')+'\nFAIL: '+error.message;console.error(error);}
 };

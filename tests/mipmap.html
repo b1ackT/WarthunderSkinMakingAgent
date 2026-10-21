@@ -1,0 +1,56 @@
+<!doctype html><meta charset="utf-8"><title>Distance layers integration checks</title>
+<style>body{background:#17212b;color:#dce7f1;font:14px system-ui}iframe{width:1440px;height:1000px;border:0}pre{white-space:pre-wrap}</style>
+<pre id="result">RUNNING</pre><iframe id="studio" src="../?test=distance"></iframe>
+<script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+<script type="module">
+import {toDDS} from '../image-io.js?v=0.5.0';
+const frame=document.querySelector('iframe'),results=[];const assert=(v,s)=>{if(!v)throw Error(s);results.push('PASS '+s);document.querySelector('pre').textContent=results.join('\n');};
+async function run(){
+ try{
+ const t=frame.contentWindow.studioTest;if(!t){setTimeout(run,100);return;}const doc=frame.contentDocument,$=id=>doc.getElementById(id);
+ const errors=[];frame.contentWindow.addEventListener('error',e=>errors.push(e.message));
+ assert(!!$('distancePanel')&&!!$('layerDistance'),'distance controls mounted');
+ const original=t.context().editorRevision;
+ for(const [band,color]of [['near','#ff0000'],['mid','#00ff00'],['far','#0000ff']])await t.apply({type:'fill',targets:['body'],distanceBand:band,color,name:band,block:'background'});
+ await t.apply({type:'update',mipmap:{enabled:true,midLevel:2,farLevel:4,smooth:true}});
+ const p=t.state.parts[0],pixel=()=>[...p.canvas.getContext('2d').getImageData(10,10,1,1).data].slice(0,3);
+ assert(pixel().join()==='255,0,0','near composition selects near layers');
+ await t.apply({type:'preview',mipPreview:{mode:'manual',level:2}});assert(pixel().join()==='0,255,0','mid composition selects mid layers');
+ await t.apply({type:'preview',mipPreview:{mode:'manual',level:1}});const mix=pixel();assert(Math.abs(mix[0]-128)<2&&Math.abs(mix[1]-128)<2&&mix[2]===0,'intermediate blends complete composites');
+ await t.apply({type:'preview',mipPreview:{mode:'manual',level:4}});assert(pixel().join()==='0,0,255','far composition selects far layers');
+ assert(t.context().editorRevision===original,'agent operations and preview do not impersonate user edits');
+ const mips=t.distanceMipmaps(p),dds=toDDS(p,{mipmaps:mips,alphaOverride:0});assert(mips.length===12&&new DataView(dds.buffer).getUint32(28,true)===12,'export contains full DDS mip chain');
+ assert(dds[130]===255&&dds[131]===0,'export uses near top level even with far preview selected');
+ const near=p.layers[0];t.state.selected=near.id;
+ $('copyDistanceTarget').value='far';$('copyDistance').click();assert(p.layers.at(-1).distanceBand==='far'&&p.layers[0].distanceBand==='near','distance copy preserves original');
+ await t.apply({type:'preview',mipPreview:{mode:'auto',level:0}});t.renderer.render(t.scene,t.camera);assert(p.texture.mipmaps.length===12&&!p.texture.generateMipmaps,'automatic WebGL preview uploads explicit mip chain');assert(t.renderer.getContext().getError()===0,'WebGL reports no mip upload error');
+ const layer=t.state.parts[0].layers.at(-1),encoded=t.serializeLayer(layer),restored=await t.hydrateLayer(JSON.parse(JSON.stringify(encoded)));assert(restored.distanceBand==='far'&&restored.mask,'distance layer survives serialization');
+ await t.apply({type:'update',mipmap:{enabled:false}});assert(pixel().join()==='255,0,0'&&p.layers.some(l=>l.distanceBand==='far'),'disable preserves alternate layers and uses near');
+ const a=p.layers[0];const other=t.state.parts[1];await t.apply({type:'fill',targets:['turret'],distanceBand:'near',color:'#ff0000'});const b=other.layers.at(-1);a.projectionId=b.projectionId='fixture-linked';t.state.projections.push({id:'fixture-linked',distanceBand:'near',name:'fixture',rect:{cx:.5,cy:.5,w:.2,h:.2,angle:0},targets:[p.id,other.id],camera:t.context().views.left,image:p.base});
+ b.agent={locked:true};let blocked=false;try{await t.apply({type:'update',targetLayerId:a.id,values:{distanceBand:'mid'}});}catch{blocked=true;}assert(blocked&&a.distanceBand==='near','locked projection sibling blocks regrouping');b.agent.locked=false;
+ await t.apply({type:'update',targetLayerId:a.id,values:{distanceBand:'mid'}});assert(a.distanceBand==='mid'&&b.distanceBand==='mid','projection siblings regroup together');
+ t.state.part=0;t.state.selected=a.id;$('copyDistanceTarget').value='far';$('copyDistance').click();const copied=p.layers.at(-1);const linked=other.layers.find(l=>l.projectionId===copied.projectionId);assert(copied.projectionId!==a.projectionId&&linked?.distanceBand==='far','projection copy makes a separate linked group across materials');
+ await t.apply({type:'update',mipmap:{enabled:true,midLevel:2,farLevel:4,smooth:true}});
+ const saved={version:2,vehicle:t.state.vehicle,builtin:true,model:t.state.modelSource,mipmap:{...t.state.mipmap},parts:t.state.parts.map(p=>({id:p.id,key:p.key,name:p.name,from:p.from,output:p.output,rule:p.rule,param:p.param,materialPath:p.materialPath,base:p.base.toDataURL(),alpha:p.alpha?.toDataURL(),layers:p.layers.map(t.serializeLayer)})),projections:t.state.projections.map(d=>({...d,image:undefined,imageSrc:t.getImageSrc(d.image)}))};
+ await t.restoreProject(JSON.parse(JSON.stringify(saved)));assert(t.state.mipmap.enabled&&t.state.mipmap.farLevel===4&&t.state.parts[1].layers.some(l=>l.distanceBand==='far'),'project restore preserves distance settings and layers');
+ const fake={job:{id:null,status:'idle',revision:0,stages:[],feedback:[],allowResearch:true},assets:[],events:[],integration:{}};let submitted;
+ const workflow=new t.AgentWorkspace({context:t.context,preview:()=>'',busy:()=>false,selected:()=>null,toast:()=>{},fail:e=>{throw e;},api:async(path,options={})=>{
+  if(path.endsWith('/commands'))return {job:fake.job,commands:[]};
+  if(path.endsWith('/job')&&options.method==='POST'){submitted=JSON.parse(options.body);fake.job={...submitted,id:'isolated-ui-fixture',status:'queued',revision:1,stage:-1,stages:submitted.stages.map(title=>({title,status:'pending'}))};}
+  return fake;
+ }});clearInterval(workflow.timer);await new Promise(r=>setTimeout(r,30));
+ assert($('agentDistanceLivery').checked===$('mipEnabled').checked&&!$('agentDistanceLivery').closest('details'),'workflow toggle is prominent and follows restored project');
+ for(const step of [0,1,2]){workflow.goStep(step);assert(!$('agentDistanceLivery').closest('[hidden]'),'mipmap stays available in workflow step '+step);}
+ $('agentDistanceLivery').click();assert(!$('mipEnabled').checked&&!t.state.mipmap.enabled,'workflow switch disables sidebar and canvas together');
+ $('mipEnabled').click();assert($('agentDistanceLivery').checked&&t.state.mipmap.enabled,'sidebar switch enables workflow and canvas together');
+ $('agentMipMiddle').value='3';$('agentMipMiddle').dispatchEvent(new frame.contentWindow.Event('change'));assert(t.state.mipmap.midLevel===3&&$('mipMid').value==='3','workflow settings update canonical project');
+ $('mipFar').value='6';$('mipFar').dispatchEvent(new frame.contentWindow.Event('change'));assert($('agentMipDistant').value==='6','sidebar settings update workflow');
+ $('agentMipMid').click();assert(t.state.mipLevel===3&&$('agentMipLevel').value==='3','workflow preview button drives model preview');
+ $('agentBrief').value='isolated test';await workflow.submit();assert(submitted.distanceLivery===t.state.mipmap.enabled,'submitted agent task matches enabled project');
+ fake.job.distanceLivery=false;workflow.render();assert($('agentDistanceLivery').checked,'stale task intent does not override canvas switch');
+ assert(!errors.length,'no uncaught application errors');
+ document.querySelector('pre').textContent=results.join('\n')+'\nALL CHECKS PASSED';
+ }catch(e){document.querySelector('pre').textContent=results.join('\n')+'\nFAIL '+e.stack;}
+}
+run();
+</script>

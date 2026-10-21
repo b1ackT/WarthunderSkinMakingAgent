@@ -39,8 +39,16 @@ export function decodeDDS(bytes){
  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const pixel=v.getUint32(128+y*pitch+x*4,true),i=(y*w+x)*4;for(let ch=0;ch<4;ch++)data[i+ch]=masks[ch]?Math.round(((pixel&masks[ch])>>>shifts[ch])*255/(masks[ch]>>>shifts[ch])):(ch===3?255:0);}
  const alpha=canvas(w,h),ad=alpha.getContext('2d').createImageData(w,h);for(let i=0;i<data.length;i+=4){ad.data[i]=ad.data[i+1]=ad.data[i+2]=data[i+3];ad.data[i+3]=255;data[i+3]=255;}alpha.getContext('2d').putImageData(ad,0,0);const c=canvas(w,h);c.getContext('2d').putImageData(new ImageData(data,w,h),0,0);c.sourceAlpha=alpha;return c;
 }
-export function toDDS(p){
- const w=p.canvas.width,h=p.canvas.height,g=p.canvas.getContext('2d'),data=g.getImageData(0,0,w,h).data;let alpha=null;if(p.alpha){const a=canvas(w,h);a.getContext('2d').drawImage(p.alpha,0,0,w,h);alpha=a.getContext('2d').getImageData(0,0,w,h).data;}
- const bytes=new Uint8Array(128+w*h*4),v=new DataView(bytes.buffer);const put=(o,n)=>v.setUint32(o,n,true);put(0,0x20534444);put(4,124);put(8,0x100f);put(12,h);put(16,w);put(20,w*4);put(76,32);put(80,0x41);put(88,32);put(92,0x00ff0000);put(96,0x0000ff00);put(100,0x000000ff);put(104,0xff000000);put(108,0x1000);
- for(let i=0;i<data.length;i+=4){bytes[128+i]=data[i+2];bytes[129+i]=data[i+1];bytes[130+i]=data[i];bytes[131+i]=alpha?alpha[i]:255;}return bytes;
+export function toDDS(p,{alphaOverride,mipmaps}={}){
+ const levels=mipmaps?.length?mipmaps:[p.canvas],w=p.canvas.width,h=p.canvas.height;
+ let expectedW=w,expectedH=h;
+ for(const level of levels){if(level.width!==expectedW||level.height!==expectedH)throw Error('DDS mip尺寸不连续');expectedW=Math.max(1,Math.floor(expectedW/2));expectedH=Math.max(1,Math.floor(expectedH/2));}
+ if(levels.length>1&&(levels.at(-1).width!==1||levels.at(-1).height!==1))throw Error('DDS mip链须完整到1×1');
+ const bytes=new Uint8Array(128+levels.reduce((n,l)=>n+l.width*l.height*4,0)),v=new DataView(bytes.buffer),multi=levels.length>1;const put=(o,n)=>v.setUint32(o,n,true);
+ put(0,0x20534444);put(4,124);put(8,0x100f|(multi?0x20000:0));put(12,h);put(16,w);put(20,w*4);if(multi)put(28,levels.length);put(76,32);put(80,0x41);put(88,32);put(92,0x00ff0000);put(96,0x0000ff00);put(100,0x000000ff);put(104,0xff000000);put(108,0x1000|(multi?0x400008:0));
+ let offset=128;
+ for(const level of levels){const data=level.getContext('2d').getImageData(0,0,level.width,level.height).data;let alpha=null;
+ if(p.alpha){const a=canvas(level.width,level.height);a.getContext('2d').drawImage(p.alpha,0,0,a.width,a.height);alpha=a.getContext('2d').getImageData(0,0,a.width,a.height).data;}
+ for(let i=0;i<data.length;i+=4){bytes[offset+i]=data[i+2];bytes[offset+i+1]=data[i+1];bytes[offset+i+2]=data[i];bytes[offset+i+3]=alphaOverride??(alpha?alpha[i]:255);}offset+=data.length;
+ }return bytes;
 }

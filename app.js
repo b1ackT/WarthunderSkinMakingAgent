@@ -2,15 +2,18 @@ import * as THREE from 'three';
 import { OrbitControls } from './vendor/jsm/controls/OrbitControls.js';
 import { OBJLoader } from './vendor/jsm/loaders/OBJLoader.js';
 import { zipSync, unzipSync, strToU8, strFromU8 } from 'fflate';
-import { canvas, copyCanvas, imageFrom, readImage, download, splitBase, toDDS } from './image-io.js';
+import { canvas, copyCanvas, imageFrom, readImage, download, splitBase, toDDS } from './image-io.js?v=0.5.0';
 import { buildUVGeometry, bakeProjection, captureCamera, restoreCamera, reframeRectangle } from './projection.js';
-import { AgentWorkspace } from './agent-ui.js?v=0.4.1';
+import { AgentWorkspace } from './agent-ui.js?v=0.5.1';
+import { exportPolicy, skinConfig } from './skin-export.js';
+import { DISTANCE_BANDS, DEFAULT_MIPMAP, normalizeMipmap, validateMipmap, mipWeights, mipDimensions, layerInBand } from './mipmap.js';
 
 const $ = id => document.getElementById(id);
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const state = {
   parts: [], part: 0, selected: null, tool: 'move', vehicle: 'HSTV-L', builtin: true,
   modelSource: null, modelFiles: null, projections: [], history: [], redo: [],
+  mipmap: { ...DEFAULT_MIPMAP }, mipPreview: 'manual', mipLevel: 0, creationDistance: 'all',
   zoom: 1, panX: 0, panY: 0, space: false, brush: 24, busy: false, links: [],
 };
 let renderer, scene, camera, controls, model, geometries, textureTransform, drag, uvCache;
@@ -37,7 +40,7 @@ function getImageSrc(im) { return im.src?.startsWith('data:') ? im.src : copyCan
 // Layer images are immutable except paint layers; masks are editable raster data.
 function cloneLayers(layers) { return layers.map(l => ({ ...l, agent: l.agent ? structuredClone(l.agent) : undefined, mask: copyCanvas(l.mask), image: l.kind === 'paint' && l.image ? copyCanvas(l.image) : l.image })); }
 function snapshot(baseIds = []) {
-  return { part: state.part, selected: state.selected, layers: state.parts.map(p => cloneLayers(p.layers)),
+  return { mipmap: { ...state.mipmap }, part: state.part, selected: state.selected, layers: state.parts.map(p => cloneLayers(p.layers)),
     bases: Object.fromEntries(state.parts.filter(p => baseIds.includes(p.id)).map(p => [p.id, { base: copyCanvas(p.base), alpha: p.alpha }])),
     projections: state.projections.map(d => ({ ...d, rect: { ...d.rect }, targets: [...d.targets], camera: structuredClone(d.camera) })) };
 }
@@ -50,12 +53,12 @@ async function travel(from, to) {
   if (!from.length || draft) return;
   editorRevision++; const entry = from.pop(); to.push(snapshot(Object.keys(entry.bases)));
   state.parts.forEach((p, i) => { p.layers = cloneLayers(entry.layers[i]); if (entry.bases[p.id]) { p.base = copyCanvas(entry.bases[p.id].base); p.alpha = entry.bases[p.id].alpha; p.original.image = p.base; p.original.needsUpdate = true; } });
-  state.projections = entry.projections; state.part = entry.part; state.selected = entry.selected;
+  state.mipmap = normalizeMipmap(entry.mipmap); syncMipmapUI(); state.projections = entry.projections; state.part = entry.part; state.selected = entry.selected;
   composeAll(); refresh(); historyButtons();
 }
 function clearHistory() { editorRevision++; state.history = []; state.redo = []; historyButtons(); }
 function makePart(name, image, from, output, key = null, alpha = null, id = crypto.randomUUID()) {
-  const split = splitBase(image), base = split.base, p = { id, name, key, from, output, rule: 'replace_tex', param: true, base, alpha: alpha || split.alpha, layers: [], canvas: canvas(base.width, base.height) };
+  const split = splitBase(image), base = split.base, p = { id, name, key, from, output, rule: 'set_tex', param: true, base, alpha: alpha || split.alpha, layers: [], canvas: canvas(base.width, base.height) };
   for (const [name, source] of [['texture', p.canvas], ['original', p.base]]) {
     p[name] = new THREE.CanvasTexture(source); p[name].colorSpace = THREE.SRGBColorSpace;
     p[name].wrapS = p[name].wrapT = THREE.RepeatWrapping; p[name].anisotropy = 8;
@@ -64,7 +67,7 @@ function makePart(name, image, from, output, key = null, alpha = null, id = cryp
 }
 function newLayer(name, kind = 'image', rect = { x: .25, y: .25, w: .5, h: .5 }) {
   const mask = canvas(512, 512); mask.getContext('2d').fillStyle = '#fff'; mask.getContext('2d').fillRect(0, 0, 512, 512);
-  return { id: crypto.randomUUID(), name, kind, ...rect, image: null, mask, opacity: 1, blend: 'source-over', scale: 1, dx: 0, dy: 0, angle: 0, flip: false, visible: true, fill: false, color: '#e6edf2' };
+  return { id: crypto.randomUUID(), name, kind, distanceBand: state.mipmap.enabled ? state.creationDistance : 'all', ...rect, image: null, mask, opacity: 1, blend: 'source-over', scale: 1, dx: 0, dy: 0, angle: 0, flip: false, visible: true, fill: false, color: '#e6edf2' };
 }
 function layerCanvas(p, l) {
   const w = Math.max(1, Math.round(l.w * p.canvas.width)), h = Math.max(1, Math.round(l.h * p.canvas.height));
@@ -82,12 +85,49 @@ function layerCanvas(p, l) {
   g.globalCompositeOperation = 'destination-in'; g.drawImage(l.mask, 0, 0, w, h);
   return patch;
 }
+function distanceSources(p, layers = p.layers) {
+  // Render each layer patch once, then compose complete variants before crossfading.
+  const patches = layers.filter(l => l.visible).map(l => [l, layerCanvas(p, l)]);
+  return Object.fromEntries(['near', 'mid', 'far'].map(band => {
+    const c = canvas(p.canvas.width, p.canvas.height), g = c.getContext('2d'); g.drawImage(p.base, 0, 0);
+    for (const [l, patch] of patches) if (layerInBand(l, band)) { g.globalAlpha = l.opacity; g.globalCompositeOperation = l.blend; g.drawImage(patch, l.x * c.width, l.y * c.height); }
+    return [band, c];
+  }));
+}
+function blendDistance(sources, level, width, height) {
+  const c = canvas(width, height), g = c.getContext('2d'); g.globalCompositeOperation = 'lighter';
+  for (const [band, weight] of Object.entries(mipWeights(level, state.mipmap))) if (weight > 0) { g.globalAlpha = weight; g.drawImage(sources[band], 0, 0, width, height); }
+  return c;
+}
+function distanceMipmaps(p, sources = distanceSources(p)) { return mipDimensions(p.canvas.width, p.canvas.height).map((size, level) => blendDistance(sources, level, size.width, size.height)); }
 function compose(p = part(), previewLayers = null) {
   if (!p) return;
-  const g = p.canvas.getContext('2d'); g.clearRect(0, 0, p.canvas.width, p.canvas.height); g.drawImage(p.base, 0, 0);
-  for (const l of previewLayers || p.layers) if (l.visible) { g.globalAlpha = l.opacity; g.globalCompositeOperation = l.blend; g.drawImage(layerCanvas(p, l), l.x * p.canvas.width, l.y * p.canvas.height); }
+  const g = p.canvas.getContext('2d'); g.clearRect(0, 0, p.canvas.width, p.canvas.height);
+  if (state.mipmap.enabled) {
+    const sources = distanceSources(p, previewLayers || p.layers);
+    g.drawImage(blendDistance(sources, state.mipLevel, p.canvas.width, p.canvas.height), 0, 0);
+    p.texture.mipmaps = state.mipPreview === 'auto' ? distanceMipmaps(p, sources) : [];
+    p.texture.generateMipmaps = state.mipPreview !== 'auto';
+  } else {
+    g.drawImage(p.base, 0, 0);
+    for (const l of previewLayers || p.layers) if (l.visible && layerInBand(l, 'near')) { g.globalAlpha = l.opacity; g.globalCompositeOperation = l.blend; g.drawImage(layerCanvas(p, l), l.x * p.canvas.width, l.y * p.canvas.height); }
+    p.texture.mipmaps = []; p.texture.generateMipmaps = true;
+  }
   g.globalAlpha = 1; g.globalCompositeOperation = 'source-over'; p.texture.needsUpdate = true;
   if (p === part()) drawEditor();
+}
+function syncMipmapUI() {
+  $('mipEnabled').checked = state.mipmap.enabled; $('mipMid').value = state.mipmap.midLevel; $('mipFar').value = state.mipmap.farLevel; $('mipSmooth').checked = state.mipmap.smooth;
+  $('mipMode').value = state.mipPreview; $('mipLevel').value = state.mipLevel; $('mipLevel').disabled = !state.mipmap.enabled || state.mipPreview === 'auto';
+  $('mipLevel').nextElementSibling.value = Number(state.mipLevel).toFixed(1); $('mipSettings').hidden = !state.mipmap.enabled;
+  $('mipSummary').textContent = state.mipmap.enabled ? `近景 0 → 中景 ${state.mipmap.midLevel} → 远景 ${state.mipmap.farLevel} · ${state.mipPreview === 'auto' ? '自动采样' : '手动对比'}` : '当前使用普通皮肤导出';
+  document.dispatchEvent(new Event('studio:mipmap'));
+}
+function setLayerDistance(l, band) {
+  if (!DISTANCE_BANDS.includes(band)) throw Error('距离分组无效');
+  const layers = l.projectionId ? state.parts.flatMap(p => p.layers).filter(n => n.projectionId === l.projectionId) : [l];
+  layers.forEach(n => n.distanceBand = band);
+  const record = state.projections.find(p => p.id === l.projectionId); if (record) record.distanceBand = band;
 }
 function composeAll() { state.parts.forEach(p => compose(p)); }
 function addImage(image, name) {
@@ -113,7 +153,7 @@ function refreshLayers() {
     check.onclick = e => { e.stopPropagation(); checkpoint(); l.visible = check.checked; compose(); };
     const thumb = document.createElement('img'); thumb.className = 'thumb'; if (l.image) thumb.src = thumbnail(l.image); else thumb.style.background = l.color;
     const name = document.createElement('span'); name.textContent = l.name;
-    const type = document.createElement('small'); type.textContent = ({ projection: '投射', paint: '绘画', external: 'PS', text: '文字', fill: '色块', image: '图片' })[l.kind];
+    const type = document.createElement('small'); type.textContent = ({ projection: '投射', paint: '绘画', external: 'PS', text: '文字', fill: '色块', image: '图片' })[l.kind] + ' · ' + ({ all: '共用', near: '近', mid: '中', far: '远' })[l.distanceBand || 'all'];
     row.append(check, thumb, name, type); row.onclick = () => { state.selected = l.id; refreshLayers(); drawEditor(); }; list.append(row);
   }
   $('properties').hidden = !selected(); syncProperties(); agentWorkspace?.layerSelected(selected());
@@ -121,7 +161,7 @@ function refreshLayers() {
 function thumbnail(im) { const c = canvas(48, 48); c.getContext('2d').drawImage(im, 0, 0, 48, 48); return c.toDataURL(); }
 function syncProperties() {
   const l = selected(); if (!l) return;
-  $('layerName').value = l.name; $('opacity').value = l.opacity; $('opacity').nextElementSibling.value = Math.round(l.opacity * 100) + '%'; $('blend').value = l.blend;
+  $('layerDistance').value = l.distanceBand || 'all'; $('layerName').value = l.name; $('opacity').value = l.opacity; $('opacity').nextElementSibling.value = Math.round(l.opacity * 100) + '%'; $('blend').value = l.blend;
   $('fillEnabled').checked = l.fill; $('fillColor').value = l.color; $('flip').checked = l.flip;
   $('transformProps').hidden = ['projection', 'paint', 'external'].includes(l.kind); $('textProps').hidden = l.kind !== 'text';
   $('editProjection').hidden = l.kind !== 'projection'; $('deleteProjection').hidden = l.kind !== 'projection'; $('sourceImage').hidden = l.kind === 'paint' || l.kind === 'fill';
@@ -250,7 +290,7 @@ function beginProjection(record = null) {
   if (!model || draft) return; controls.update();
   const host = $('viewport');
   if (record) { const saved = restoreCamera(record.camera); camera.copy(saved); camera.aspect = host.clientWidth / host.clientHeight; camera.updateProjectionMatrix(); controls.target.fromArray(record.camera.target); }
-  draft = record ? { ...record, rect: { ...record.rect }, targets: [...record.targets], image: record.image, existing: true } : { id: crypto.randomUUID(), name: '模型投射', image: null, rect: { cx: .5, cy: .5, w: .45, h: .45, angle: 0 }, targets: state.parts.map(p => p.id), occlusion: true, mirror: false, existing: false };
+  draft = record ? { ...record, rect: { ...record.rect }, targets: [...record.targets], image: record.image, existing: true } : { id: crypto.randomUUID(), name: '模型投射', image: null, rect: { cx: .5, cy: .5, w: .45, h: .45, angle: 0 }, targets: state.parts.map(p => p.id), occlusion: true, mirror: false, distanceBand: state.mipmap.enabled ? state.creationDistance : 'all', existing: false };
   if (record) draft.rect = reframeRectangle(record.rect, record.camera.aspect, camera.aspect);
   draft.camera = captureCamera(camera, controls.target); draft.viewport = { width: host.clientWidth, height: host.clientHeight }; draft.result = null;
   controls.enabled = false; $('projectionOverlay').hidden = false; $('projectionPanel').hidden = false; $('projectionOcclusion').checked = draft.occlusion; $('projectionMirror').checked = draft.mirror; $('projectionAngle').value = draft.rect.angle; $('projectionSize').value = draft.rect.w;
@@ -283,14 +323,14 @@ async function previewDraft() {
 function commitResult(record, result) {
   for (const p of state.parts) {
     const old = p.layers.find(l => l.projectionId === record.id), data = result.get(p.id);
-    if (data) { if (old) old.image = data.canvas; else p.layers.push(projectionLayer(record, p, data.canvas)); }
+    if (data) { if (old) old.image = data.canvas; else { const layer = projectionLayer(record, p, data.canvas); layer.distanceBand = record.distanceBand || 'all'; p.layers.push(layer); } }
     else p.layers = p.layers.filter(l => l.projectionId !== record.id);
   }
 }
 async function applyProjection() {
   if (!draft?.image) throw Error('请先选择自己的图片。'); clearTimeout(draftTimer);
   const result = draft.result || await calculateDraft(); if (!result.size) throw Error('投射没有覆盖任何选中材质，请调整图片位置与视角。');
-  checkpoint(); const record = { id: draft.id, name: draft.name, image: draft.image, camera: draft.camera, rect: { ...draft.rect }, viewport: { ...draft.viewport }, targets: [...draft.targets], occlusion: draft.occlusion, mirror: draft.mirror };
+  checkpoint(); const record = { id: draft.id, name: draft.name, image: draft.image, camera: draft.camera, rect: { ...draft.rect }, viewport: { ...draft.viewport }, targets: [...draft.targets], occlusion: draft.occlusion, mirror: draft.mirror, distanceBand: draft.distanceBand || 'all' };
   state.projections = state.projections.filter(d => d.id !== record.id); state.projections.push(record); commitResult(record, result);
   const target = state.parts.find(p => result.has(p.id)); state.part = state.parts.indexOf(target); state.selected = target.layers.find(l => l.projectionId === record.id).id;
   const names = state.parts.filter(p => result.has(p.id)).map(p => p.name); endProjection(); refresh(); fit(); toast('已投射到 ' + names.join(' / ') + '，可继续编辑图层或整组投射。');
@@ -315,7 +355,7 @@ function serializeLayer(l) { return { ...l, image: undefined, mask: undefined, i
 async function hydrateLayer(data) { const l = { ...data }; l.image = data.imageSrc ? await imageFrom(data.imageSrc) : null; if (l.kind === 'paint' && l.image) l.image = copyCanvas(l.image); l.mask = copyCanvas(await imageFrom(data.maskSrc)); delete l.imageSrc; delete l.maskSrc; return l; }
 async function saveProject() {
   if (draft) throw Error('请先确认或取消当前投射，再保存工程。');
-  const data = { version: 2, vehicle: state.vehicle, builtin: state.builtin, part: state.part, selected: state.selected, view: captureCamera(camera, controls.target), model: state.modelSource,
+  const data = { version: 2, mipmap: state.mipmap, vehicle: state.vehicle, builtin: state.builtin, part: state.part, selected: state.selected, view: captureCamera(camera, controls.target), model: state.modelSource,
     parts: state.parts.map(p => ({ id: p.id, key: p.key, name: p.name, from: p.from, output: p.output, rule: p.rule, param: p.param, materialPath: p.materialPath, base: p.base.toDataURL(), alpha: p.alpha ? copyCanvas(p.alpha).toDataURL() : null, layers: p.layers.map(serializeLayer) })),
     projections: state.projections.map(d => ({ ...d, image: undefined, imageSrc: getImageSrc(d.image) })) };
   if (agentWorkspace) data.agent = await agentWorkspace.exportBundle();
@@ -332,7 +372,7 @@ async function restoreProject(data, files = {}) {
   if (assetIds?.size) for (const p of data.parts) for (const l of p.layers) if (l.agent) { l.agent.assetId = assetIds.get(l.agent.assetId) || l.agent.assetId; for (const v of l.agent.versions || []) v.assetId = assetIds.get(v.assetId) || v.assetId; }
   const parts = []; for (const info of data.parts) { const p = makePart(info.name, await imageFrom(info.base), info.from, info.output, info.key, info.alpha ? await imageFrom(info.alpha) : null, info.id); p.rule = info.rule; p.param = info.param; p.materialPath = info.materialPath; p.layers = await Promise.all(info.layers.map(hydrateLayer)); parts.push(p); }
   const oldParts = state.parts, reuseModel = data.builtin && state.builtin && data.model.objText === state.modelSource.objText;
-  cancelProjection(); await disconnectAll(); state.parts = parts; state.part = clamp(data.part || 0, 0, parts.length - 1); state.selected = data.selected; state.vehicle = data.vehicle; state.builtin = data.builtin;
+  cancelProjection(); await disconnectAll(); state.mipmap = normalizeMipmap(data.mipmap); state.mipLevel = 0; state.mipPreview = 'manual'; syncMipmapUI(); state.parts = parts; state.part = clamp(data.part || 0, 0, parts.length - 1); state.selected = data.selected; state.vehicle = data.vehicle; state.builtin = data.builtin;
   state.projections = await Promise.all((data.projections || []).map(async d => ({ ...d, image: await imageFrom(d.imageSrc) })));
   state.modelFiles = data.builtin ? null : Object.fromEntries(Object.entries(files).filter(([k]) => k.startsWith('model/')).map(([k, v]) => [k.slice(6), v]));
   if (reuseModel) {
@@ -344,15 +384,16 @@ async function restoreProject(data, files = {}) {
 }
 function validateConfig() { const names = new Set(); for (const p of state.parts) { if (!/^[a-zA-Z0-9_.-]+$/.test(p.output) || !p.from || /["\r\n*]/.test(p.from)) throw Error('请检查导出规则：输出名使用字母、数字、_、-；from 不含引号、换行和 *。'); if (names.has(p.output.toLowerCase())) throw Error('不同材质的输出名称不能相同。'); names.add(p.output.toLowerCase()); } }
 async function exportSkin() {
-  if (draft) throw Error('请先确认或取消当前投射。'); validateConfig(); const files = {}; let blk = 'name:t="user"\n\n';
-  for (const p of state.parts) { compose(p); files[p.output + '.dds'] = toDDS(p); blk += `${p.rule}{\n  from:t="${p.from}*"\n  to:t="${p.output}.dds"\n${p.param ? '  param:t="camo_skin_tex"\n' : ''}}\n\n`; }
+  if (draft) throw Error('请先确认或取消当前投射。'); validateConfig(); const files = {}, options = { builtin: state.builtin }, blk = skinConfig(state.parts, options);
+  for (const p of state.parts) { compose(p); files[p.output + '.dds'] = state.mipmap.enabled ? toDDS(p, { ...exportPolicy(p, options), mipmaps: distanceMipmaps(p) }) : toDDS(p, exportPolicy(p, options)); }
+  if (state.mipmap.enabled) files['distance-layers.json'] = strToU8(JSON.stringify({ mipmap: state.mipmap, parts: state.parts.map(p => ({ name: p.output, levels: mipDimensions(p.canvas.width, p.canvas.height) })), note: 'Mip levels are not fixed metre distances. Validate custom mip retention in game.' }, null, 2));
   files[state.builtin ? 'us_hstv_l.blk' : 'skin.blk'] = strToU8(blk);
-  files['安装说明.txt'] = strToU8('将 DDS 与 BLK 放在 War Thunder/UserSkins/自定义目录。其他载具需沿用游戏模板的 BLK 文件名并核对 from。\n本工程仅导出颜色贴图，不覆盖游戏法线和材质贴图。源 JPEG 不包含原始 DDS Alpha；导入 DDS 可保留其 Alpha。\n请在游戏内检查材质、接缝与方向。\n');
+  files['安装说明.txt'] = strToU8('将 DDS 与 BLK 放在 War Thunder/UserSkins/自定义目录。其他载具需沿用游戏模板的 BLK 文件名并核对 from。\n本工程仅导出颜色贴图，不覆盖游戏法线和材质贴图。源 JPEG 不包含原始 DDS Alpha；导入 DDS 可保留其 Alpha。\n可变皮肤启用时 DDS 包含完整自定义 mip 链；远近和斜视角、分辨率、画质会改变切换，不能指定固定米数。请在游戏内验证是否保留自定义 mip。\n请在游戏内检查材质、接缝与方向。\n');
   download(zipSync(files, { level: 1 }), state.vehicle + '-studio-skin.zip', 'application/zip'); toast('已导出 DDS + BLK，颜色贴图保持当前工程分辨率。');
 }
 async function exportPSD() {
   if (draft) throw Error('请先结束当前投射。'); const p = part(), children = [{ name: 'Base texture', canvas: p.base }];
-  for (const l of p.layers) children.push({ name: l.name, canvas: layerCanvas(p, l), left: Math.round(l.x * p.canvas.width), top: Math.round(l.y * p.canvas.height), opacity: l.opacity, hidden: !l.visible, blendMode: ({ 'source-over': 'normal', multiply: 'multiply', screen: 'screen', overlay: 'overlay', 'soft-light': 'soft light', lighter: 'linear dodge' })[l.blend] || 'normal' });
+  for (const l of p.layers) children.push({ name: '[' + (l.distanceBand || 'all') + '] ' + l.name, canvas: layerCanvas(p, l), left: Math.round(l.x * p.canvas.width), top: Math.round(l.y * p.canvas.height), opacity: l.opacity, hidden: !l.visible, blendMode: ({ 'source-over': 'normal', multiply: 'multiply', screen: 'screen', overlay: 'overlay', 'soft-light': 'soft light', lighter: 'linear dodge' })[l.blend] || 'normal' });
   children.push({ name: 'UV guide (hidden)', hidden: true, canvas: makeUV(p, true) });
   download(globalThis.agPsd.writePsd({ width: p.canvas.width, height: p.canvas.height, canvas: p.canvas, children }, { generateThumbnail: false }), p.output + '.psd'); toast('已导出分层 PSD：底图、栅格图层和隐藏 UV 参考层。');
 }
@@ -399,9 +440,9 @@ function agentContext() {
   for (const [name, position] of Object.entries({ left: [8.8, 1.7, 0], right: [-8.8, 1.7, 0], front: [0, 1.7, 8.8], top: [0, 9, .001] })) {
     const c = camera.clone(); c.position.set(...position); c.lookAt(0, 1.05, 0); c.updateMatrixWorld(true); views[name] = captureCamera(c, new THREE.Vector3(0, 1.05, 0));
   }
-  return clean({ version: 1, editorRevision, vehicle: state.vehicle, selectedPart: part()?.id, selectedLayerId: state.selected, camera: currentCamera, views, viewport: { width: $('viewport').clientWidth, height: $('viewport').clientHeight },
-    parts: state.parts.map(p => ({ id: p.id, key: p.key, name: p.name, width: p.canvas.width, height: p.canvas.height, output: p.output, layers: p.layers.map(l => ({ id: l.id, name: l.name, kind: l.kind, x: l.x, y: l.y, w: l.w, h: l.h, scale: l.scale, angle: l.angle, dx: l.dx, dy: l.dy, opacity: l.opacity, blend: l.blend, visible: l.visible, color: l.color, fill: l.fill, projectionId: l.projectionId, agent: l.agent })) })),
-    projections: state.projections.map(d => ({ id: d.id, name: d.name, camera: d.camera, rect: d.rect, viewport: d.viewport, targets: d.targets, occlusion: d.occlusion })),
+  return clean({ version: 1, editorRevision, mipmap: state.mipmap, mipPreview: { mode: state.mipPreview, level: state.mipLevel }, vehicle: state.vehicle, selectedPart: part()?.id, selectedLayerId: state.selected, camera: currentCamera, views, viewport: { width: $('viewport').clientWidth, height: $('viewport').clientHeight },
+    parts: state.parts.map(p => ({ id: p.id, key: p.key, name: p.name, width: p.canvas.width, height: p.canvas.height, output: p.output, layers: p.layers.map(l => ({ id: l.id, name: l.name, kind: l.kind, distanceBand: l.distanceBand || 'all', x: l.x, y: l.y, w: l.w, h: l.h, scale: l.scale, angle: l.angle, dx: l.dx, dy: l.dy, opacity: l.opacity, blend: l.blend, visible: l.visible, color: l.color, fill: l.fill, projectionId: l.projectionId, agent: l.agent })) })),
+    projections: state.projections.map(d => ({ id: d.id, name: d.name, camera: d.camera, rect: d.rect, viewport: d.viewport, targets: d.targets, distanceBand: d.distanceBand || 'all', occlusion: d.occlusion })),
   });
 }
 function agentPreview() {
@@ -413,6 +454,7 @@ function resolveAgentParts(targets) {
   if (!result.length) throw Error('未匹配到目标材质，请重新读取 context'); return result;
 }
 function agentLayerMetadata(l, op, assetId) {
+  if (op.distanceBand !== undefined) setLayerDistance(l, op.distanceBand);
   const old = l.agent || {}, versions = [...(old.versions || [])];
   if (assetId && versions.at(-1)?.assetId !== assetId) versions.push({ assetId, prompt: op.prompt || '', time: new Date().toISOString() });
   l.agent = { ...old, block: op.block || old.block || 'decoration', stage: op.stage ?? old.stage, prompt: op.prompt ?? old.prompt ?? '', assetId: assetId || old.assetId, versions, updatedAt: new Date().toISOString() };
@@ -424,7 +466,18 @@ function validateAgentRect(rect) {
 }
 async function applyAgentOperation(op, guard, userAction = false) {
   if (draft) throw Error('用户正在调整模型投射，请先结束该调整');
-  if (op.type === 'preview') return { message: '已提供当前模型预览', layerIds: [] };
+  if (op.type === 'preview') {
+    if (op.mipPreview) {
+      const { mode = 'manual', level = state.mipLevel } = op.mipPreview;
+      if (!['manual', 'auto'].includes(mode) || !Number.isFinite(level) || level < 0 || level > 14) throw Error('预览模式或层级无效');
+      if (!(await guard())) throw Error('任务已暂停或修改');
+      state.mipPreview = mode; state.mipLevel = level; syncMipmapUI(); composeAll();
+    }
+    return { message: '已提供当前模型预览', layerIds: [] };
+  }
+  if (op.distanceBand !== undefined && !DISTANCE_BANDS.includes(op.distanceBand)) throw Error('距离分组无效');
+  if (op.values?.distanceBand !== undefined && !DISTANCE_BANDS.includes(op.values.distanceBand)) throw Error('距离分组无效');
+  const mipmap = op.mipmap ? validateMipmap({ ...state.mipmap, ...op.mipmap }) : null;
   const startRevision = editorRevision; let image, asset;
   if (op.type === 'image') {
     asset = agentWorkspace.session?.assets.find(a => a.id === op.assetId); const response = await fetchAgentAsset(op.assetId);
@@ -434,10 +487,13 @@ async function applyAgentOperation(op, guard, userAction = false) {
   const originalApplying = agentApplying; agentApplying = !userAction;
   const affected = [];
   try {
-    if (op.type === 'update') {
+    if (op.type === 'update' && mipmap) {
+      checkpoint(); state.mipmap = mipmap; syncMipmapUI(); composeAll();
+    } else if (op.type === 'update') {
       const layers = state.parts.flatMap(p => p.layers).filter(l => (op.layerIds || [op.targetLayerId]).includes(l.id)); if (!layers.length) throw Error('要修改的图层不存在'); layers.forEach(checkAgentLayer);
+      if (op.values?.distanceBand !== undefined) for (const l of layers) if (l.projectionId) state.parts.flatMap(p => p.layers).filter(n => n.projectionId === l.projectionId).forEach(checkAgentLayer);
       const values = {}; for (const [key, value] of Object.entries(op.values || {})) { if (['x', 'y', 'w', 'h', 'scale', 'dx', 'dy', 'angle', 'opacity'].includes(key)) { if (!Number.isFinite(value)) throw Error('属性数值无效'); values[key] = value; } else if (['visible', 'fill'].includes(key)) values[key] = !!value; else if (key === 'color' && /^#[\da-f]{6}$/i.test(value)) values[key] = value; else if (key === 'blend' && ['source-over', 'multiply', 'screen', 'overlay', 'soft-light', 'lighter'].includes(value)) values[key] = value; }
-      for (const l of layers) validateAgentRect({ ...l, ...values }); checkpoint(); for (const l of layers) { Object.assign(l, values); agentLayerMetadata(l, op); affected.push(l.id); } composeAll(); refreshLayers();
+      for (const l of layers) validateAgentRect({ ...l, ...values }); checkpoint(); for (const l of layers) { Object.assign(l, values); if (op.values?.distanceBand !== undefined) setLayerDistance(l, op.values.distanceBand); agentLayerMetadata(l, op); affected.push(l.id); } composeAll(); refreshLayers();
     } else if (op.type === 'image' && op.targetLayerId) {
       const p = state.parts.find(p => p.layers.some(l => l.id === op.targetLayerId)), l = p?.layers.find(l => l.id === op.targetLayerId); if (!l) throw Error('目标图层已删除，请重新读取任务'); checkAgentLayer(l);
       if (l.kind === 'projection') {
@@ -457,12 +513,12 @@ async function applyAgentOperation(op, guard, userAction = false) {
       const parts = resolveAgentParts(op.targets || placement.targets);
       if (placement.mode === 'uv') {
         const rect = validateAgentRect(placement.rect || { x: .25, y: .25, w: .5, h: .5 }); checkpoint();
-        for (const p of parts) { const l = newLayer(op.name || asset?.name || 'Agent 图片', 'image', rect); l.image = image; agentLayerMetadata(l, op, op.assetId); p.layers.push(l); affected.push(l.id); }
+        for (const p of parts) { const l = newLayer(op.name || asset?.name || 'Agent 图片', 'image', rect); l.image = image; l.distanceBand = op.distanceBand || 'all'; agentLayerMetadata(l, op, op.assetId); p.layers.push(l); affected.push(l.id); }
       } else {
         const snapshot = placement.camera || agentContext().views[placement.view || 'current']; if (!snapshot) throw Error('投射视角不存在');
         const viewport = placement.viewport || { width: 1000 * snapshot.aspect, height: 1000 }, rect = { cx: .5, cy: .5, w: .35, h: .35 * snapshot.aspect * image.height / image.width, angle: 0, ...placement.rect };
         for (const value of Object.values(rect)) if (!Number.isFinite(value)) throw Error('投射参数无效'); if (rect.w <= 0 || rect.h <= 0 || rect.w > 4 || rect.h > 4) throw Error('投射尺寸无效');
-        const record = { id: crypto.randomUUID(), name: op.name || asset?.name || 'Agent 投射', image, camera: snapshot, viewport, rect, targets: parts.map(p => p.id), occlusion: placement.occlusion !== false, mirror: !!placement.mirror };
+        const record = { id: crypto.randomUUID(), name: op.name || asset?.name || 'Agent 投射', image, camera: snapshot, viewport, rect, targets: parts.map(p => p.id), occlusion: placement.occlusion !== false, mirror: !!placement.mirror, distanceBand: op.distanceBand || 'all' };
         const result = await bakeProjection({ renderer, model, geometries, parts, camera: restoreCamera(snapshot), image, rect, viewport, occlusion: record.occlusion, mirror: record.mirror });
         if (!result.size) throw Error('图片未覆盖所选模型表面，请重新定位后重试');
         if (startRevision !== editorRevision || !(await guard())) throw Error('用户已修改要求，投射未落图');
@@ -475,14 +531,28 @@ async function applyAgentOperation(op, guard, userAction = false) {
       checkpoint(); for (const p of parts) {
         const l = newLayer(op.name || (op.type === 'text' ? 'Agent 文字' : 'Agent 底色'), op.type, rect); l.opacity = clamp(op.opacity ?? 1, 0, 1); l.blend = ['source-over', 'multiply', 'screen', 'overlay', 'soft-light', 'lighter'].includes(op.blend) ? op.blend : 'source-over';
         if (op.type === 'fill') { l.fill = true; l.color = color; } else { l.text = String(op.text || '').slice(0, 2000); l.font = ['Arial', 'Microsoft YaHei', 'Georgia', 'Impact', 'Consolas'].includes(op.font) ? op.font : 'Arial'; l.textColor = color; l.image = textImage(l); }
-        agentLayerMetadata(l, op); p.layers.push(l); affected.push(l.id);
+        l.distanceBand = op.distanceBand || 'all'; agentLayerMetadata(l, op); p.layers.push(l); affected.push(l.id);
       }
       state.part = state.parts.indexOf(parts[0]); state.selected = parts[0].layers.at(-1).id; composeAll(); refresh();
     } else throw Error('未知 Agent 操作');
-    return { message: `已同步 ${affected.length} 个独立图层，其他图层保留`, layerIds: affected };
+    return { message: mipmap ? '已更新可选距离渐变设置，现有图层保留' : `已同步 ${affected.length} 个独立图层，其他图层保留`, layerIds: affected };
   } finally { agentApplying = originalApplying; }
 }
 
+// Distance settings are project data; preview movement does not pause the agent.
+$('mipEnabled').onchange = () => { checkpoint(); state.mipmap.enabled = $('mipEnabled').checked; syncMipmapUI(); composeAll(); };
+for (const id of ['mipMid', 'mipFar', 'mipSmooth']) $(id).onchange = () => { try { const value = validateMipmap({ enabled: state.mipmap.enabled, midLevel: Number($('mipMid').value), farLevel: Number($('mipFar').value), smooth: $('mipSmooth').checked }); checkpoint(); state.mipmap = value; syncMipmapUI(); composeAll(); } catch (e) { syncMipmapUI(); fail(e); } };
+$('mipMode').onchange = () => { state.mipPreview = $('mipMode').value; syncMipmapUI(); composeAll(); };
+$('mipLevel').oninput = () => { state.mipLevel = Number($('mipLevel').value); syncMipmapUI(); composeAll(); };
+for (const band of ['near', 'mid', 'far']) $('preview' + band).onclick = () => { state.mipPreview = 'manual'; state.mipLevel = { near: 0, mid: state.mipmap.midLevel, far: state.mipmap.farLevel }[band]; syncMipmapUI(); composeAll(); };
+$('creationDistance').onchange = () => state.creationDistance = $('creationDistance').value;
+$('layerDistance').onchange = () => { if (!selected()) return; checkpoint(); setLayerDistance(selected(), $('layerDistance').value); composeAll(); refreshLayers(); };
+$('copyDistance').onclick = () => { const l = selected(); if (!l) return; checkpoint(); const band = $('copyDistanceTarget').value;
+  let projectionId; if (l.projectionId) { const original = state.projections.find(p => p.id === l.projectionId); projectionId = crypto.randomUUID(); state.projections.push({ ...original, id: projectionId, name: original.name + ' / ' + band, rect: { ...original.rect }, targets: [...original.targets], distanceBand: band }); }
+  for (const p of state.parts) for (const old of [...p.layers].filter(n => l.projectionId ? n.projectionId === l.projectionId : n.id === l.id)) { const copy = cloneLayers([old])[0]; copy.id = crypto.randomUUID(); copy.name += ' / ' + band; copy.distanceBand = band; if (projectionId) copy.projectionId = projectionId; p.layers.push(copy); if (old.id === l.id) state.selected = copy.id; }
+  composeAll(); refreshLayers(); toast('已复制到距离分组，源图层保留。');
+};
+syncMipmapUI();
 // UI bindings.
 for (const k of ['x', 'y', 'w', 'h', 'scale', 'dx', 'dy', 'angle', 'opacity']) { $(k).onpointerdown = () => { if (selected()) checkpoint(); }; $(k).onkeydown = e => { if (e.key.startsWith('Arrow') && selected()) checkpoint(); }; $(k).oninput = () => { if (selected()) { selected()[k] = Number($(k).value); syncProperties(); compose(); } }; }
 $('part').onchange = () => { state.part = Number($('part').value); state.selected = null; refresh(); fit(); };
@@ -527,9 +597,12 @@ $('projectionOcclusion').onchange = () => { if (draft) { draft.occlusion = $('pr
 $('connectPS').onclick = () => connectPS().catch(fail); $('browsePS').onclick = () => task('选择 Photoshop 联动文件…', async () => { const result = await api('/api/browse', { method: 'POST' }); if (result.path) $('watchPath').value = result.path; });
 new ResizeObserver(drawEditor).observe($('editorWrap'));
 await task('加载模型与原车贴图…', async () => { init3D(); const info = await fetch('/api/session').then(r => r.json()); apiToken = info.token; await loadBuiltin(); });
-if (model) agentWorkspace = new AgentWorkspace({ api, context: agentContext, preview: agentPreview, fetchAsset: fetchAgentAsset, selected, busy: () => state.busy || !!draft || !!drag,
+if (model && !new URLSearchParams(location.search).has('test')) agentWorkspace = new AgentWorkspace({ api, context: agentContext, preview: agentPreview, fetchAsset: fetchAgentAsset, selected, busy: () => state.busy || !!draft || !!drag,
   selectedSource: () => { const l = selected(); const image = l?.projectionId ? state.projections.find(d => d.id === l.projectionId)?.image : l?.image; return image ? getImageSrc(image) : null; },
   lockLayer: locked => { const l = selected(); if (!l) return; checkpoint(); l.agent = { ...l.agent, locked }; refreshLayers(); },
   apply: applyAgentOperation, toast, fail,
   beginRegion: () => { if (draft) { toast('请先结束当前模型投射'); return false; } controls.update(); controls.enabled = false; return true; }, endRegion: () => controls.enabled = true,
 });
+
+// Isolated browser checks never publish canvas context to the user's agent task.
+if (new URLSearchParams(location.search).has('test')) globalThis.studioTest = { AgentWorkspace, state, apply: op => applyAgentOperation(op, async () => true), composeAll, distanceSources, distanceMipmaps, blendDistance, serializeLayer, hydrateLayer, snapshot, travel, restoreProject, getImageSrc, context: agentContext, renderer, scene, camera, controls };

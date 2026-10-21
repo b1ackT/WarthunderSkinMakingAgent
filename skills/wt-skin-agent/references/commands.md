@@ -126,3 +126,7 @@ node agent.cjs complete --file complete.json
 `complete.json`: `{ "revision": 12, "message": "Layered draft ready for review" }`.
 
 When the browser is closed, a result is stale, or a target is locked, the adapter returns an explicit error. Inspect `status` and resolve the actual issue; do not retry a rejected draw repeatedly or claim it succeeded.
+
+## Distance groups
+
+See [distance layers](distance-layers.md) for `distanceBand` on new layers, linked projection updates, and `type: update` with `mipmap` configuration. These commands use the same revision and pause guards.

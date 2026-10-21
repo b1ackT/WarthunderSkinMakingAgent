@@ -7,7 +7,7 @@ class AgentStore {
     this.projectRoot = root;
     this.root = path.join(root, '.studio-agent'); this.assetsDir = path.join(this.root, 'assets');
     this.context = null; this.lastCanvas = 0; this.commands = []; this.events = []; this.assets = [];
-    this.job = { id: null, status: 'idle', revision: 0, brief: '', stages: [], references: [], stage: -1, pauseAfterStage: true, allowResearch: true, feedback: [], worker: null };
+    this.job = { id: null, status: 'idle', revision: 0, brief: '', stages: [], references: [], stage: -1, pauseAfterStage: true, allowResearch: true, researchFocus: '', distanceLivery: false, feedback: [], worker: null };
     this.sequence = 0; this.queue = Promise.resolve(); this.ready = this.load();
   }
   async load() {
@@ -35,12 +35,14 @@ class AgentStore {
   cancelPending(reason) { for (const c of this.commands) if (['queued', 'applying'].includes(c.status)) { c.status = 'cancelled'; c.error = reason; } }
   async updateContext(context, preview) {
     const changed = this.context && this.context.editorRevision !== context.editorRevision;
+    const distanceChanged = !!this.job.id && typeof context.mipmap?.enabled === 'boolean' && this.job.distanceLivery !== context.mipmap.enabled;
+    if (distanceChanged) this.job.distanceLivery = context.mipmap.enabled;
     this.context = context; this.lastCanvas = Date.now();
     if (preview) await fs.writeFile(path.join(this.root, 'preview.png'), decodeImage(preview).bytes);
     await fs.writeFile(path.join(this.root, 'context.json'), JSON.stringify(context, null, 2));
     if (changed && this.job.status === 'running') {
       this.job.revision++; this.job.status = 'paused'; this.cancelPending('用户已修改画布'); this.event('pause', '检测到用户编辑画布，已暂停后续落图。请以最新位置继续。'); await this.persist();
-    }
+    } else if (distanceChanged) await this.persist();
     return { revision: this.job.revision, status: this.job.status };
   }
   async addAsset(data) {
@@ -62,7 +64,7 @@ class AgentStore {
     if (!this.context) throw Error('请先打开模型工作台');
     if (!String(data.brief || '').trim()) throw Error('请填写创作要求');
     this.cancelPending('新任务');
-    this.job = { id: crypto.randomUUID(), status: 'queued', revision: this.job.revision + 1, brief: String(data.brief).slice(0, 40000), stages: (data.stages?.length ? data.stages : ['风格', '材质', '图像或角色']).map(title => ({ title: String(title).slice(0, 180), status: 'pending', message: '' })), references: [...new Set(data.references || this.assets.filter(a => a.source === 'upload').map(a => a.id))], pauseAfterStage: data.pauseAfterStage !== false, allowResearch: data.allowResearch !== false, stage: -1, feedback: [], worker: null, placement: data.placement || null, createdAt: new Date().toISOString() };
+    this.job = { id: crypto.randomUUID(), status: 'queued', revision: this.job.revision + 1, brief: String(data.brief).slice(0, 40000), stages: (data.stages?.length ? data.stages : ['风格', '材质', '图像或角色']).map(title => ({ title: String(title).slice(0, 180), status: 'pending', message: '' })), references: [...new Set(data.references || this.assets.filter(a => a.source === 'upload').map(a => a.id))], pauseAfterStage: data.pauseAfterStage !== false, allowResearch: data.allowResearch !== false, researchFocus: String(data.researchFocus || '').slice(0, 4000), distanceLivery: data.distanceLivery === true, stage: -1, feedback: [], worker: null, placement: data.placement || null, createdAt: new Date().toISOString() };
     this.event('queued', '任务已提交，等待当前对话中的 Agent 读取。'); await this.persist(); return this.view();
   }
   async control(action, data = {}) {
@@ -108,7 +110,7 @@ class AgentStore {
     this.checkRevision(command.revision); if (command.status === 'cancelled') throw Error('操作已取消');
     command.status = data.success ? 'applied' : 'failed'; command.result = { ...data, preview: undefined }; command.completedAt = new Date().toISOString();
     if (data.preview) { const decoded = decodeImage(data.preview); await fs.writeFile(path.join(this.root, 'preview.png'), decoded.bytes); }
-    if (data.context) { this.context = data.context; await fs.writeFile(path.join(this.root, 'context.json'), JSON.stringify(this.context, null, 2)); }
+    if (data.context) { if (typeof data.context.mipmap?.enabled === 'boolean') this.job.distanceLivery = data.context.mipmap.enabled; this.context = data.context; await fs.writeFile(path.join(this.root, 'context.json'), JSON.stringify(this.context, null, 2)); }
     this.event(data.success ? 'applied' : 'error', data.message || (data.success ? '已同步到画布' : '画布操作失败'), { commandId: id }); await this.persist(); return command;
   }
   async complete(data) { this.checkRevision(data.revision); if (this.commands.some(c => c.status === 'queued')) throw Error('仍有未应用的画布操作'); this.job.status = 'completed'; this.event('completed', data.message || '本次创作完成，可继续逐层修改。'); await this.persist(); return this.view(); }

@@ -6,14 +6,16 @@ const phases = { idle: '未提交任务', queued: '等待 Agent 读取', running
 export class AgentWorkspace {
   constructor(adapter) {
     this.adapter = adapter; this.session = null; this.urls = new Map(); this.executing = false; this.polling = false; this.uploading = false; this.targetAsset = null; this.placement = null; this.lastContext = ''; this.eventsSignature = ''; this.assetsSignature = '';
-    this.mount(); this.bind(); this.poll().catch(adapter.fail); this.timer = setInterval(() => this.poll().catch(() => {}), 1000);
+    this.mount(); this.bind(); this.syncDistance(); this.poll().catch(adapter.fail); this.timer = setInterval(() => this.poll().catch(() => {}), 1000);
   }
   async api(suffix = '', method = 'GET', data) { return this.adapter.api('/api/agent' + suffix, { method, ...(data ? { body: JSON.stringify(data) } : {}) }); }
   mount() {
     const panel = document.createElement('section'); panel.id = 'agentPanel'; panel.className = 'agent-panel';
     panel.innerHTML = `<div class="agent-heading"><h2>创作流程</h2><span class="agent-status" id="agentStatus">未提交任务</span><button id="toggleAgent">收起</button></div>
-    <div id="agentBody"><nav class="workflow-steps" aria-label="创作步骤"><button data-flow="0"><span>1</span> 描述需求</button><i>→</i><button data-flow="1"><span>2</span> 添加素材</button><i>→</i><button data-flow="2"><span>3</span> 创作与调整</button></nav>
-    <section id="agentStep0" class="workflow-page"><label for="agentBrief">想做一款什么样的皮肤？</label><textarea id="agentBrief" rows="2" placeholder="说说风格、配色、人设或文字，也可以只描述一个想法。"></textarea><div class="workflow-footer"><details class="workflow-settings"><summary>分段与更多设置</summary><div class="agent-options"><div><label for="agentStages">每行一个阶段</label><textarea id="agentStages" rows="3">风格\n材质\n图像或角色</textarea></div><div><label><input id="agentPauseStages" type="checkbox" checked> 每段完成后暂停</label><label><input id="agentResearch" type="checkbox" checked> 允许查找网上参考</label></div></div></details><button id="agentNext" class="primary">下一步：添加素材 →</button></div></section>
+    <div class="workflow-mipmap"><div class="workflow-mipmap-heading"><label><input id="agentDistanceLivery" type="checkbox"> Mipmap · 远近渐变皮肤 <small>可选</small></label><span id="agentMipSummary" aria-live="polite">普通皮肤</span></div>
+<div id="agentMipTools" hidden><div class="agent-actions"><button id="agentMipNear">近景</button><button id="agentMipMid">中景</button><button id="agentMipFar">远景</button><details class="workflow-mip-options"><summary>渐变与预览设置</summary><div class="workflow-mip-grid"><label>中景层级<input id="agentMipMiddle" type="number" min="1" max="10"></label><label>远景层级<input id="agentMipDistant" type="number" min="2" max="14"></label><label><input id="agentMipSmooth" type="checkbox"> 平滑渐变</label><label>预览模式<select id="agentMipMode"><option value="manual">手动对比</option><option value="auto">自动随远近 / 角度</option></select></label></div><label class="slider">过渡层级<input id="agentMipLevel" type="range" min="0" max="14" step=".1"><output>0.0</output></label></details></div><p class="hint">Agent 按共用、近景、中景、远景分层创作；可在过程中切换预览。层级不是固定米数。</p></div></div>
+<div id="agentBody"><nav class="workflow-steps" aria-label="创作步骤"><button data-flow="0"><span>1</span> 描述需求</button><i>→</i><button data-flow="1"><span>2</span> 添加素材</button><i>→</i><button data-flow="2"><span>3</span> 创作与调整</button></nav>
+    <section id="agentStep0" class="workflow-page"><label for="agentBrief">想做一款什么样的皮肤？</label><textarea id="agentBrief" rows="2" placeholder="说说风格、配色、人设或文字，也可以只描述一个想法。"></textarea><div class="workflow-footer"><details class="workflow-settings"><summary>分段与更多设置</summary><div class="agent-options"><div><label for="agentStages">每行一个阶段</label><textarea id="agentStages" rows="3">风格\n材质\n图像或角色</textarea></div><div><label><input id="agentPauseStages" type="checkbox" checked> 每段完成后暂停</label><label><input id="agentResearch" type="checkbox" checked> 允许检索痛车实车与设计参考</label><label for="agentResearchFocus">参考检索重点</label><input id="agentResearchFocus" placeholder="例如 AMG 痛车侧面构图、人物倾斜方向、脸部避开接缝"></div></div></details><button id="agentNext" class="primary">下一步：添加素材 →</button></div></section>
     <section id="agentStep1" class="workflow-page" hidden><div class="workflow-assets-head"><p class="hint">添加自己的图片，并圈出大概位置；也可以跳过，让 Agent 自由发挥。</p><div class="agent-actions"><button id="agentAddReferences">＋ 添加图片</button><button id="agentMarkGlobal">在模型上圈位置</button></div></div><div class="agent-library"><span id="agentAssetCount">0 张</span><div id="agentReferences" class="agent-references"></div></div><div class="workflow-footer"><button id="agentBack">← 返回需求</button><button id="agentSubmit" class="primary">确认并开始 →</button></div></section>
     <section id="agentStep2" class="workflow-page" hidden><div id="agentStageList" class="agent-stages"></div><p id="agentLatest" class="workflow-latest" aria-live="polite">准备好后开始创作。</p><div id="agentHandoff" class="workflow-handoff" hidden><span>把任务发到当前对话，Agent 读取后开始。</span><button id="agentCopy" class="primary">复制任务到对话</button></div><div id="agentReviewStart"><button id="agentStartReview" class="primary">开始创作</button></div><div id="agentAdjust" hidden><div class="workflow-adjust"><textarea id="agentFeedback" rows="1" aria-label="修改要求" placeholder="想改哪里？例如：背景改冷色，主体保持不变。"></textarea><button id="agentRevise" class="primary">提交修改</button><button id="agentPause">暂停</button><button id="agentResume">继续</button></div></div><div class="workflow-footer"><button id="agentEditInputs">← 修改需求与素材</button><details class="workflow-log"><summary>详细记录与任务操作</summary><div id="agentActivity" class="agent-activity"></div><div class="agent-actions"><button id="agentExportTask">导出任务说明</button><button id="agentCancel">结束任务</button></div></details></div></section></div>`;
     document.querySelector('.workspace-top').after(panel);
@@ -23,7 +25,22 @@ export class AgentWorkspace {
     const file = document.createElement('input'); file.type = 'file'; file.multiple = true; file.accept = 'image/png,image/jpeg,image/webp'; file.id = 'agentFileInput'; file.hidden = true; document.body.append(file);
     const overlay = document.createElement('div'); overlay.id = 'agentRegionOverlay'; overlay.hidden = true; overlay.innerHTML = '<div id="agentRegionBox"></div><span>拖出范围标记位置 · 松开确认 · Esc 取消</span>'; $('viewport').append(overlay);
   }
+  syncDistance() {
+    if (!$('mipEnabled')) return;
+    const enabled = $('mipEnabled').checked;
+    $('agentDistanceLivery').checked = enabled; $('agentMipTools').hidden = !enabled;
+    $('agentMipSummary').textContent = enabled ? `已启用 · 近景 0 → 中景 ${$('mipMid').value} → 远景 ${$('mipFar').value} · 与侧栏同步` : '普通皮肤 · 默认关闭';
+    for (const [top, side] of [['agentMipMiddle', 'mipMid'], ['agentMipDistant', 'mipFar'], ['agentMipMode', 'mipMode'], ['agentMipLevel', 'mipLevel']]) $(top).value = $(side).value;
+    $('agentMipSmooth').checked = $('mipSmooth').checked;
+    $('agentMipLevel').disabled = $('mipLevel').disabled; $('agentMipLevel').nextElementSibling.value = $('mipLevel').value;
+  }
   bind() {
+    document.addEventListener('studio:mipmap', () => this.syncDistance());
+    for (const [top, side, event] of [['agentDistanceLivery', 'mipEnabled', 'change'], ['agentMipMiddle', 'mipMid', 'change'], ['agentMipDistant', 'mipFar', 'change'], ['agentMipSmooth', 'mipSmooth', 'change'], ['agentMipMode', 'mipMode', 'change'], ['agentMipLevel', 'mipLevel', 'input']]) {
+      $(top).addEventListener(event, () => { if ($(top).type === 'checkbox') $(side).checked = $(top).checked; else $(side).value = $(top).value; $(side).dispatchEvent(new Event(event, { bubbles: true })); });
+    }
+    for (const [top, side] of [['agentMipNear', 'previewnear'], ['agentMipMid', 'previewmid'], ['agentMipFar', 'previewfar']]) $(top).onclick = () => $(side).click();
+
     for (const button of document.querySelectorAll('[data-flow]')) button.onclick = () => this.goStep(Number(button.dataset.flow));
     $('agentNext').onclick = () => { if (!$('agentBrief').value.trim()) { $('agentBrief').focus(); this.adapter.toast('先写一句你想做的皮肤。'); return; } this.goStep(1); };
     $('agentBack').onclick = () => this.goStep(0); $('agentEditInputs').onclick = () => this.goStep(0);
@@ -75,7 +92,7 @@ export class AgentWorkspace {
   async importBundle(bundle) {
     const ids = new Map(); if (!bundle) return ids;
     for (const asset of bundle.assets || []) { const imported = await this.api('/assets', 'POST', { ...asset, source: 'project' }); ids.set(asset.id, imported.id); }
-    if (bundle.job?.brief) { $('agentBrief').value = bundle.job.brief; $('agentStages').value = bundle.job.stages.map(s => s.title).join('\n'); $('agentPauseStages').checked = bundle.job.pauseAfterStage; $('agentResearch').checked = bundle.job.allowResearch; }
+    if (bundle.job?.brief) { $('agentBrief').value = bundle.job.brief; $('agentStages').value = bundle.job.stages.map(s => s.title).join('\n'); $('agentPauseStages').checked = bundle.job.pauseAfterStage; $('agentResearch').checked = bundle.job.allowResearch; $('agentResearchFocus').value = bundle.job.researchFocus || ''; this.syncDistance(); }
     this.assetsSignature = ''; return ids;
   }
   async upload(files) {
@@ -84,12 +101,12 @@ export class AgentWorkspace {
   }
   async submit() {
     if (!$('agentBrief').value.trim()) { this.goStep(0); $('agentBrief').focus(); throw Error('先写一句你想做的皮肤'); }
-    await this.syncContext(true);
-    this.session = await this.api('/job', 'POST', { brief: $('agentBrief').value, stages: $('agentStages').value.split('\n').map(s => s.trim().replace(/^\d+[.、)）]\s*/, '')).filter(Boolean), pauseAfterStage: $('agentPauseStages').checked, allowResearch: $('agentResearch').checked, references: this.session?.assets.filter(a => a.source === 'upload').map(a => a.id) || [], placement: this.placement });
+    await this.syncContext(true); this.syncDistance();
+    this.session = await this.api('/job', 'POST', { brief: $('agentBrief').value, stages: $('agentStages').value.split('\n').map(s => s.trim().replace(/^\d+[.、)）]\s*/, '')).filter(Boolean), pauseAfterStage: $('agentPauseStages').checked, allowResearch: $('agentResearch').checked, researchFocus: $('agentResearchFocus').value.trim(), distanceLivery: $('agentDistanceLivery').checked, references: this.session?.assets.filter(a => a.source === 'upload').map(a => a.id) || [], placement: this.placement });
     this.render(); this.goStep(2); this.adapter.toast('任务已准备好，复制到当前对话即可开始。');
   }
   async control(action, extra = {}) { this.session = await this.api('/control', 'POST', { action, ...extra }); this.render(); if (['revise', 'resume'].includes(action)) this.goStep(2); }
-  instructions() { return `请读取 ${this.session?.integration?.skillPath || 'skills/wt-skin-agent/SKILL.md'}，使用 node "${this.session?.integration?.cliPath || 'agent.cjs'}" status 读取 Skin Studio 当前任务。任务 ${this.session?.job.id || '尚未提交'}，revision ${this.session?.job.revision ?? 0}。按用户分段工作；每次生成与落图前重新检查暂停和修改状态。图片生成、背景、主体、装饰、文字必须分成可编辑图层。不要启动或调用另一个 Codex。`; }
+  instructions() { return `请读取 ${this.session?.integration?.skillPath || 'skills/wt-skin-agent/SKILL.md'}，使用 node "${this.session?.integration?.cliPath || 'agent.cjs'}" status 读取 Skin Studio 当前任务。任务 ${this.session?.job.id || '尚未提交'}，revision ${this.session?.job.revision ?? 0}。按用户分段工作；每次生成与落图前重新检查暂停和修改状态。图片生成、背景、主体、装饰、文字必须分成可编辑图层。允许检索时先查痛车实车与设计参考、记录来源并优化构图；可变皮肤按距离组独立分层，检查近中远与过渡。不要启动或调用另一个 Codex。`; }
   async copyTask() { const text = this.instructions(); try { await navigator.clipboard.writeText(text); this.adapter.toast('已复制。粘贴到当前对话，Agent 即可读取任务。'); } catch { $('agentFeedback').value = text; this.adapter.toast('请复制修改框中的任务说明到当前对话。'); } }
   async syncContext(force = false) {
     const context = this.adapter.context(), key = JSON.stringify(context); if (!force && key === this.lastContext) return;
@@ -111,8 +128,9 @@ export class AgentWorkspace {
     } catch (error) { try { await this.api('/commands/' + command.id, 'POST', { success: false, message: error.message }); } catch {} this.adapter.fail(error); }
   }
   render() {
+    this.syncDistance();
     if (!this.session) return; const { job, assets, events } = this.session;
-    if (job.id && this.formJobId !== job.id) { this.formJobId = job.id; $('agentBrief').value = job.brief; $('agentStages').value = job.stages.map(s => s.title).join('\n'); $('agentPauseStages').checked = job.pauseAfterStage; $('agentResearch').checked = job.allowResearch; if (job.status !== 'cancelled') this.goStep(2); }
+    if (job.id && this.formJobId !== job.id) { this.formJobId = job.id; $('agentBrief').value = job.brief; $('agentStages').value = job.stages.map(s => s.title).join('\n'); $('agentPauseStages').checked = job.pauseAfterStage; $('agentResearch').checked = job.allowResearch; $('agentResearchFocus').value = job.researchFocus || ''; this.syncDistance(); if (job.status !== 'cancelled') this.goStep(2); }
     const hasJob = !!job.id; $('agentAdjust').hidden = !hasJob; $('agentReviewStart').hidden = hasJob; $('agentHandoff').hidden = job.status !== 'queued';
     $('agentSticky').hidden = !hasJob;
     $('agentLatest').textContent = events.at(-1)?.message || '准备好后开始创作。';

@@ -6,3 +6,7 @@ node_modules/
 Thumbs.db
 desktop.ini
 *.log
+
+# Local artwork, task state and generated verification artifacts
+.studio-agent/
+output/
