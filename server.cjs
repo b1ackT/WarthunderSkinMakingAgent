@@ -8,6 +8,8 @@ const { promisify } = require('node:util');
 const { AgentStore } = require('./agent-store.cjs');
 const run = promisify(execFile);
 const root = __dirname, port = Number(process.env.PORT || 8766);
+if (!Number.isInteger(port) || port < 1 || port > 65535) throw Error('PORT must be an integer between 1 and 65535');
+const reuseExisting = process.argv.includes('--open'), wantsBrowser = reuseExisting && !process.argv.includes('--no-open');
 const token = crypto.randomBytes(32).toString('hex');
 const agent = new AgentStore(root);
 const watches = new Map();
@@ -20,7 +22,12 @@ async function body(req) {
   for await (const chunk of req) { size += chunk.length; if (size > 48 * 1024 * 1024) throw Error('Request too large'); chunks.push(chunk); }
   return chunks.length ? JSON.parse(Buffer.concat(chunks).toString('utf8')) : {};
 }
-function openBrowser() { spawn('cmd.exe', ['/c', 'start', '', 'http://127.0.0.1:' + port], { windowsHide: true, stdio: 'ignore' }).unref(); }
+function openBrowser() {
+  const url = 'http://127.0.0.1:' + port;
+  const child = spawn(process.env.ComSpec || 'cmd.exe', ['/d', '/c', 'start', '', url], { windowsHide: true, stdio: 'ignore' });
+  child.once('error', error => console.error('Browser could not open: ' + error.message + '. Open ' + url + ' manually.'));
+  child.once('exit', code => { if (code) console.error('Open ' + url + ' manually in your browser.'); }); child.unref();
+}
 async function inspect(file) {
   const stat = await fsp.stat(file); if (!stat.isFile()) throw Error('请选择文件，不是文件夹。');
   if (stat.size > 512 * 1024 * 1024) throw Error('文件超过 512 MB，请导出精简 PSD 或 PNG。'); return stat;
@@ -108,7 +115,14 @@ const server = http.createServer(async (req, res) => {
   } catch (error) { if (!res.headersSent) json(res, error.code === 'ENOENT' ? 404 : 400, { error: error.code === 'ENOENT' ? '文件不存在，请检查路径。' : error.message }); else res.end(); }
 });
 server.on('error', async error => {
-  if (error.code === 'EADDRINUSE' && process.argv.includes('--open')) { try { if ((await (await fetch('http://127.0.0.1:' + port + '/health')).text()) === 'skin-studio-workshop-v2') { openBrowser(); return; } } catch {} }
-  console.error(error.message); process.exitCode = 1;
+  if (error.code === 'EADDRINUSE' && reuseExisting) {
+    try {
+      const response = await fetch('http://127.0.0.1:' + port + '/health', { signal: AbortSignal.timeout(2500) });
+      if (response.ok && (await response.text()) === 'skin-studio-workshop-v2') {
+        console.log('Skin Studio is already running: http://127.0.0.1:' + port); if (wantsBrowser) openBrowser(); return;
+      }
+    } catch {}
+  }
+  console.error(error.code === 'EADDRINUSE' ? 'Port ' + port + ' is occupied by another program. Close that program or choose a different PORT.' : error.message); process.exitCode = 1;
 });
-server.listen(port, '127.0.0.1', () => { console.log('Skin Studio: http://127.0.0.1:' + port); if (process.argv.includes('--open')) openBrowser(); });
+agent.ready.then(() => server.listen(port, '127.0.0.1', () => { console.log('Skin Studio: http://127.0.0.1:' + port); if (wantsBrowser) openBrowser(); })).catch(error => { console.error('Cannot initialize Skin Studio workspace: ' + error.message); process.exitCode = 1; });

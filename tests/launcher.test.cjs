@@ -1,0 +1,12 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process'),path=require('node:path'),os=require('node:os');
+const script=path.resolve(__dirname,'../启动 Skin Studio.cmd');
+function launch(env={}){const base={...process.env,SKIN_STUDIO_NO_PAUSE:'1'};for(const key of Object.keys(base))if(Object.keys(env).some(k=>k.toLowerCase()===key.toLowerCase()))delete base[key];return spawnSync(process.env.ComSpec||'cmd.exe',['/d','/c','call',script,'--check'],{cwd:os.tmpdir(),env:{...base,...env},windowsHide:true,encoding:'utf8',timeout:10000});}
+test('Windows launcher supports unrelated working directory and spaced Chinese path',{skip:process.platform!=='win32'},()=>{const r=launch();assert.equal(r.status,0,r.stdout+r.stderr);assert.match(r.stdout,/startup checks passed/);});
+test('Windows launcher finds standard Node installation when PATH lacks Node',{skip:process.platform!=='win32'},()=>{const env={};for(const k of Object.keys(process.env))if(k.toLowerCase()==='path')env[k]=path.join(process.env.SystemRoot,'System32');const r=launch(env);assert.equal(r.status,0,r.stdout+r.stderr);assert.match(r.stdout,/startup checks passed/);});
+test('Windows launcher keeps Windows line endings and intact fallback paths',()=>{const data=require('node:fs').readFileSync(script,'utf8');assert.ok(data.includes('\r\n'));assert.ok(data.includes('%ProgramFiles%\\nodejs\\node.exe'));assert.ok(data.includes('%LOCALAPPDATA%\\Programs\\nodejs\\node.exe'));assert.ok(!/(^|[^\r])\n/.test(data));});
+
+test('CMD starts a reachable Studio server from an unrelated directory',{skip:process.platform!=='win32'},async()=>{
+ const {spawn,execFileSync}=require('node:child_process');const child=spawn(process.env.ComSpec||'cmd.exe',['/d','/c','call',script,'--no-open'],{cwd:os.tmpdir(),env:{...process.env,SKIN_STUDIO_NO_PAUSE:'1',PORT:'18869'},windowsHide:true});let output='';child.stdout.on('data',b=>output+=b);child.stderr.on('data',b=>output+=b);
+ try{await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error(output||'startup timed out')),8000);child.stdout.on('data',()=>{if(output.includes('Skin Studio:')){clearTimeout(timer);resolve();}});child.once('error',reject);child.once('exit',code=>{clearTimeout(timer);reject(Error('Launcher exited '+code+' '+output));});});assert.equal(await(await fetch('http://127.0.0.1:18869/health')).text(),'skin-studio-workshop-v2');}
+ finally{try{execFileSync('taskkill.exe',['/pid',String(child.pid),'/t','/f'],{windowsHide:true,stdio:'ignore'});}catch{}}
+});

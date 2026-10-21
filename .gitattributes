@@ -1,0 +1,2 @@
+# Windows launchers must retain CRLF in ZIP downloads and checkouts.
+*.cmd text eol=crlf

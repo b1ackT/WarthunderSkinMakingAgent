@@ -41,3 +41,14 @@ test('unsupported file paths cannot become file links', async () => {
   assert.equal((await fetch(origin + '/api/watch', { method: 'POST', headers: headers(), body: JSON.stringify({ path: 'relative.png' }) })).status, 400);
   assert.equal((await fetch(origin + '/api/watch', { method: 'POST', headers: headers(), body: JSON.stringify({ path: path.join(temp, 'private.txt') }) })).status, 400);
 });
+
+test('repeated launch reuses Studio without opening a test browser', async () => {
+ const result=await new Promise((resolve,reject)=>{const p=spawn(process.execPath,['server.cjs','--open','--no-open'],{cwd:path.resolve(__dirname,'..'),env:{...process.env,PORT:'18867'},windowsHide:true});let output='';p.stdout.on('data',d=>output+=d);p.stderr.on('data',d=>output+=d);p.once('error',reject);p.once('exit',code=>resolve({code,output}));});
+ assert.equal(result.code,0,result.output);assert.match(result.output,/already running/);
+});
+
+test('occupied foreign port is reported without terminating its server', async () => {
+ const http=require('node:http');const foreign=http.createServer((req,res)=>res.end('another app'));await new Promise(r=>foreign.listen(0,'127.0.0.1',r));
+ try {const port=foreign.address().port;const result=await new Promise((resolve,reject)=>{const p=spawn(process.execPath,['server.cjs','--open','--no-open'],{cwd:path.resolve(__dirname,'..'),env:{...process.env,PORT:String(port)},windowsHide:true});let output='';p.stderr.on('data',d=>output+=d);p.once('error',reject);p.once('exit',code=>resolve({code,output}));});assert.equal(result.code,1);assert.match(result.output,/occupied by another program/);assert.equal(await(await fetch('http://127.0.0.1:'+port)).text(),'another app');}
+ finally{await new Promise(r=>foreign.close(r));}
+});
