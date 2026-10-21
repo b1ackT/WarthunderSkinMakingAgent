@@ -62,3 +62,13 @@ test('canvas mip changes sync agent intent and retain pause/revision protections
  await s.updateContext({editorRevision:3,mipmap:{enabled:false}});assert.equal(s.job.distanceLivery,false);
  const copy=new AgentStore(s.projectRoot);await copy.ready;assert.equal(copy.job.distanceLivery,false);
 });
+
+test('prompt attachments remain bound to the specific initial and revision prompts', async t => {
+ const s=await fixture(t),dataUrl='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLttAAAAABJRU5ErkJggg==';
+ const a=await s.addAsset({dataUrl,source:'prompt',name:'initial.png'}),b=await s.addAsset({dataUrl,source:'prompt',name:'revision.png'});
+ await s.start({brief:'参考初稿',attachments:[a.id,a.id],references:[]});assert.deepEqual(s.job.promptAttachments,[a.id]);assert.deepEqual(s.job.references,[a.id]);
+ await s.control('revise',{prompt:'仅参考新图修改此层',attachments:[b.id],target:{layerId:'only-this-layer',assetId:a.id}});
+ assert.deepEqual(s.job.feedback.at(-1).attachments,[b.id]);assert.equal(s.job.feedback.at(-1).target.assetId,a.id);assert.deepEqual(s.job.promptAttachments,[a.id]);assert.ok(s.job.references.includes(b.id));
+ const r=s.job.revision;await assert.rejects(s.control('revise',{prompt:'invalid',attachments:['missing']}),/附件素材不存在/);assert.equal(s.job.revision,r);
+ const restored=new AgentStore(s.projectRoot);await restored.ready;assert.deepEqual(restored.job.feedback.at(-1).attachments,[b.id]);
+});

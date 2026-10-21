@@ -4,7 +4,7 @@ import { OBJLoader } from './vendor/jsm/loaders/OBJLoader.js';
 import { zipSync, unzipSync, strToU8, strFromU8 } from 'fflate';
 import { canvas, copyCanvas, imageFrom, readImage, download, splitBase, toDDS } from './image-io.js?v=0.5.0';
 import { buildUVGeometry, bakeProjection, captureCamera, restoreCamera, reframeRectangle } from './projection.js';
-import { AgentWorkspace } from './agent-ui.js?v=0.5.1';
+import { AgentWorkspace } from './agent-ui.js?v=0.5.2';
 import { exportPolicy, skinConfig } from './skin-export.js';
 import { DISTANCE_BANDS, DEFAULT_MIPMAP, normalizeMipmap, validateMipmap, mipWeights, mipDimensions, layerInBand } from './mipmap.js';
 

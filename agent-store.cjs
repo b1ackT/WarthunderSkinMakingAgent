@@ -60,11 +60,16 @@ class AgentStore {
     if (this.job.status === 'running') { this.job.status = 'paused'; this.job.revision++; this.cancelPending('用户修改素材要求'); this.event('pause', '素材位置或说明已修改，后续落图已暂停。'); }
     await this.persist(); return asset;
   }
+  attachmentIds(value = []) {
+    if (!Array.isArray(value)) throw Error('图片附件需要素材ID数组');
+    const ids = [...new Set(value)]; if (ids.some(id => typeof id !== 'string' || !this.assets.some(a => a.id === id))) throw Error('图片附件素材不存在'); return ids;
+  }
   async start(data) {
     if (!this.context) throw Error('请先打开模型工作台');
     if (!String(data.brief || '').trim()) throw Error('请填写创作要求');
+    const attachments = this.attachmentIds(data.attachments);
     this.cancelPending('新任务');
-    this.job = { id: crypto.randomUUID(), status: 'queued', revision: this.job.revision + 1, brief: String(data.brief).slice(0, 40000), stages: (data.stages?.length ? data.stages : ['风格', '材质', '图像或角色']).map(title => ({ title: String(title).slice(0, 180), status: 'pending', message: '' })), references: [...new Set(data.references || this.assets.filter(a => a.source === 'upload').map(a => a.id))], pauseAfterStage: data.pauseAfterStage !== false, allowResearch: data.allowResearch !== false, researchFocus: String(data.researchFocus || '').slice(0, 4000), distanceLivery: data.distanceLivery === true, stage: -1, feedback: [], worker: null, placement: data.placement || null, createdAt: new Date().toISOString() };
+    this.job = { id: crypto.randomUUID(), status: 'queued', revision: this.job.revision + 1, brief: String(data.brief).slice(0, 40000), stages: (data.stages?.length ? data.stages : ['风格', '材质', '图像或角色']).map(title => ({ title: String(title).slice(0, 180), status: 'pending', message: '' })), promptAttachments: attachments, references: [...new Set([...(data.references || this.assets.filter(a => a.source === 'upload').map(a => a.id)), ...attachments])], pauseAfterStage: data.pauseAfterStage !== false, allowResearch: data.allowResearch !== false, researchFocus: String(data.researchFocus || '').slice(0, 4000), distanceLivery: data.distanceLivery === true, stage: -1, feedback: [], worker: null, placement: data.placement || null, createdAt: new Date().toISOString() };
     this.event('queued', '任务已提交，等待当前对话中的 Agent 读取。'); await this.persist(); return this.view();
   }
   async control(action, data = {}) {
@@ -73,9 +78,10 @@ class AgentStore {
     else if (action === 'resume') { this.job.status = 'queued'; this.job.revision++; this.job.worker = null; this.event('queued', '已继续，等待 Agent 读取最新要求。'); }
     else if (action === 'revise') {
       if (!String(data.prompt || '').trim()) throw Error('请填写修改要求');
+      const attachments = this.attachmentIds(data.attachments);
       this.job.status = 'queued'; this.job.revision++; this.cancelPending('用户修改要求'); this.job.worker = null;
-      const feedback = { id: crypto.randomUUID(), prompt: String(data.prompt).slice(0, 20000), target: data.target || null, stage: data.stage ?? this.job.stage, time: new Date().toISOString() };
-      this.job.feedback.push(feedback); this.event('feedback', feedback.prompt, { target: feedback.target });
+      const feedback = { id: crypto.randomUUID(), prompt: String(data.prompt).slice(0, 20000), attachments, target: data.target || null, stage: data.stage ?? this.job.stage, time: new Date().toISOString() };
+      this.job.references = [...new Set([...this.job.references, ...attachments])]; this.job.feedback.push(feedback); this.event('feedback', feedback.prompt, { target: feedback.target, attachments });
     } else if (action === 'cancel') { this.job.status = 'cancelled'; this.job.revision++; this.cancelPending('用户取消'); this.event('cancelled', '创作任务已取消，现有图层保留。'); }
     else throw Error('不支持的任务操作');
     await this.persist(); return this.view();

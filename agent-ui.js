@@ -5,6 +5,7 @@ const phases = { idle: '未提交任务', queued: '等待 Agent 读取', running
 
 export class AgentWorkspace {
   constructor(adapter) {
+    this.promptDrafts = { brief: [], feedback: [], layer: [] }; this.promptBusy = false;
     this.adapter = adapter; this.session = null; this.urls = new Map(); this.executing = false; this.polling = false; this.uploading = false; this.targetAsset = null; this.placement = null; this.lastContext = ''; this.eventsSignature = ''; this.assetsSignature = '';
     this.mount(); this.bind(); this.syncDistance(); this.poll().catch(adapter.fail); this.timer = setInterval(() => this.poll().catch(() => {}), 1000);
   }
@@ -22,6 +23,24 @@ export class AgentWorkspace {
     const bar = document.createElement('div'); bar.id = 'agentSticky'; bar.className = 'agent-sticky'; bar.innerHTML = '<span id="agentStickyStatus">Agent 工作台 · 当前对话协作</span><button id="agentQuickPause">暂停</button><button id="agentQuickEdit">修改提示词</button>'; panel.after(bar);
     const tools = document.createElement('div'); tools.id = 'agentLayerTools'; tools.className = 'agent-layer-tools'; tools.innerHTML = `<label class="label">Agent · 只修改选中图层</label><p class="hint" id="agentLayerDescription">背景、主体、装饰和文字独立修改。</p><label class="hint"><input id="agentLayerLock" type="checkbox"> 锁定图层，Agent 不可修改</label><textarea id="agentLayerPrompt" rows="2" placeholder="对这一个图层提出修改要求，例如姿势、画风、细节。"></textarea><button id="agentLayerRevise" class="wide">提交此图层的修改</button><div class="row"><select id="agentVersions" aria-label="图层历史版本"></select><button id="agentRestoreVersion">恢复</button></div>`;
     $('properties').append(tools);
+    for (const [slot, id] of [['brief', 'agentBrief'], ['feedback', 'agentFeedback'], ['layer', 'agentLayerPrompt']]) {
+      const panel = document.createElement('div'); panel.className = 'prompt-attachments'; panel.id = 'prompt-' + slot;
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = '＋ 图片'; button.onclick = () => panel.querySelector('input').click();
+      const hint = document.createElement('span'); hint.textContent = '可多选、拖入或粘贴图片';
+      const input = document.createElement('input'); input.type = 'file'; input.multiple = true; input.accept = 'image/png,image/jpeg,image/webp'; input.hidden = true;
+      input.onchange = () => { this.addPromptFiles(slot, [...input.files]).catch(this.adapter.fail); input.value = ''; };
+      const list = document.createElement('div'); list.className = 'prompt-attachment-list'; list.id = 'prompt-list-' + slot;
+      panel.append(button, hint, input, list); $(id).after(panel);
+      const attach = files => this.addPromptFiles(slot, files).catch(this.adapter.fail);
+      const paste = e => { const files = [...(e.clipboardData?.items || [])].filter(i => i.kind === 'file' && i.type.startsWith('image/')).map(i => i.getAsFile()).filter(Boolean); if (files.length) { e.preventDefault(); attach(files); } };
+      $(id).addEventListener('paste', paste); panel.addEventListener('paste', paste);
+      for (const el of [$(id), panel]) {
+        el.addEventListener('dragover', e => { if ([...(e.dataTransfer?.types || [])].includes('Files')) { e.preventDefault(); panel.classList.add('drag-over'); } });
+        el.addEventListener('dragleave', () => panel.classList.remove('drag-over'));
+        el.addEventListener('drop', e => { if (e.dataTransfer?.files.length) { e.preventDefault(); e.stopPropagation(); panel.classList.remove('drag-over'); attach([...e.dataTransfer.files]); } });
+      }
+    }
+
     const file = document.createElement('input'); file.type = 'file'; file.multiple = true; file.accept = 'image/png,image/jpeg,image/webp'; file.id = 'agentFileInput'; file.hidden = true; document.body.append(file);
     const overlay = document.createElement('div'); overlay.id = 'agentRegionOverlay'; overlay.hidden = true; overlay.innerHTML = '<div id="agentRegionBox"></div><span>拖出范围标记位置 · 松开确认 · Esc 取消</span>'; $('viewport').append(overlay);
   }
@@ -42,7 +61,7 @@ export class AgentWorkspace {
     for (const [top, side] of [['agentMipNear', 'previewnear'], ['agentMipMid', 'previewmid'], ['agentMipFar', 'previewfar']]) $(top).onclick = () => $(side).click();
 
     for (const button of document.querySelectorAll('[data-flow]')) button.onclick = () => this.goStep(Number(button.dataset.flow));
-    $('agentNext').onclick = () => { if (!$('agentBrief').value.trim()) { $('agentBrief').focus(); this.adapter.toast('先写一句你想做的皮肤。'); return; } this.goStep(1); };
+    $('agentNext').onclick = () => { if (!$('agentBrief').value.trim() && !this.promptDrafts.brief.length) { $('agentBrief').focus(); this.adapter.toast('先写一句你想做的皮肤。'); return; } this.goStep(1); };
     $('agentBack').onclick = () => this.goStep(0); $('agentEditInputs').onclick = () => this.goStep(0);
     $('agentStartReview').onclick = () => this.submit().catch(this.adapter.fail);
     this.goStep(0);
@@ -50,7 +69,7 @@ export class AgentWorkspace {
     $('agentAddReferences').onclick = () => $('agentFileInput').click(); $('agentFileInput').onchange = () => this.upload([...$('agentFileInput').files]);
     $('agentSubmit').onclick = () => this.submit().catch(this.adapter.fail);
     for (const [id, action] of [['agentPause', 'pause'], ['agentQuickPause', 'pause'], ['agentResume', 'resume'], ['agentCancel', 'cancel']]) $(id).onclick = () => this.control(action).catch(this.adapter.fail);
-    $('agentRevise').onclick = () => this.control('revise', { prompt: $('agentFeedback').value, target: null }).then(() => $('agentFeedback').value = '').catch(this.adapter.fail);
+    $('agentRevise').onclick = () => this.submitFeedback().catch(this.adapter.fail);
     $('agentCopy').onclick = () => this.copyTask().catch(this.adapter.fail);
     $('agentExportTask').onclick = () => download(JSON.stringify({ instructions: this.instructions(), ...this.session }, null, 2), 'skin-agent-task.json', 'application/json');
     $('agentQuickEdit').onclick = () => { this.goStep(this.session?.job.id ? 2 : 0); (this.session?.job.id ? $('agentFeedback') : $('agentBrief')).focus(); $('agentPanel').scrollIntoView({ behavior: 'smooth', block: 'start' }); };
@@ -99,11 +118,58 @@ export class AgentWorkspace {
     if (this.uploading) return; this.uploading = true;
     try { for (let i = 0; i < files.length; i++) { const f = files[i]; if (f.size > 32 * 1024 * 1024) { this.adapter.toast(f.name + ' 超过 32 MB，已跳过'); continue; } const dataUrl = await new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(f); }); await this.api('/assets', 'POST', { name: f.name, dataUrl, role: 'reference', source: 'upload' }); $('agentAssetCount').textContent = `上传 ${i + 1}/${files.length}`; } await this.poll(); } catch (e) { this.adapter.fail(e); } finally { this.uploading = false; $('agentFileInput').value = ''; }
   }
+  async addPromptFiles(slot, files) {
+    if (this.promptBusy) throw Error('正在提交图片，请稍后添加');
+    const accepted = files.filter(f => ['image/png', 'image/jpeg', 'image/webp'].includes(f.type) && f.size <= 32 * 1024 * 1024);
+    if (accepted.length !== files.length) this.adapter.toast('仅支持 PNG/JPG/WebP，单张不超过32MB');
+    if (!accepted.length) return;
+    if (this.session?.job.status === 'running') await this.control('pause');
+    for (const file of accepted) this.promptDrafts[slot].push({ file, url: URL.createObjectURL(file), id: null });
+    this.renderPromptFiles(slot);
+  }
+  renderPromptFiles(slot) {
+    const list = $('prompt-list-' + slot); list.replaceChildren();
+    for (const item of this.promptDrafts[slot]) {
+      const card = document.createElement('div'); card.className = 'prompt-attachment';
+      const image = document.createElement('img'); image.src = item.url; image.alt = item.file.name;
+      const name = document.createElement('span'); name.textContent = item.file.name;
+      const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = '×'; remove.ariaLabel = '移除 ' + item.file.name; remove.disabled = this.promptBusy;
+      remove.onclick = () => { if (this.promptBusy) return; this.promptDrafts[slot] = this.promptDrafts[slot].filter(n => n !== item); URL.revokeObjectURL(item.url); this.renderPromptFiles(slot); };
+      card.append(image, name, remove); list.append(card);
+    }
+  }
+  clearPromptFiles(slot) { for (const item of this.promptDrafts[slot]) URL.revokeObjectURL(item.url); this.promptDrafts[slot] = []; this.renderPromptFiles(slot); }
+  setPromptBusy(value) {
+    this.promptBusy = value;
+    for (const id of ['agentBrief', 'agentFeedback', 'agentLayerPrompt', 'agentSubmit', 'agentStartReview', 'agentRevise', 'agentLayerRevise']) $(id).disabled = value;
+    for (const slot of Object.keys(this.promptDrafts)) this.renderPromptFiles(slot);
+  }
+  async flushPromptFiles(slot) {
+    if (!this.promptDrafts[slot].length) return [];
+    const current = await this.api(); if (current.job.status === 'running') await this.control('pause');
+    for (const item of this.promptDrafts[slot]) if (!item.id) {
+      const dataUrl = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(item.file); });
+      const asset = await this.api('/assets', 'POST', { name: item.file.name, role: 'reference', source: 'prompt', dataUrl }); item.id = asset.id;
+    }
+    return this.promptDrafts[slot].map(i => i.id);
+  }
   async submit() {
-    if (!$('agentBrief').value.trim()) { this.goStep(0); $('agentBrief').focus(); throw Error('先写一句你想做的皮肤'); }
-    await this.syncContext(true); this.syncDistance();
-    this.session = await this.api('/job', 'POST', { brief: $('agentBrief').value, stages: $('agentStages').value.split('\n').map(s => s.trim().replace(/^\d+[.、)）]\s*/, '')).filter(Boolean), pauseAfterStage: $('agentPauseStages').checked, allowResearch: $('agentResearch').checked, researchFocus: $('agentResearchFocus').value.trim(), distanceLivery: $('agentDistanceLivery').checked, references: this.session?.assets.filter(a => a.source === 'upload').map(a => a.id) || [], placement: this.placement });
-    this.render(); this.goStep(2); this.adapter.toast('任务已准备好，复制到当前对话即可开始。');
+    if (this.promptBusy) return;
+    if (!$('agentBrief').value.trim() && !this.promptDrafts.brief.length) { this.goStep(0); $('agentBrief').focus(); throw Error('请写创作要求或添加图片'); }
+    this.setPromptBusy(true);
+    try {
+      const attachments = await this.flushPromptFiles('brief');
+      await this.syncContext(true); this.syncDistance();
+      this.session = await this.api('/job', 'POST', { brief: $('agentBrief').value.trim() || '请参考附图自由设计皮肤。', attachments, stages: $('agentStages').value.split('\n').map(s => s.trim().replace(/^\d+[.、)）]\s*/, '')).filter(Boolean), pauseAfterStage: $('agentPauseStages').checked, allowResearch: $('agentResearch').checked, researchFocus: $('agentResearchFocus').value.trim(), distanceLivery: $('agentDistanceLivery').checked, references: this.session?.assets.filter(a => a.source === 'upload').map(a => a.id) || [], placement: this.placement });
+      this.clearPromptFiles('brief'); this.render(); this.goStep(2); this.adapter.toast('图文任务已准备好，复制到当前对话即可开始。');
+    } finally { this.setPromptBusy(false); }
+  }
+  async submitFeedback() {
+    if (this.promptBusy) return;
+    if (!$('agentFeedback').value.trim() && !this.promptDrafts.feedback.length) throw Error('请写修改要求或添加图片');
+    this.setPromptBusy(true);
+    try { const attachments = await this.flushPromptFiles('feedback'); await this.control('revise', { prompt: $('agentFeedback').value.trim() || '请参考本次附图调整设计。', attachments, target: null }); $('agentFeedback').value = ''; this.clearPromptFiles('feedback'); }
+    finally { this.setPromptBusy(false); }
   }
   async control(action, extra = {}) { this.session = await this.api('/control', 'POST', { action, ...extra }); this.render(); if (['revise', 'resume'].includes(action)) this.goStep(2); }
   instructions() { return `请读取 ${this.session?.integration?.skillPath || 'skills/wt-skin-agent/SKILL.md'}，使用 node "${this.session?.integration?.cliPath || 'agent.cjs'}" status 读取 Skin Studio 当前任务。任务 ${this.session?.job.id || '尚未提交'}，revision ${this.session?.job.revision ?? 0}。按用户分段工作；每次生成与落图前重新检查暂停和修改状态。图片生成、背景、主体、装饰、文字必须分成可编辑图层。允许检索时先查痛车实车与设计参考、记录来源并优化构图；可变皮肤按距离组独立分层，检查近中远与过渡。不要启动或调用另一个 Codex。`; }
@@ -140,7 +206,7 @@ export class AgentWorkspace {
     $('agentPause').disabled = !['running', 'queued'].includes(job.status); $('agentQuickPause').disabled = $('agentPause').disabled; $('agentResume').disabled = !['paused', 'completed'].includes(job.status);
     $('agentStageList').replaceChildren(...job.stages.map((stage, index) => { const button = document.createElement('button'); button.className = 'agent-stage ' + stage.status; button.textContent = `${index + 1}. ${stage.title} ${stage.status === 'completed' ? '✓' : stage.status === 'running' ? '…' : ''}`; button.onclick = () => { this.goStep(2); $('agentFeedback').value = `调整第 ${index + 1} 段「${stage.title}」：`; $('agentFeedback').focus(); }; return button; }));
     const signature = events.map(e => e.id).join(',');
-    if (signature !== this.eventsSignature) { const activity = $('agentActivity'); const atBottom = activity.scrollHeight - activity.scrollTop - activity.clientHeight < 50; activity.replaceChildren(...events.slice(-150).map(e => { const row = document.createElement('div'); row.className = 'agent-event ' + e.kind; const time = document.createElement('time'); time.textContent = new Date(e.time).toLocaleTimeString('zh-CN', { hour12: false }); const content = document.createElement('span'); content.textContent = e.message; row.append(time, content); for (const link of e.links || []) { const a = document.createElement('a'); a.href = link.url; a.textContent = link.title || link.url; a.target = '_blank'; a.rel = 'noreferrer'; row.append(a); } return row; })); if (atBottom) activity.scrollTop = activity.scrollHeight; this.eventsSignature = signature; }
+    if (signature !== this.eventsSignature) { const activity = $('agentActivity'); const atBottom = activity.scrollHeight - activity.scrollTop - activity.clientHeight < 50; activity.replaceChildren(...events.slice(-150).map(e => { const row = document.createElement('div'); row.className = 'agent-event ' + e.kind; const time = document.createElement('time'); time.textContent = new Date(e.time).toLocaleTimeString('zh-CN', { hour12: false }); const content = document.createElement('span'); content.textContent = e.message + (e.attachments?.length ? ' · 附图：' + e.attachments.map(id => assets.find(a => a.id === id)?.name || id).join('、') : ''); row.append(time, content); for (const link of e.links || []) { const a = document.createElement('a'); a.href = link.url; a.textContent = link.title || link.url; a.target = '_blank'; a.rel = 'noreferrer'; row.append(a); } return row; })); if (atBottom) activity.scrollTop = activity.scrollHeight; this.eventsSignature = signature; }
     const aSignature = JSON.stringify(assets); if (aSignature !== this.assetsSignature && !this.uploading && !document.activeElement?.closest('#agentReferences')) { this.assetsSignature = aSignature; this.renderAssets(assets).catch(this.adapter.fail); }
     $('agentAssetCount').textContent = assets.length + ' 张';
     this.layerSelected(this.adapter.selected());
@@ -168,10 +234,13 @@ export class AgentWorkspace {
     const key = layer.id + ':' + (metadata.versions?.length || 0); if ($('agentVersions').dataset.key !== key) { $('agentVersions').dataset.key = key; $('agentVersions').replaceChildren(...(metadata.versions || []).map((v, i) => new Option(`版本 ${i + 1} · ${(v.prompt || '原图').slice(0, 25)}`, v.assetId))); }
   }
   async reviseLayer() {
+    if (this.promptBusy) return; this.setPromptBusy(true);
+    try {
     const layer = this.adapter.selected(); if (!layer) throw Error('请先选择图层'); if (layer.agent?.locked) throw Error('此图层已锁定，请先取消锁定');
-    const source = this.adapter.selectedSource(); let sourceAsset = layer.agent?.assetId;
+    const targetPart = this.adapter.context().selectedPart; const source = this.adapter.selectedSource(); let sourceAsset = layer.agent?.assetId;
     if (!sourceAsset && source) { const asset = await this.api('/assets', 'POST', { name: layer.name + ' · 修改源图', role: 'edit-target', source: 'editor', dataUrl: source }); sourceAsset = asset.id; }
-    await this.syncContext(true); await this.control('revise', { prompt: $('agentLayerPrompt').value, target: { layerId: layer.id, partId: this.adapter.context().selectedPart, block: layer.agent?.block || layer.kind, assetId: sourceAsset, projectionId: layer.projectionId || null } }); $('agentLayerPrompt').value = ''; this.adapter.toast('已提交仅修改此图层的要求。Agent 需读取最新任务后处理。');
+    const attachments = await this.flushPromptFiles('layer'); await this.syncContext(true); await this.control('revise', { prompt: $('agentLayerPrompt').value.trim() || '仅参考本次附图调整此图层。', attachments, target: { layerId: layer.id, partId: targetPart, block: layer.agent?.block || layer.kind, assetId: sourceAsset, projectionId: layer.projectionId || null } }); $('agentLayerPrompt').value = ''; this.clearPromptFiles('layer'); this.adapter.toast('已提交仅修改此图层的要求。Agent 需读取最新任务后处理。');
+    } finally { this.setPromptBusy(false); }
   }
   async restoreVersion() { const layer = this.adapter.selected(), assetId = $('agentVersions').value; if (!layer || !assetId) return; if (layer.agent?.locked) throw Error('请先取消图层锁定'); const result = await this.adapter.apply({ type: 'image', assetId, targetLayerId: layer.id, block: layer.agent.block, prompt: '恢复历史版本', name: layer.name }, async () => true, true); await this.syncContext(true); this.adapter.toast(result.message); }
 }

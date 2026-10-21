@@ -33,8 +33,10 @@ async function run(){
  await t.apply({type:'update',mipmap:{enabled:true,midLevel:2,farLevel:4,smooth:true}});
  const saved={version:2,vehicle:t.state.vehicle,builtin:true,model:t.state.modelSource,mipmap:{...t.state.mipmap},parts:t.state.parts.map(p=>({id:p.id,key:p.key,name:p.name,from:p.from,output:p.output,rule:p.rule,param:p.param,materialPath:p.materialPath,base:p.base.toDataURL(),alpha:p.alpha?.toDataURL(),layers:p.layers.map(t.serializeLayer)})),projections:t.state.projections.map(d=>({...d,image:undefined,imageSrc:t.getImageSrc(d.image)}))};
  await t.restoreProject(JSON.parse(JSON.stringify(saved)));assert(t.state.mipmap.enabled&&t.state.mipmap.farLevel===4&&t.state.parts[1].layers.some(l=>l.distanceBand==='far'),'project restore preserves distance settings and layers');
- const fake={job:{id:null,status:'idle',revision:0,stages:[],feedback:[],allowResearch:true},assets:[],events:[],integration:{}};let submitted;
+ const fake={job:{id:null,status:'idle',revision:0,stages:[],feedback:[],allowResearch:true},assets:[],events:[],integration:{}};let submitted,lastRevision,failRevision=false;
  const workflow=new t.AgentWorkspace({context:t.context,preview:()=>'',busy:()=>false,selected:()=>null,toast:()=>{},fail:e=>{throw e;},api:async(path,options={})=>{
+  if(path.endsWith('/assets')&&options.method==='POST'){const data=JSON.parse(options.body);const asset={...data,id:'prompt-'+fake.assets.length,filename:'test.png'};fake.assets.push(asset);return asset;}
+  if(path.endsWith('/control')){const data=JSON.parse(options.body);if(data.action==='revise'&&failRevision){failRevision=false;throw Error('test retry');}lastRevision=data;fake.job.status=data.action==='pause'?'paused':'queued';fake.job.revision++;}
   if(path.endsWith('/commands'))return {job:fake.job,commands:[]};
   if(path.endsWith('/job')&&options.method==='POST'){submitted=JSON.parse(options.body);fake.job={...submitted,id:'isolated-ui-fixture',status:'queued',revision:1,stage:-1,stages:submitted.stages.map(title=>({title,status:'pending'}))};}
   return fake;
@@ -48,6 +50,19 @@ async function run(){
  $('agentMipMid').click();assert(t.state.mipLevel===3&&$('agentMipLevel').value==='3','workflow preview button drives model preview');
  $('agentBrief').value='isolated test';await workflow.submit();assert(submitted.distanceLivery===t.state.mipmap.enabled,'submitted agent task matches enabled project');
  fake.job.distanceLivery=false;workflow.render();assert($('agentDistanceLivery').checked,'stale task intent does not override canvas switch');
+ workflow.adapter.fetchAsset=async id=>fetch(fake.assets.find(a=>a.id===id).dataUrl);
+ const png=Uint8Array.from(atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLttAAAAABJRU5ErkJggg=='),c=>c.charCodeAt(0));const reference=new frame.contentWindow.File([png],'reference.png',{type:'image/png'});
+ await workflow.addPromptFiles('brief',[reference]);assert($('prompt-list-brief').querySelector('img')&&workflow.promptDrafts.brief.length===1,'prompt attachments show image thumbnails');
+ $('prompt-list-brief').querySelector('button').click();assert(!workflow.promptDrafts.brief.length,'pending prompt image can be removed');
+ await workflow.addPromptFiles('brief',[reference]);$('agentBrief').value='';await workflow.submit();assert(submitted.attachments.length===1&&submitted.brief.includes('附图'),'image-only creation submits bound attachment IDs');
+ assert(!workflow.promptDrafts.brief.length,'successful prompt clears pending attachments');
+ const paste=new frame.contentWindow.Event('paste',{cancelable:true,bubbles:true});Object.defineProperty(paste,'clipboardData',{value:{items:[{kind:'file',type:'image/png',getAsFile:()=>reference}]}});$('agentFeedback').dispatchEvent(paste);await new Promise(r=>setTimeout(r,20));assert(paste.defaultPrevented&&workflow.promptDrafts.feedback.length===1,'paste in feedback prompt attaches an image');
+ failRevision=true;let failed=false;try{await workflow.submitFeedback();}catch{failed=true;}const uploads=fake.assets.length;assert(failed&&workflow.promptDrafts.feedback[0].id,'failed submit retains the uploaded draft for retry');
+ await workflow.submitFeedback();assert(lastRevision.attachments.length===1&&fake.assets.length===uploads&&!workflow.promptDrafts.feedback.length,'retry reuses image asset and binds it to revision');
+ const drop=new frame.contentWindow.Event('drop',{cancelable:true,bubbles:true});Object.defineProperty(drop,'dataTransfer',{value:{files:[reference]}});$('agentLayerPrompt').dispatchEvent(drop);await new Promise(r=>setTimeout(r,20));assert(drop.defaultPrevented&&workflow.promptDrafts.layer.length===1,'drop in layer prompt attaches image independently');
+ const target=t.state.parts[0].layers[0];target.agent={assetId:fake.assets[0].id};workflow.adapter.selected=()=>target;workflow.adapter.selectedSource=()=>null;await workflow.reviseLayer();assert(lastRevision.target.layerId===target.id&&lastRevision.target.assetId===fake.assets[0].id&&lastRevision.attachments.length===1,'layer edit keeps source target distinct from new picture reference');
+ fake.job.status='running';await workflow.addPromptFiles('feedback',[reference]);assert(fake.job.status==='paused'&&lastRevision.action==='pause','adding a prompt picture pauses active generation');
+ await new Promise(r=>setTimeout(r,80));
  assert(!errors.length,'no uncaught application errors');
  document.querySelector('pre').textContent=results.join('\n')+'\nALL CHECKS PASSED';
  }catch(e){document.querySelector('pre').textContent=results.join('\n')+'\nFAIL '+e.stack;}
