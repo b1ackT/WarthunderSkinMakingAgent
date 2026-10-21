@@ -1,1 +1,0 @@
-{"revision":1,"operation":{"type":"fill","name":"材质色调 · 冷钢柔光","block":"material","stage":1,"targets":["body","turret","gun","mg"],"color":"#7896ad","opacity":0.38,"blend":"soft-light","prompt":"颜色贴图上的冷钢色调柔光层，原车表面细节保留。不是物理材质通道。"}}

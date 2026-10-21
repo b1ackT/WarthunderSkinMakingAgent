@@ -1,1 +1,0 @@
-{"revision":17,"operation":{"type":"update","layerIds":["20d1d19c-15c9-40df-b6d2-3f8002848baa"],"values":{"visible":false},"block":"background","prompt":"检查发现侧面白色长条经共享UV重复到顶面。隐藏此独立底板，恢复干净的黑白分区；其他图层保持不变。"}}

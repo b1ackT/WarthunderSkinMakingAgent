@@ -1,1 +1,0 @@
-{"revision":21,"operation":{"type":"fill","name":"材质 · 拉丝金属微纹理","block":"material","stage":1,"targets":["body","turret","gun","mg"],"color":"#ffffff","blend":"multiply","opacity":0.24,"prompt":"材质 · 拉丝金属微纹理：独立、可调整强度的颜色贴图层。"}}

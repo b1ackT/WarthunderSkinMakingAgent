@@ -10,3 +10,6 @@ desktop.ini
 # Local artwork, task state and generated verification artifacts
 .studio-agent/
 output/
+tests/artifacts/
+backups/**/agent-session*.json
+*.studio.zip
