@@ -16,6 +16,7 @@ goto failed
 if errorlevel 1 goto failed
 if not exist "server.cjs" goto files_missing
 if not exist "agent-store.cjs" goto files_missing
+if not exist "browser-launch.cjs" goto files_missing
 if not exist "index.html" goto files_missing
 if /i "%~1"=="--check" goto checked
 echo Starting Skin Studio. Keep this window open while editing.

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.cjs",
-    "check": "node --check mipmap.js && node --check app.js && node --check projection.js && node --check image-io.js && node --check server.cjs && node --check agent-ui.js && node --check agent-store.cjs && node --check agent.cjs",
+    "check": "node --check browser-launch.cjs && node --check mipmap.js && node --check app.js && node --check projection.js && node --check image-io.js && node --check server.cjs && node --check agent-ui.js && node --check agent-store.cjs && node --check agent.cjs",
     "test": "node --test tests/*.test.cjs"
   },
   "keywords": [],
