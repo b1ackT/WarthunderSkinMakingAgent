@@ -4,7 +4,7 @@ import { OBJLoader } from './vendor/jsm/loaders/OBJLoader.js';
 import { zipSync, unzipSync, strToU8, strFromU8 } from 'fflate';
 import { canvas, copyCanvas, imageFrom, readImage, download, splitBase, toDDS } from './image-io.js?v=0.5.0';
 import { buildUVGeometry, bakeProjection, captureCamera, restoreCamera, reframeRectangle } from './projection.js';
-import { AgentWorkspace } from './agent-ui.js?v=0.5.2';
+import { AgentWorkspace } from './agent-ui.js?v=0.5.3';
 import { exportPolicy, skinConfig } from './skin-export.js';
 import { DISTANCE_BANDS, DEFAULT_MIPMAP, normalizeMipmap, validateMipmap, mipWeights, mipDimensions, layerInBand } from './mipmap.js';
 
@@ -399,7 +399,12 @@ async function exportPSD() {
 }
 
 async function api(path, options = {}) {
-  const response = await fetch(path, { ...options, headers: { 'X-Studio-Token': apiToken, ...(options.body ? { 'Content-Type': 'application/json' } : {}) } });
+  const request = () => fetch(path, { ...options, headers: { 'X-Studio-Token': apiToken, ...(options.body ? { 'Content-Type': 'application/json' } : {}) } });
+  let response = await request();
+  if (response.status === 403) {
+    const session = await fetch('/api/session');
+    if (session.ok) { apiToken = (await session.json()).token; response = await request(); }
+  }
   const data = await response.json(); if (!response.ok) throw Error(data.error || '本地文件连接失败'); return data;
 }
 function watchDescription(link) { const p = state.parts.find(p => p.id === link.partId); return link.target === 'composite' ? `${p?.name} / PS 合成图层` : link.target === 'base' ? `${p?.name} / 底图` : link.target === 'projection' ? '整组投射源图片' : `${p?.name} / 图片图层`; }

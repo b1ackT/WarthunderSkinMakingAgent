@@ -1,4 +1,5 @@
 import { download } from './image-io.js';
+import { AgentConnection } from './agent-connection.js?v=0.5.3';
 const $ = id => document.getElementById(id);
 const roleNames = { reference: '综合参考', style: '风格参考', character: '主体 / 角色', background: '背景参考', decoration: '装饰 / 标记', material: '材质参考' };
 const phases = { idle: '未提交任务', queued: '等待 Agent 读取', running: 'Agent 创作中', paused: '已暂停', completed: '本次创作完成', cancelled: '已取消' };
@@ -8,6 +9,9 @@ export class AgentWorkspace {
     this.promptDrafts = { brief: [], feedback: [], layer: [] }; this.promptBusy = false;
     this.adapter = adapter; this.session = null; this.urls = new Map(); this.executing = false; this.polling = false; this.uploading = false; this.targetAsset = null; this.placement = null; this.lastContext = ''; this.eventsSignature = ''; this.assetsSignature = '';
     this.mount(); this.bind(); this.syncDistance(); this.poll().catch(adapter.fail); this.timer = setInterval(() => this.poll().catch(() => {}), 1000);
+    this.connection = new AgentConnection(() => this.poll().catch(() => {})); this.connection.start();
+    window.addEventListener('pagehide', () => this.connection.stop());
+    window.addEventListener('pageshow', () => this.connection.start());
   }
   async api(suffix = '', method = 'GET', data) { return this.adapter.api('/api/agent' + suffix, { method, ...(data ? { body: JSON.stringify(data) } : {}) }); }
   mount() {

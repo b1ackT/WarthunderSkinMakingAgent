@@ -51,6 +51,8 @@ For generated images:
 
 Read [the command reference](references/commands.md) when constructing operations. It includes projection, independent fills/text, targeted image updates and layer transforms.
 
+The editor receives authenticated server push and can apply work in a background tab. Do not ask the user to keep it in the foreground. If `canvasOnline` is false, check the connection/server; the page must remain open. Closed, discarded or frozen tabs and sleeping computers cannot execute canvas operations. Restore the connection without bypassing pause/revision checks.
+
 ## Pauses, staged review and revisions
 
 - Re-read status before each generation and each canvas mutation, and after long tool calls. Never reuse an old revision after the user changes the brief, reference placement, mask or layer location.

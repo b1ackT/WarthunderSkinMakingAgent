@@ -1,12 +1,15 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const { EventEmitter } = require('node:events');
 
-class AgentStore {
+class AgentStore extends EventEmitter {
   constructor(root) {
+    super();
     this.projectRoot = root;
     this.root = path.join(root, '.studio-agent'); this.assetsDir = path.join(this.root, 'assets');
     this.context = null; this.lastCanvas = 0; this.commands = []; this.events = []; this.assets = [];
+    this.canvasConnections = new Set();
     this.job = { id: null, status: 'idle', revision: 0, brief: '', stages: [], references: [], stage: -1, pauseAfterStage: true, allowResearch: true, researchFocus: '', distanceLivery: false, feedback: [], worker: null };
     this.sequence = 0; this.queue = Promise.resolve(); this.ready = this.load();
   }
@@ -20,9 +23,11 @@ class AgentStore {
     } catch (e) { if (e.code !== 'ENOENT') throw e; }
   }
   view() {
-    return { job: this.job, assets: this.assets, events: this.events, commands: this.commands.map(({ result, ...c }) => ({ ...c, result: result ? { ...result, preview: undefined } : null })), context: this.context, canvasOnline: Date.now() - this.lastCanvas < 15000,
+    return { job: this.job, assets: this.assets, events: this.events, commands: this.commands.map(({ result, ...c }) => ({ ...c, result: result ? { ...result, preview: undefined } : null })), context: this.context, canvasOnline: this.canvasOnline(),
       integration: { projectRoot: this.projectRoot, cliPath: path.join(this.projectRoot, 'agent.cjs'), skillPath: path.join(this.projectRoot, 'skills', 'wt-skin-agent', 'SKILL.md'), previewPath: path.join(this.root, 'preview.png'), contextPath: path.join(this.root, 'context.json'), assetsPath: this.assetsDir } };
   }
+  canvasOnline() { return this.canvasConnections.size > 0 || Date.now() - this.lastCanvas < 15000; }
+  connectCanvas(connection) { this.canvasConnections.add(connection); return () => this.canvasConnections.delete(connection); }
   async persist() {
     const data = JSON.stringify({ job: this.job, assets: this.assets, events: this.events, commands: this.commands, sequence: this.sequence }, null, 2);
     this.queue = this.queue.catch(() => {}).then(async () => { const temp = path.join(this.root, 'session.next.json'); await fs.writeFile(temp, data); await fs.rename(temp, path.join(this.root, 'session.json')); });
@@ -30,7 +35,7 @@ class AgentStore {
   }
   event(kind, message, extra = {}) {
     const e = { id: ++this.sequence, kind, message: String(message).slice(0, 16000), time: new Date().toISOString(), ...extra };
-    this.events.push(e); if (this.events.length > 800) this.events.shift(); return e;
+    this.events.push(e); if (this.events.length > 800) this.events.shift(); this.emit('wake'); return e;
   }
   cancelPending(reason) { for (const c of this.commands) if (['queued', 'applying'].includes(c.status)) { c.status = 'cancelled'; c.error = reason; } }
   async updateContext(context, preview) {
@@ -104,7 +109,7 @@ class AgentStore {
     await this.persist(); return this.view();
   }
   async enqueue(data) {
-    this.checkRevision(data.revision); if (Date.now() - this.lastCanvas > 15000) throw Error('编辑器未在线。请打开 Skin Studio 网页后再提交画布操作。');
+    this.checkRevision(data.revision); if (!this.canvasOnline()) throw Error('编辑器未连接。请保持 Skin Studio 网页打开，可在后台运行。');
     if (!['image', 'fill', 'text', 'update', 'preview'].includes(data.operation?.type)) throw Error('未知画布操作');
     if (data.operation.assetId && !this.assets.some(a => a.id === data.operation.assetId)) throw Error('素材 ID 不存在，请先 asset 入库');
     const command = { id: crypto.randomUUID(), jobId: this.job.id, revision: this.job.revision, status: 'queued', operation: data.operation, createdAt: new Date().toISOString() };

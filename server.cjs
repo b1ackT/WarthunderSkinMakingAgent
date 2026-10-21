@@ -40,6 +40,15 @@ async function handleAPI(req, res, url) {
   if (url.pathname.startsWith('/api/agent')) {
     await agent.ready;
     const suffix = url.pathname.slice('/api/agent'.length);
+    if (suffix === '/stream' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', 'Connection': 'keep-alive', 'X-Content-Type-Options': 'nosniff' });
+      res.flushHeaders();
+      const disconnect = agent.connectCanvas(res);
+      const wake = () => { if (!res.destroyed && !res.writableNeedDrain) res.write('data: wake\n\n'); };
+      agent.on('wake', wake); const timer = setInterval(wake, 10000);
+      res.on('close', () => { clearInterval(timer); agent.off('wake', wake); disconnect(); });
+      wake(); return;
+    }
     if (!suffix && req.method === 'GET') return json(res, 200, agent.view());
     if (suffix === '/context' && req.method === 'POST') { const data = await body(req); return json(res, 200, await agent.updateContext(data.context, data.preview)); }
     if (suffix === '/job' && req.method === 'POST') return json(res, 200, await agent.start(await body(req)));

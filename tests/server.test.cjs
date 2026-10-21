@@ -42,6 +42,18 @@ test('unsupported file paths cannot become file links', async () => {
   assert.equal((await fetch(origin + '/api/watch', { method: 'POST', headers: headers(), body: JSON.stringify({ path: path.join(temp, 'private.txt') }) })).status, 400);
 });
 
+test('background stream requires authentication and emits a wake frame', async () => {
+  assert.equal((await fetch(origin + '/api/agent/stream')).status, 403);
+  const controller = new AbortController();
+  const response = await fetch(origin + '/api/agent/stream', { headers: headers(), signal: controller.signal });
+  assert.equal(response.headers.get('content-type'), 'text/event-stream');
+  const reader = response.body.getReader();
+  assert.match(new TextDecoder().decode((await reader.read()).value), /data: wake/);
+  const state = await (await fetch(origin + '/api/agent', { headers: headers() })).json();
+  assert.equal(state.canvasOnline, true);
+  controller.abort(); await reader.cancel().catch(() => {});
+});
+
 test('repeated launch reuses Studio without opening a test browser', async () => {
  const result=await new Promise((resolve,reject)=>{const p=spawn(process.execPath,['server.cjs','--open','--no-open'],{cwd:path.resolve(__dirname,'..'),env:{...process.env,PORT:'18867'},windowsHide:true});let output='';p.stdout.on('data',d=>output+=d);p.stderr.on('data',d=>output+=d);p.once('error',reject);p.once('exit',code=>resolve({code,output}));});
  assert.equal(result.code,0,result.output);assert.match(result.output,/already running/);

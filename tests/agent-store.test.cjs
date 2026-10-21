@@ -19,6 +19,19 @@ test('pause rejects late operations and invalidates queued work', async t => {
   await assert.rejects(s.acknowledge(c.id, { success: true }), /任务已修改/);
   assert.deepEqual(await s.pollCommands(), []);
 });
+test('background connection stays online without polling and retains pause guards', async t => {
+  const s = await fixture(t); s.lastCanvas = Date.now() - 120000;
+  assert.equal(s.view().canvasOnline, false);
+  const disconnect = s.connectCanvas({}); assert.equal(s.view().canvasOnline, true);
+  let wakes = 0; s.on('wake', () => wakes++);
+  const c = await s.enqueue({ revision: s.job.revision, operation: { type: 'fill' } });
+  assert.ok(wakes > 0); await s.control('pause'); assert.equal(c.status, 'cancelled');
+  await assert.rejects(s.enqueue({ revision: s.job.revision, operation: { type: 'fill' } }), /未运行/);
+  disconnect(); assert.equal(s.view().canvasOnline, false);
+  await s.control('resume'); await s.claim();
+  await assert.rejects(s.enqueue({ revision: s.job.revision, operation: { type: 'fill' } }), /未连接/);
+});
+
 test('stage review pauses, continue requires a new claim and revision', async t => {
   const s = await fixture(t), oldRevision = s.job.revision;
   await s.stage({ revision: oldRevision, index: 0, status: 'completed' });
